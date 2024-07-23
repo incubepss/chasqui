@@ -1,0 +1,14 @@
+<div class="card" [class.--noCard]="noCard">
+  <div class="card-body">
+    <h6 class="card-title" *ngIf="title">{{ title }}</h6>
+    <ul class="list-unstyled mb-0">
+      <li class="shippingMethod-name">{{ shippingLine?.shippingMethod?.name }}</li>
+      <li>{{ shippingLine?.shippingMethod?.customFields?.address_or_places }}</li>
+      <li>{{ shippingLine?.shippingMethod?.customFields?.schedule }}</li>
+      <li [innerHTML]="shippingLine?.shippingMethod?.description"></li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <ng-content></ng-content>
+  </div>
+</div>

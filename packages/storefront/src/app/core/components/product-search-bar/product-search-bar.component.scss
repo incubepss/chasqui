@@ -1,0 +1,51 @@
+@import 'variables';
+@import 'bootstrap';
+
+:host {
+  display: block;
+  margin: 0 0.25rem;
+  border-radius: 10px;
+}
+
+input.form-control {
+  background: transparent;
+  height: 40px;
+  width: 40px;
+  border-radius: 10px;
+  border: 0;
+  font-size: 0.8rem;
+  transition: width 500ms ease-in-out;
+  padding-left: 40px;
+  text-align: left;
+  &:focus {
+    width: 250px;
+  }
+}
+
+input.form-control::placeholder {
+  color: var(--gray-dark);
+  font-family: $headings-font-family;
+  font-weight: 400;
+  text-align: left;
+}
+
+.input-icons {
+  position: relative;
+  align-items: center;
+
+  .icon {
+    position: absolute;
+    min-width: 40px;
+    cursor: pointer;
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  :host {
+    margin: 0;
+  }
+
+  input::placeholder {
+    font-size: 0.8rem;
+  }
+}

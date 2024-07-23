@@ -1,0 +1,8 @@
+.env
+node_modules
+dist
+static/assets
+static/assets*
+static/email/test-emails
+src/emails/test-emails
+admin-ui/

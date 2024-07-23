@@ -1,0 +1,64 @@
+<form #signInForm="ngForm" (submit)="signIn()">
+  <vsf-centered-card [illustration]="illustration">
+    <div class="form-group">
+      <label>E-Mail</label>
+      <input
+        class="form-control"
+        name="emailAddress"
+        type="email"
+        email
+        required
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        #emailAddress="ngModel"
+        [(ngModel)]="model.emailAddress"
+        [ngClass]="{
+          'is-invalid': !emailAddress.pristine && emailAddress.invalid
+        }"
+      />
+      <div *ngIf="!emailAddress.pristine && emailAddress.invalid" class="invalid-feedback">
+        <div *ngIf="emailAddress.errors.required">El email es requerido</div>
+        <div *ngIf="emailAddress.errors.pattern">La dirección de email no es válida.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input
+        class="form-control mt-1"
+        type="password"
+        name="password"
+        required
+        #password="ngModel"
+        [(ngModel)]="model.password"
+        [ngClass]="{
+          'is-invalid': !password.pristine && password.invalid
+        }"
+      />
+      <div *ngIf="!password.pristine && password.invalid" class="invalid-feedback">
+        <div *ngIf="password.errors.required">La contraseña es requerida</div>
+      </div>
+    </div>
+
+    <button
+      class="btn btn-primary btn-block mt-3 btnSignIn"
+      [disabled]="signInForm.invalid || signInForm.pristine"
+      type="submit"
+    >
+      Entrar
+    </button>
+    <a [routerLink]="['/micuenta/olvido-de-password', { email: this.model.emailAddress }]">¿olvidaste tu contraseña?</a>
+    <div
+      class="alert alert-warning invalid-credentials visible"
+      role="alert"
+      *ngIf="model.invalid"
+    >
+      {{model.invalidMessage}}
+    </div>
+
+    <div *ngIf="displayRegisterLink" class="register-link">
+      <a [routerLink]="['/micuenta/registrar']"> <strong>Registrate acá</strong>, si todavía no tenés cuenta</a>
+    </div>
+
+    <ng-content select=".slot-aditionalContent"></ng-content>
+    
+  </vsf-centered-card>
+</form>

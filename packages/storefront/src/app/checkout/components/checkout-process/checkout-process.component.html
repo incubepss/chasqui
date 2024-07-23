@@ -1,0 +1,127 @@
+<ng-container *ngIf="(cart$ | async) || (isThanksStage$ | async); else noActiveCard">
+  <div
+    class="container checkout checkout--mobile"
+    [class.isSigninStep]="(activeStage$ | async) === 1"
+    [class.isFinalStep]="(activeStage$ | async) === 4"
+    [class.isThanksStep]="(activeStage$ | async) === 5"
+    *ngIf="(isStoreDisabled$ | async) !== true"
+  >
+    <div class="checkout-mobileHeader">
+      <div class="mobileHeader-icon">
+        <a [contextRouterLink]="['catalogo']" routerLinkActive="active">
+          <fa-icon icon="arrow-left"></fa-icon
+        ></a>
+      </div>
+      <div class="mobileHeader-title">Finalizar compra</div>
+    </div>
+    <div class="checkout-stepsIndicator">
+      <vsf-checkout-stage-indicator
+        *ngIf="(activeStage$ | async) > 1 && (activeStage$ | async) < 5"
+        [activeStage]="activeStage$ | async"
+        [signedIn]="signedIn$ | async"
+        (clickStep)="onStep($event)"
+      ></vsf-checkout-stage-indicator>
+    </div>
+    <div class="checkout-main" #checkoutMain>
+      <router-outlet></router-outlet>
+
+      <ng-container *ngIf="(activeStage$ | async) === 4">
+        <div class="checkout-summary" *ngIf="cart$ | async as cart">
+          <div class="checkout-summary__choisesBox">
+            <span
+              *ngIf="(activeStage$ | async) > 2 && (showOrderGroup$ | async) && (isOrderPartOfGroup$ | async)"
+            >
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h6 class="card-title">Compra grupal</h6>
+                  <div *ngIf="cart.customFields?.orderGroup?.code; else noGroup">
+                    <p class="text-success">Activada</p>
+                    Código: <strong>{{ cart.customFields.orderGroup.code }}</strong> <br />
+                    Coordina:
+                    <strong
+                      >{{ cart.customFields.orderGroup.customer.firstName }}
+                      {{ cart.customFields.orderGroup.customer.lastName }}</strong
+                    >
+                    <br />
+                    {{ cart.customFields.orderGroup.customer.emailAddress }}
+                  </div>
+                  <ng-template #noGroup>
+                    <p class="text-danger">Grupo no activado</p>
+                  </ng-template>
+                </div>
+                <div class="card-footer" *ngIf="(activeStage$ | async) > 3 && (orderSinglesAllowed$ | async)">
+                  <a class="btn-link" [routerLink]="['./', 'entrega']">Cambiar</a>
+                </div>
+              </div>
+            </span>
+
+            <vsf-shipping-line-card
+              *ngIf="cart.shippingLines?.length && !cart.customFields?.orderGroup?.code"
+              title="Entrega"
+              [shippingLine]="cart.shippingLines[0]"
+            >
+              <a class="btn-link" *ngIf="(activeStage$ | async) > 2" (click)="changeShippingMethod()">
+                Cambiar
+              </a>
+            </vsf-shipping-line-card>
+
+            <vsf-address-card
+              *ngIf="cart.shippingAddress?.streetLine1"
+              title="Dirección"
+              [address]="cart.shippingAddress"
+            >
+              <a
+                class="btn-link"
+                *ngIf="(activeStage$ | async) > 2 && !cart.customFields?.orderGroup"
+                (click)="changeShippingAddress()"
+              >
+                Cambiar
+              </a>
+            </vsf-address-card>
+
+            <span *ngIf="(activeStage$ | async) > 2 && (paymentMethod$ | async) as paymentMethod">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <h6 class="card-title">Método de pago</h6>
+                  <div class="paymentMethod-name">{{ paymentMethod.name }}</div>
+                  <div
+                    [innerHTML]="paymentMethod.customFields?.paymentInstruction | paymentInstruction"
+                  ></div>
+                </div>
+                <div class="card-footer" *ngIf="(activeStage$ | async) > 3">
+                  <a class="btn-link" [routerLink]="['./', 'pago']">Cambiar</a>
+                </div>
+              </div>
+            </span>
+          </div>
+
+          <div class="checkout-summary__cartContent">
+            <h6 class="card-title">Artículos</h6>
+            <vsf-cart-contents [cart]="cart"></vsf-cart-contents>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noActiveCard>
+  <div class="container container-page">
+    <div class="col-12">
+      <vsf-content-not-found message="No se encontró un carrito activo">
+        <img
+          image
+          src="../../../../assets/illustrations/support-woman-colour.svg"
+          width="250"
+          height="250"
+          alt="404 ilustración"
+        />
+        <div actions>
+          <a class="btn btn-primary" [contextRouterLink]="['catalogo']" routerLinkActive="active"
+            >Ir al catálogo</a
+          >
+        </div>
+      </vsf-content-not-found>
+    </div>
+  </div>
+</ng-template>

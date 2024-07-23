@@ -1,0 +1,52 @@
+<div class="sub-header">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/']">Tiendas</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a [contextRouterLink]="['/']">{{ channelName$ | async }}</a>
+        </li>
+        <li class="breadcrumb-item">Entregas</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container container-page">
+  <div class="row">
+    <div class="col-md-6 col-lg-5 zones-container">
+      <div *ngFor="let zone of zones" class="mb-5 zone">
+        <h5 [class]="zone.typeDelivery" class="mb-3">{{ zone.name }}</h5>
+        <div
+          *ngFor="let method of filterItemsOfType(zone.typeDelivery)"
+          (click)="onShownMethod(method)"
+          class="method"
+          [class.--selected]="selectedMethod?.id === method.id"
+        >
+          <div class="method-header">
+            <div class="method-name">{{ method.name }}</div>
+          </div>
+          <div class="method-collapsable">
+            <div [innerHTML]="method.description" class="method-description"></div>
+            <div class="method-meta">
+              <p>
+                <fa-icon icon="map-marked"></fa-icon>
+                <strong>{{ method.customFields.address_or_places }}</strong>
+              </p>
+              <p>
+                <fa-icon icon="clock"></fa-icon>
+                <strong>{{ method.customFields.schedule }}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-7">
+      <vsf-entregas-mapa [selectedMethod]="selectedMethod" (clickMethod)="onShownMethod($event)">
+      </vsf-entregas-mapa>
+    </div>
+  </div>
+</div>

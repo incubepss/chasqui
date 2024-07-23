@@ -1,0 +1,105 @@
+@import 'variables';
+@import '../../account.scss';
+
+:host {
+  display: block;
+}
+
+.toolbar {
+  margin-bottom: 1rem;
+}
+
+.cell-total, .header-total {
+  text-align: right;
+}
+
+.cell-center {
+  text-align: center;
+}
+
+.card {
+  cursor: pointer;
+  transition: border-color 200ms ease-in;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  &:hover {
+    border-color: #0c96a0;
+  }
+}
+
+.card:last-child {
+  border-bottom-color: $gray-400;
+}
+
+.orderBodyCard {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  color: $gray-800;
+
+  .left {
+    flex: 1 1 60%;
+    overflow-wrap: anywhere;
+  }
+
+  .right {
+    flex: 1 1 40%;
+    text-align: right;
+    padding-left: 0.5rem;
+  }
+
+  &-code {
+    font-size: 1rem;
+    color: $gray-900;
+  }
+
+  &-date {
+    color: $gray-700;
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+
+  &-detailContainer {
+    display: flex;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    align-items: center;
+  }
+
+  &-total {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: right;
+    color: $chq2color-primary-comunity;
+  }
+
+  &-ordersQuantity {
+    font-size: 0.85rem;
+    font-weight: normal;
+    color: $gray-700;
+  }
+}
+
+.footerActions {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+
+  &-loading {
+    margin-bottom: 2rem;
+  }
+}
+
+.emptyResult {
+  margin-top: 2rem;
+  color: $gray-600;
+  font-size: 1.5rem;
+  min-height: 150px;
+
+  fa-icon {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+}

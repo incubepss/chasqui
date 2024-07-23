@@ -1,0 +1,24 @@
+<div *ngIf="cart$ | async as order">
+  <form class="payment-form row cart-content" #paymentForm="ngForm" (submit)="completeOrder()">
+    <div class="section">
+      <h5>
+        Dejanos tus comentarios
+      </h5>
+      <textarea rows="3" maxlength="250" type="text" class="form-control" id="comments" name="comments" [required]="true" [(ngModel)]="comments"
+        placeholder="">
+      </textarea>
+    </div>
+    <div class="section" *ngIf="(isOrderPartOfGroup$ | async) !== true && (signedIn$ | async) && (orderGroupEnabled$ | async)">
+      <h5>
+        Invita a más personas a tu compra
+      </h5>
+      <vsf-checkout-ordergroup></vsf-checkout-ordergroup>
+    </div>
+    <div class="checkout-actions">
+        <button class="btn btn-primary" [disabled]="busy">
+          <span *ngIf="busy" class="loading-indicator spinner-grow spinner-grow-sm"></span>
+          Confirmar el pedido
+        </button>
+    </div>
+  </form>
+</div>

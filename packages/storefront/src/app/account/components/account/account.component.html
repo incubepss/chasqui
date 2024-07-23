@@ -1,0 +1,25 @@
+<div class="container container-page" [class.isSignedIn]="isSignedIn$ | async"  >
+  <div class="container-menu" *ngIf="isSignedIn$ | async">
+    
+    <div class="avatar">
+      <ng-container *ngIf="activeCustomer$ | async as customer">
+        <div class="avatar-name">{{ customer.firstName }} {{ customer.lastName }}</div>
+        <div class="avatar-email">{{ customer.emailAddress }}</div>
+
+        <button type="button" class="btn btn-sm btn-signOut" (click)="signOut()">
+          <fa-icon icon="door-open"></fa-icon>
+          cerrar sesión
+        </button>
+
+        <div class="icon-edit" [routerLink]="['./', 'datos-personales']">
+          <fa-icon icon="pencil-alt"></fa-icon>
+        </div>
+      </ng-container>
+    </div>
+     
+  </div>
+
+  <div class="container-section">
+    <router-outlet></router-outlet>
+  </div>
+</div>

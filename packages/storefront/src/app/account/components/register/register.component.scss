@@ -1,0 +1,26 @@
+@import 'variables';
+
+:host {
+  display: block;
+  margin-top: $spacer * 0.5;
+  padding: 1rem;
+
+  .registration-sent {
+    text-align: center;
+    padding: $spacer * 2;
+
+    fa-icon {
+      font-size: 3rem;
+      color: $success;
+    }
+  }
+}
+
+label {
+  margin-top: 0.5em;
+}
+
+
+button {
+  margin-top: 3rem;
+}

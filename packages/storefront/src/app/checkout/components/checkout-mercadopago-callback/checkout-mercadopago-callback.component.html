@@ -1,0 +1,52 @@
+<div *ngIf="order$ | async as order">
+  <div class="text-center mb-4">
+    <ul class="order-details list-unstyled">
+      <li class="lead"><span class="text-muted">Código del pedido:</span> {{ order.code }}</li>
+      <li class="lead"><span class="text-muted">Fecha:</span> {{ order.updatedAt | date: 'medium' }}</li>
+    </ul>
+    <h2 class="display-4">¡Gracias por tu compra!</h2>
+  </div>
+</div>
+
+<div class="text-center text-warning mb-4" *ngIf="(status$ | async) === 'pending'">
+  <h4>Tu pago está pendiente</h4>
+</div>
+
+<div class="text-center text-info mb-4" *ngIf="(status$ | async) === 'in_process'">
+  <h4>Tu pago está en proceso de revisión</h4>
+</div>
+
+<div  class="text-center text-success mb-4" *ngIf="(status$ | async) === 'approved'">
+  <h4>Tu pago fué aprobado</h4>
+</div>
+
+<div class="text-center" *ngIf="notFound$ | async">
+  <h4 class="display-4">Pedido no encontrado</h4>
+</div>
+
+ <div *ngIf="pagos$ | async">
+  <div class="block pagoContainer text-center" *ngFor="let pago of pagos$ | async">
+    <div class="field">
+      <label class="field-label">Fecha</label>
+      <div class="field-value">{{pago.fecha}}</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Monto del pago</label>
+      <div class="field-value">{{pago.monto*100 | formatPrice}}</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Con</label>
+      <div class="field-value">{{pago.metodo}}</div>
+    </div>
+    <div class="field">
+      <label class="field-label">Estado</label>
+      <div class="field-value field-value--state">{{pago.estado}} {{pago.estado_detallado}}</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-actions row justify-content-center">
+  <div class="col-lg-8 text-center">
+    <button class="btn btn-secondary" [routerLink]="'/micuenta/pedidos'">Ver mis pedidos</button>
+  </div>
+</div>

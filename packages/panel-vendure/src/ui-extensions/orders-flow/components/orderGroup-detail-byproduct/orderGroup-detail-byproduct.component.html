@@ -1,0 +1,88 @@
+<div *ngIf="orderGroup$ | async as order">
+  <div class="toolbar">
+    <div>{{getQuantityDescription(order)}}</div>
+  </div>
+  <table class="tableOrders table table-noborder table-compact">
+    <thead>
+      <tr>
+        <th class="left"  width="150">Productor</th>
+        <th class="left" colspan="2">Producto</th>
+        <th class="right" width="80">P. Lista</th>
+        <th class="right" width="60">Cantidad</th>
+        <th class="right" width="80">P. Final</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="lineRow" *ngFor="let v of order?.linesGrouped">
+        <td class="left">
+          {{v.productorNombre}}
+        </td>
+        <td class="left" width="80">
+          {{v.productoSku}}
+        </td>
+        <td class="left">
+          <strong>{{v.productoNombre}}</strong>
+        </td>
+        <td class="right">{{v.listPrice | localeCurrency: order.currencyCode}}</td>
+        <td class="right">{{v.cantidad}}</td>
+        <td class="right strong">{{v.subTotallistPrice | localeCurrency: order.currencyCode}}</td>
+      </tr>
+      <tr class="lineRow">
+        <td class="left" colspan="6">
+          * listado por artículos no incluye detalle de descuentos ni cargos adicionales
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="subTotalContainer" *ngIf="orderGroupInput as detail">
+    <table class="table table-noborder table-compact">
+      <tr *ngFor="let surcharge of detail.surcharges">
+        <td class="right line">
+          Adicional: {{surcharge.description}}
+        </td>
+        <td class="right line">
+          {{surcharge.priceWithTax | localeCurrency: detail.currencyCode}}
+        </td>
+      </tr>
+      <tr>
+        <td class="right">
+          Subtotal
+        </td>
+        <td class="right">
+          {{detail.subTotalWithTax | localeCurrency: detail.currencyCode}}
+        </td>
+      </tr>
+      <tr *ngIf="detail?.shippingLines?.[0]">
+        <td class="right">
+          Envio: {{detail?.shippingLines[0].shippingMethod?.name}}
+        </td>
+        <td class="right">
+          {{detail.shippingWithTax | localeCurrency: detail.currencyCode}}
+        </td>
+      </tr>
+      <tr class="totalRow">
+        <td class="right line">
+          Total
+        </td>
+        <td class="right line">
+          {{detail.totalWithTax | localeCurrency: detail.currencyCode}}
+        </td>
+      </tr>
+    </table>
+</div>
+  
+  <div class="loadingContainer" *ngIf="loading$ | async">
+    <span class="spinner spinner-md">Loading...</span>
+  </div>
+
+  <ng-template #NotFound>
+    <div class="emptyContainer">
+      <div class="emptyContainer-iconContainer">
+        <clr-icon shape="sun"></clr-icon>
+      </div>
+      <div class="emptyContainer-primaryMsg">
+        No se encontró al pedido 
+      </div>
+    </div>
+  </ng-template>
+</div>

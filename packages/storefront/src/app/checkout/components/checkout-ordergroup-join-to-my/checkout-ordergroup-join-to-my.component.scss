@@ -1,0 +1,60 @@
+@import 'variables';
+
+:host {
+  display: block;
+}
+
+.listContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.orderGroupBox {
+  width: 100%;
+  margin: 0 0 1em 0;
+  background: $gray-100;
+  border-radius: 0.5em;
+  border: 1px solid #fff;
+  cursor: pointer;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+
+  &-main {
+    display: flex;
+    align-items: flex-start;
+
+    > fa-icon {
+      width: 2.7rem;
+      font-size: 1.8rem;
+      margin-top: 0.2rem;
+    }
+
+    div {
+      flex: 1 1 auto;
+    }
+  }
+
+  &-labelState {
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+  }
+
+  &-date {
+    font-size: 1rem;
+    line-height: 0.9rem;
+    font-weight: bold;
+  }
+
+  &-labelAdd {
+    color: $gray-700;
+    font-size: 0.9rem;
+  }
+
+  &-code {
+    color: $gray-700;
+    font-size: 0.9rem;
+  }
+
+  &:hover{
+    background: #C4C4C4;
+  }
+}

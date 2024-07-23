@@ -1,0 +1,112 @@
+{
+  "id": "11",
+  "code": "1NE1YBSJGCY5E24W",
+  "state": "PaymentAuthorized",
+  "active": false,
+  "lines": [
+    {
+      "id": "27",
+      "featuredAsset": {
+        "id": "5",
+        "width": 1080,
+        "height": 690,
+        "name": "ha0202.jpg",
+        "preview": "http://localhost:3000/panel-assets/channel-2/preview/97/ha0202__preview.jpg",
+        "focalPoint": null,
+        "__typename": "Asset"
+      },
+      "unitPrice": 4959,
+      "unitPriceWithTax": 6000,
+      "quantity": 3,
+      "linePriceWithTax": 18000,
+      "discountedLinePriceWithTax": 18000,
+      "productVariant": {
+        "id": "5",
+        "name": "Harina 000 SICSA x  1 kg",
+        "__typename": "ProductVariant"
+      },
+      "discounts": [],
+      "__typename": "OrderLine"
+    }
+  ],
+  "totalQuantity": 3,
+  "subTotal": 34877,
+  "subTotalWithTax": 38000,
+  "total": 54877,
+  "totalWithTax": 58000,
+  "shipping": 20000,
+  "shippingWithTax": 20000,
+  "shippingLines": [
+    {
+      "priceWithTax": 20000,
+      "shippingMethod": {
+        "id": "4",
+        "code": "zona-sur",
+        "name": "Zona Sur",
+        "description": "<p>Envio jueves de 11 a 16 hs. Costo de envío $200</p>",
+        "__typename": "ShippingMethod"
+      },
+      "__typename": "ShippingLine"
+    }
+  ],
+  "discounts": [],
+  "surcharges": [
+    {
+      "description": "Bono colaboración",
+      "sku": "1-2",
+      "price": 20000,
+      "priceWithTax": 20000,
+      "__typename": "Surcharge"
+    }
+  ],
+  "__typename": "Order",
+  "shippingAddress": {
+    "fullName": "leo invitado",
+    "company": "",
+    "streetLine1": "artigas",
+    "streetLine2": "",
+    "city": "fiske",
+    "province": "Río Negro",
+    "postalCode": "8332",
+    "country": "Argentina",
+    "phoneNumber": "",
+    "__typename": "OrderAddress"
+  },
+  "billingAddress": {
+    "fullName": null,
+    "company": null,
+    "streetLine1": null,
+    "streetLine2": null,
+    "city": null,
+    "province": null,
+    "postalCode": null,
+    "country": null,
+    "phoneNumber": null,
+    "__typename": "OrderAddress"
+  },
+  "payments": [
+    {
+      "id": "15",
+      "method": "mercado-pago",
+      "updatedAt": "2021-12-15T16:15:52.854Z",
+      "state": "Authorized",
+      "amount": 58000,
+      "errorMessage": null,
+      "metadata": {
+        "public": {
+          "preferenciaId": "835446788-5bfafcbb-e106-4902-8638-3a7ffc45516f",
+          "init_point": "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=835446788-5bfafcbb-e106-4902-8638-3a7ffc45516f",
+          "public_key": "TEST-34b20da1-01ac-4449-9cbc-98eb026a041d"
+        }
+      },
+      "transactionId": "1NE1YBSJGCY5E24W-1639574153053",
+      "__typename": "Payment",
+      "paymentMethod": {
+        "id": "2",
+        "name": "Mercado Pago",
+        "description": "",
+        "__typename": "PaymentMethodQuote"
+      }
+    }
+  ]
+}

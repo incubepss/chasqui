@@ -1,0 +1,86 @@
+  <form #guestForm="ngForm" class="form" (submit)="setCustomerForOrder()">
+    <div class="form-group">
+      <label for="firstName" >Nombre *</label>
+      <div>
+        <input
+          class="form-control mt-1"
+          id="firstName"
+          name="firstName"
+          #inputFirstName="ngModel"
+          [(ngModel)]="firstName"
+          required
+        />
+        <div *ngIf="inputFirstName?.invalid && inputFirstName?.touched" class="invalid-feedback d-block">
+          Requerido
+        </div>
+      </div>
+    </div>
+    <div class="form-group" *ngIf="showLastName">
+      <label for="lastName" >Apellido</label>
+      <div>
+        <input
+          class="form-control mt-1"
+          name="lastName"
+          id="lastName"
+          #inputLastName="ngModel"
+          [(ngModel)]="lastName"
+        />
+        <div *ngIf="inputLastName?.invalid && inputLastName?.touched" class="invalid-feedback d-block">
+          Requerido
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="emailAddress">E-Mail *</label>
+      <div>
+        <input
+          class="form-control mt-1"
+          type="email"
+          name="emailAddress"
+          id="emailAddress"
+          #inputEmail="ngModel"
+          [(ngModel)]="emailAddress"
+          (ngModelChange)="tryAgain()"
+          required
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        />
+        <div *ngIf="inputEmail?.invalid && inputEmail?.touched" class="invalid-feedback d-block">
+          <div *ngIf="inputEmail.errors.required">Requerido</div>
+          <div *ngIf="inputEmail.errors.pattern">E-Mail es invalido</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber">Teléfono</label>
+      <div>
+        <input
+          class="form-control mt-1"
+          type="text"
+          name="phoneNumber"
+          id="phoneNumber"
+          #inputPhoneNumber="ngModel"
+          [(ngModel)]="phoneNumber"
+        />
+      </div>
+    </div>
+
+    <div *ngIf="emailAlreadyInUse" class="message">
+        <div class="message-main">
+         <fa-icon icon="exclamation-triangle"></fa-icon> El email ya está en uso
+        </div>
+        <div class="message-detail">
+          <button class="btn btn-secondary" [routerLink]="['/finalizar-compra', { email: this.emailAddress }]" (click)="onBack()">Entrá con tu cuenta</button> 
+          
+          <a [routerLink]="['/micuenta/olvido-de-password', { email: this.emailAddress }]"> o recorda tu contraseña</a>
+        </div>
+    </div>
+
+    <button
+      *ngIf="emailAlreadyInUse === false"
+      class="btn btn-primary btn-block form-btnSubmit"
+      type="submit"
+      [disabled]="guestForm.invalid || guestForm.pristine"
+      >
+      Siguiente
+    </button>
+  </form>

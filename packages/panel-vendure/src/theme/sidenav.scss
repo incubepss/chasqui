@@ -1,0 +1,73 @@
+.sidenav {
+  width: 230px;
+}
+
+.main-container .content-container .content-area {
+  padding: 0.5rem;
+  padding-top: 1rem;
+}
+
+.sidenav .nav-group .nav-list, .sidenav .nav-group label {
+  padding: 0 0 0.4rem 0.2rem;
+}
+
+.sidenav .nav-group .nav-list .nav-link {
+  padding: 0.2rem 0 0.4rem 0.5rem;
+  &:hover {
+    color: var(--color-primary-600); 
+  }
+}
+
+.sidenav .nav-group {
+  margin-top: 0.2rem;
+}
+
+.sidenav .nav-group label {
+  padding-left: 10px;
+  cursor: auto;
+}
+
+.sidenav .collapsible.nav-group label {
+  min-width: 10rem;
+  line-height: initial;
+
+  &:after {
+    display: none;
+  }
+}
+
+.sidenav .nav-group input[type=checkbox]:focus+label {
+  outline: initial;
+}
+
+.sidenav .collapsible input[type=checkbox]:checked~.nav-list,.sidenav .collapsible input[type=checkbox]:checked~ul {
+  height: auto;
+  display: inline-block;
+}
+
+.sidenav .collapsible input[type=checkbox]~.nav-list,.sidenav .collapsible input[type=checkbox]~ul {
+  height: auto
+}
+
+.sidenav .collapsible input[type=checkbox]:checked~label:after {
+  transform: rotate(-90deg) translateX(-.35rem) translateY(-.4rem)
+}
+
+.nav-list clr-icon {
+  margin-right: 0.3rem !important;
+}
+
+.nav.sidenav {
+  width: 12rem !important;
+}
+
+.sidenav .collapsible label {
+  position: relative;
+}
+
+.sidenav .collapsible label:after {
+  position: absolute;
+  display: inline-block;
+  right: 0;
+}
+

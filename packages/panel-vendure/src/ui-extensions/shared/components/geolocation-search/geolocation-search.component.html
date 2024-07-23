@@ -1,0 +1,17 @@
+<ng-select [items]="points$ | async"
+           bindLabel="display_name"
+           [addTag]="false"
+           [multiple]="false"
+           [hideSelected]="true"
+           [trackByFn]="trackByFn"
+           [minTermLength]="5"
+           [loading]="loading"
+           [typeahead]="input$"
+           (change)="onSelect($event)"
+           placeholder="Busca un lugar..."
+           typeToSearchText="Ingresa al menos 5 caracteres"
+           loadingText="buscando..."
+           notFoundText="no se encontró ningún resultado"
+           #selectComponent
+      >
+</ng-select>

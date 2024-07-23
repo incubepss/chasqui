@@ -1,0 +1,78 @@
+<div class="mercadoPago">
+  <div class="LoadingLibContainer text-center" *ngIf="loadingLib; else loadingLibDone">
+    <span class="loading-indicator spinner-grow spinner-grow-sm"></span>
+    <span class="LoadingLibContainer-label">Espere por favor....</span>
+  </div>
+
+  <div class="text-center notFoundContainer" *ngIf="notOrderFound$ | async; else orderFoundTpl">
+    <h3>No se encontró el pedido</h3>
+  </div>
+
+  <ng-template #orderFoundTpl>
+    <div *ngIf="order$ | async as order">
+      <h4>Tu pedido</h4>
+      <div class="field">
+        <label class="field-label">Pedido</label>
+        <div class="field-value">{{ order.code }}</div>
+      </div>
+      <div class="field">
+        <label class="field-label">Fecha</label>
+        <div class="field-value">{{ order.updatedAt | date: 'medium':'-0300' }}</div>
+      </div>
+      <div class="field">
+        <label class="field-label">Total del pedido</label>
+        <div class="field-value">{{ order.totalWithTax | formatPrice }}</div>
+      </div>
+    </div>
+
+    <div class="text-center" *ngIf="notPaymentFound">
+      <h3>El pedido no está seleccionado para mercado pago</h3>
+    </div>
+
+    <div class="block text-center" *ngIf="linkInicioPago">
+      <a class="btn btn-secondary" href="{{ linkInicioPago }}">Iniciar pago con Mercado Pago</a>
+    </div>
+
+    <div class="block text-center" *ngIf="payment$ | async as payment">
+      <div class="text-center" *ngIf="payment.state === 'Settled'">
+        <h3>Ya pagaste</h3>
+        <h2>¡Muchas gracias!</h2>
+      </div>
+    </div>
+
+    <div *ngIf="pagosOnPayment.length; else noPagos">
+      <h4>Tus pagos</h4>
+      <div class="block pagoContainer text-center" *ngFor="let pago of pagosOnPayment">
+        <div class="field">
+          <label class="field-label">Fecha</label>
+          <div class="field-value">{{ pago.fecha }}</div>
+        </div>
+        <div class="field">
+          <label class="field-label">Monto del pago</label>
+          <div class="field-value">{{ pago.monto * 100 | formatPrice }}</div>
+        </div>
+        <div class="field">
+          <label class="field-label">Con</label>
+          <div class="field-value">{{ pago.metodo }}</div>
+        </div>
+        <div class="field">
+          <label class="field-label">Estado</label>
+          <div class="field-value field-value--state">{{ pago.estado }} {{ pago.estado_detallado }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #loadingLibDone>
+    <div *ngIf="(payment$ | async) === undefined">
+      <div>Espera abrir MP</div>
+      <div>O Paga directamente con usando ese link (proximanmente)</div>
+    </div>
+  </ng-template>
+
+  <ng-template #noPagos>
+    <div *ngIf="loadingLib === false">
+      <h5 class="text-secondary">Todavía no hay pagos realizados</h5>
+    </div>
+  </ng-template>
+</div>

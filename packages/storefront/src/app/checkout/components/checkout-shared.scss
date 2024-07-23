@@ -1,0 +1,52 @@
+@import "variables";
+
+.PaymentMethod {
+  &-name {
+    font-size: 1.7rem;
+  }
+
+  &-description {
+    font-size: 1rem;
+    background-color: $gray-100;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+}
+
+
+.checkout-actions {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  bottom: 0;
+  background-color: white;
+  padding: 0;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  justify-items: flex-end;
+  align-items: flex-end;
+  text-align: right;
+
+  > * {
+    flex: 1 1 auto;
+  }
+
+  > button {
+    height: 3rem;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .checkout-actions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3rem;
+    z-index: 1600;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+}

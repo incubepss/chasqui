@@ -1,0 +1,103 @@
+@import 'variables';
+@import '../checkout-shared.scss';
+
+:host {
+  display: block;
+  margin-bottom: $spacer * 3;
+}
+
+.form-check-input {
+  visibility: hidden;
+}
+
+.form-check-label {
+  @include media-breakpoint-down(sm) {
+    justify-content: center;
+  }
+}
+
+.customer-address {
+  display: inline-block;
+  width: 100%;
+  font-size: $font-size-sm;
+  padding: $spacer;
+  margin-right: $spacer;
+  margin-bottom: $spacer;
+  border-radius: $border-radius;
+  cursor: pointer;
+  border: 1px solid $gray-200;
+  transition: background-color 0.2s;
+  background-color: #c4c4c434;
+
+  &.isSelected{
+    border: 1px solid $info;
+    background: #0c96a01c;
+  }
+
+  &:hover {
+    background-color: #C4C4C4;
+  }
+}
+
+.card-direccion {
+  .checkout-actions {
+    position: relative;
+    left: initial;
+    right: initial;
+    justify-content: center;
+
+    > button {
+      flex: 0 1 50%;
+    }
+  }
+}
+
+.accordion > .card > .card-header {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.card-body {
+  margin-bottom: 1rem;
+}
+
+.shipping-method {
+  display: flex;
+  width: 100%;
+  .price {
+    margin-left: $spacer;
+  }
+}
+
+.form-check{
+    padding: 0 !important;
+}
+
+.contaninerJoinGroup {
+  &-btnContinue {
+    margin-top: 1rem;
+  }
+}
+
+
+.boxJoinGroup {
+  padding: 1.5rem;
+  border: 1px solid $gray-300;
+  background-color: $gray-100;
+  border-radius: $border-radius;
+}
+
+
+@include media-breakpoint-down(sm) {
+  .card-direccion {
+    .checkout-actions {
+      position: fixed;
+      left: 0;
+      right: 0;
+  
+      > button {
+        flex: 1 1 100%;
+      }
+    }
+  }
+}

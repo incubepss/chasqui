@@ -1,0 +1,48 @@
+@import 'variables';
+@import '../checkout-shared.scss';
+
+
+.account-signup {
+  max-width: 400px;
+  margin: auto auto $spacer * 2;
+}
+.summary-card {
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.card {
+  padding: 1rem;
+  background: #fff;
+  
+  &-title {
+    font-weight: bold;
+    padding: 0;
+    color: #7C7C7C;
+  }
+
+  &-body {
+    padding: 0;
+  }
+}
+
+.section {
+  width: 100%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-bottom: 1px solid $gray-300;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+
+  h5 {
+    color: #495057;
+  }
+}
+
+textarea {
+  background-color: #F9F9F9;
+}
+
+.footer-actions {
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,23 @@
+<div [ngClass]="getClass()">
+  <div class="shippingMethodContainer-logo col-xl-2">
+    <span class="shippingMethodContainer-logoImg"></span>
+  </div>
+  <div class="shippingMethodContainer-detail row col-lg-12 col-xl-10">
+    <div class="details col-xs-12 col-lg-8 col-xl-9">
+      <div class="shippingMethodContainer-primary">
+        <span class="shippingMethodContainer-logoImg"></span>
+        <div>
+          <div class="labelType labelType--delivery">Zona de entrega</div>
+          <div class="labelType labelType--showroom">Punto de retiro</div>
+          <div class="shippingMethodContainer-name">{{ method.name }}</div>
+        </div>
+      </div>
+      <div class="shippingMethodContainer-address" *ngIf="method.customFields?.address_or_places">{{ method.customFields?.address_or_places }}</div>
+      <div class="shippingMethodContainer-schedule" *ngIf="method.customFields?.schedule">Horario: {{ method.customFields?.schedule }}</div>
+      <div class="shippingMethodContainer-description" [innerHTML]="method.description"></div>
+    </div>
+    <div class="price col-xs-12 col-lg-4 col-xl-3" *ngIf="showPrice">
+        <div class="shippingMethodContainer-price" [style]="this.selected ? 'text-decoration: underline' : '' ">{{ method.priceWithTax > 0 ? (method.priceWithTax | formatPrice) : '¡GRATIS!' }}</div>
+    </div>
+  </div>
+</div>

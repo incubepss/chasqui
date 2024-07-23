@@ -1,0 +1,133 @@
+<ng-template #groupDoorModal let-modal>
+  <div class="modal-body" ngbAutofocus>
+    <button type="button" class="close" aria-label="Cerrar" (click)="cancel()">
+      <span aria-hidden="true">×</span>
+    </button>
+
+    <div *ngIf="orderGroupEnabled$ | async; else groupsDisabled">
+      <div *ngIf="loading$ | async; else loaded" class="loadingContainer">
+        <span class="loading-indicator spinner-grow"></span>
+      </div>
+
+      <ng-template #loaded>
+        <div class="orderGroupDoor" *ngIf="orderGroup$ | async as orderGroup; else notFound">
+          <ng-container *ngIf="orderGroup.active; else noLongerActived">
+            <div class="orderGroupDoor-messageReceive">
+              <img
+                *ngIf="orderGroup.channel.customFields?.imgLogo"
+                [src]="orderGroup.channel.customFields?.imgLogo | assetPreview: 300"
+                alt="Tienda logo"
+              />
+              <div>
+                Estás por comenzar una compra grupal en la tienda de
+                <strong>{{ orderGroup.channel.customFields?.nombre }}</strong>
+              </div>
+            </div>
+
+            <div class="orderGroupDoor-ownerContainer ownerContainer">
+              <h6 class="ownerContainer-title">El grupo está coordinado por:</h6>
+              <div class="ownerContainer-name">
+                {{ orderGroup.customer.firstName }} {{ orderGroup.customer.lastName }}
+              </div>
+              <div class="ownerContainer-email">
+                {{ orderGroup.customer.emailAddress }}
+              </div>
+              <div class="ownerContainer-phoneNumber" *ngIf="orderGroup.customer.phoneNumber">
+                #{{ orderGroup.customer.phoneNumber }}
+              </div>
+            </div>
+
+            <div class="orderGroupDoor-identifyForm identifyForm">
+              <div class="identifyForm-title">Por favor, identificate para empezar</div>
+
+              <form (ngSubmit)="applyJoinOrderGroup(orderGroup)" class="identifyForm-inputContainer">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="aliasInpt"
+                  name="aliasInpt"
+                  required
+                  minlength="3"
+                  maxlength="50"
+                  placeholder="Ingresá tu nombre"
+                  [(ngModel)]="alias"
+                  #aliasInpt="ngModel"
+                  autofocus
+                />
+                <button type="submit" class="btn btn-primary" [disabled]="aliasInpt.invalid">
+                  <fa-icon icon="arrow-right"></fa-icon>
+                </button>
+              </form>
+
+              <div
+                class="identifyForm-error"
+                *ngIf="aliasInpt.invalid && (aliasInpt.dirty || aliasInpt.touched)"
+              >
+                <div *ngIf="aliasInpt.errors?.required">El nombre es requerido</div>
+                <div *ngIf="aliasInpt.errors?.minlength">Al menos ingresá 3 caracteres</div>
+              </div>
+              <div class="identifyForm-infoDisclaimer">
+                Te solicitamos tu nombre o apodo para que quien coordine te pueda acampañar en el proceso de
+                compra.
+              </div>
+            </div>
+          </ng-container>
+
+          <ng-template #noLongerActived>
+            <div class="orderGroupDoor-messageReceive orderGroup-noactive">
+              <h4>El pedido grupal ya no está activo</h4>
+              <h5>para realizar compras.</h5>
+            </div>
+
+            <div class="orderGroupDoor-ownerContainer ownerContainer">
+              <h6 class="ownerContainer-title">El grupo estaba coordinado por:</h6>
+              <div class="ownerContainer-name">
+                {{ orderGroup.customer.firstName }} {{ orderGroup.customer.lastName }}
+              </div>
+              <div class="ownerContainer-email">
+                {{ orderGroup.customer.emailAddress }}
+              </div>
+              <div class="ownerContainer-phoneNumber" *ngIf="orderGroup.customer.phoneNumber">
+                #{{ orderGroup.customer.phoneNumber }}
+              </div>
+            </div>
+
+            <div actions class="orderGroupDoor-footerActions">
+              <button type="button" class="btn btn-primary" (click)="close()">
+                Continuar con pedido individual
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </ng-template>
+
+      <ng-template #notFound>
+        <vsf-content-not-found message="No se encontró el grupo">
+          <img
+            image
+            src="../../../../assets/illustrations/support-woman-colour.svg"
+            width="250"
+            height="250"
+            alt="404 ilustración"
+          />
+          <div actions>
+            <a class="btn btn-primary" (click)="close()">Continuar</a>
+          </div>
+        </vsf-content-not-found>
+      </ng-template>
+    </div>
+
+    <ng-template #groupsDisabled>
+      <div class="container text-center">
+        <div class="orderGroupDoor-messageReceive orderGroup-noactive">
+          <h4>Los pedidos grupales ya no están activos en la tienda</h4>
+        </div>
+        <div actions>
+          <button type="button" class="btn btn-primary" (click)="close()">
+            Continuar con pedido individual
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>

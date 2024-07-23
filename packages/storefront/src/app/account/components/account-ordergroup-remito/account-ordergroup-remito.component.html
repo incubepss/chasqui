@@ -1,0 +1,103 @@
+<vsf-mobile-section  title="Remito del pedido en grupo">
+
+  <div toolbar>
+    <button type="button" class="btn btn-primary" (click)="print()">Imprimir / Generar PDF</button>
+  </div>
+
+  <div class="orderGroupRemito" *ngIf="orderGroup$ | async as orderGroup">
+
+    <div class="orderGroupRemito-storeData chqCard" *ngIf="orderGroup.channel?.customFields as storeData">
+      <h4>{{storeData.nombre}}</h4>
+      <div>{{storeData.emailStore}}</div>
+      <div *ngIf="storeData.phoneStore">Teléfono: {{storeData.phoneStore}}</div>
+      <div *ngIf="storeData.whatsappStore">Whatsapp: {{storeData.whatsappStore}}</div>
+      <div *ngIf="storeData.telegramStore">Telegram: {{storeData.telegramStore}}</div>
+    </div>
+
+    <div class="orderGroupRemito-header ">
+      <div class="orderGroupRemito-headerLeft chqCard">
+        <ng-container *ngIf="orderGroup.shippingMethod.customFields as sMethodFields">
+          <ng-container *ngIf="sMethodFields.typeDelivery==='shipping'">
+            <small >Envío a domicilio</small>
+            <div>zona {{orderGroup.shippingMethod.name}}</div>
+          </ng-container>
+          <ng-container *ngIf="sMethodFields.typeDelivery==='showroom'">
+            <small>Retiro en el local</small>
+            <div>{{orderGroup.shippingMethod.name}}</div>
+            <div>{{sMethodFields.address_or_places}}</div>
+          </ng-container>
+        </ng-container>
+      </div>
+      <div class="orderGroupRemito-headerCenter chqCard">
+        <small>Pedido grupal coordinado por</small>
+        <div class="orderGroupRemito-customer">
+          <ng-container *ngIf="orderGroup.customer; else desconocido">
+            <div class="data-primary">
+                {{orderGroup.customer.firstName}} {{orderGroup.customer.lastName}}
+            </div>
+            <div class="data-secondary">{{orderGroup.customer.emailAddress}}</div>
+            <div class="data-secondary">{{orderGroup.customer.phoneNumber}}</div>
+          </ng-container>
+          <ng-template #desconocido>
+            Desconocido
+          </ng-template>
+        </div>
+      </div>
+      <div class="orderGroupRemito-headerRight chqCard">
+          <small>fecha y nº pedido</small>
+          <div class="orderGroupRemito-date" *ngIf="orderGroup.orderPlacedAt">{{ orderGroup.orderPlacedAt | date: 'longDate':'-0300' }}</div>
+          <div class="orderGroupRemito-date" *ngIf="!orderGroup.orderPlacedAt">{{ orderGroup.createdAt | date: 'longDate':'-0300' }}</div>
+          <div class="orderGroupRemito-code">#{{ orderGroup.code }}</div>
+          <div><vsf-state-tag [state]="orderGroup.state" mode="orderGroup"></vsf-state-tag></div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="orderGroup.shippingMethod?.customFields?.typeDelivery==='shipping'">
+      <div class="chqCard" *ngIf="orderGroup.shippingAddress as address">
+        <small>Dirección</small>
+        <div >
+          <div *ngIf="address.streetLine1">calle: {{address.streetLine1}}</div>
+          <div *ngIf="address.city">ciudad: {{address.city}}, {{address.province}}</div>
+          <div *ngIf="address.postalCode">c.postal: {{address.postalCode}}</div>
+          <div *ngIf="address.phoneNumber">teléfono: {{address.phoneNumber}}</div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="orderListContainer chqCard">
+      <small>Artículos ({{orderGroup.totalQuantity}})</small>
+      <table class="linesList table table-sm">
+        <thead>
+            <th>Productor</th>
+            <th>Código</th>
+            <th>Producto</th>
+            <th class="text-right">P. Lista</th>
+            <th class="text-right">Cantidad</th>
+            <th class="text-right">Subtotal</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let line of orderGroup.linesGrouped">
+            <td>{{line.productorNombre}}</td>
+            <td>{{line.productoSku}}</td>
+            <td class="linesList-cellProductoNombre">{{line.productoNombre}}</td>
+            <td class="text-right linesList-cellListPrice">{{line.listPrice | formatPrice}}</td>
+            <td class="text-right linesList-cellCantidad"> <span class="linesList-flagFactorCant">x</span> {{line.cantidad}}</td>
+            <td class="text-right">{{line.subTotallistPrice | formatPrice}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="linesList-disclaimer">* listado por artículos no incluye detalle de descuentos ni cargos adicionales</div>
+    </div>
+    
+    <div class="totalContainer chqCard">
+      Total {{orderGroup.totalWithTax | formatPrice}}
+    </div>
+  </div>
+
+
+  <ng-container *ngIf="notFound$| async">
+    no se encontró el grupo
+  </ng-container>
+
+</vsf-mobile-section>

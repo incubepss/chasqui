@@ -1,0 +1,38 @@
+<vsf-layout class="layout" [class.isMulticatalogo]="(isHomePage$ | async) === true" [class.isCatalogo]="isCatalogo$ | async">
+  <vsf-layout-header *ngIf="(isHomePage$ | async) === false">
+    <div class="header" [style.backgroundColor]="(isHomePage$ | async) ? defaultBackgroundColor : backgroundColor">
+        <div class="container">
+          <div class="d-block d-md-none" (click)="openMobileNav()">
+            <fa-icon icon="bars"></fa-icon>
+          </div>
+          <a [routerLink]="makeLink([])" class="logo-link">
+            <vsf-img-logo-tienda></vsf-img-logo-tienda>
+          </a>
+          <div class="d-none d-lg-flex flex-row align-items-center">
+            <vsf-layout-top-nav class="d-none d-lg-block"></vsf-layout-top-nav>
+            <vsf-account-link class="mr-2 d-none d-lg-block"></vsf-account-link>
+          </div>
+          
+          <div class="d-none d-lg-flex d-flex flex-row align-items-center">
+            <vsf-product-search-bar ></vsf-product-search-bar>
+            <vsf-cart-toggle (toggle)="openCartDrawer()"></vsf-cart-toggle>
+          </div>
+          
+        </div>
+    </div>
+  </vsf-layout-header>
+  <vsf-collections-menu-mobile 
+    [navMenu]="mobileNavVisible$ | async"
+    [cateMenu]="mobileCateVisible$ | async"
+  ></vsf-collections-menu-mobile>
+  <vsf-mobile-toolbar [backgroundColor]="(isHomePage$ | async) ? defaultBackgroundColor : backgroundColor"></vsf-mobile-toolbar>
+  <vsf-cart-drawer [visible]="cartDrawerVisible$ | async" (close)="closeCartDrawer()"></vsf-cart-drawer>
+  <div class="contents">
+    <!--vsf-home-page *ngIf="isHomePage$ | async; else main"></!--vsf-home-page-->
+    <router-outlet></router-outlet>
+    <ng-template #main>
+      <router-outlet></router-outlet>
+    </ng-template>
+  </div>
+  <vsf-layout-footer></vsf-layout-footer>
+</vsf-layout>

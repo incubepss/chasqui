@@ -1,0 +1,105 @@
+<div *ngIf="loading$ | async; else notLoading">
+  <div class="container container-page placeholder">
+    <div class="row">
+      <div class="col-12 col-md-3 text-center">
+        <div class="placeholder-image loading-placeholder"></div>
+      </div>
+      <div class="col-12 col-md-9">
+        <div class="placeholder-title loading-placeholder"></div>
+        <div class="placeholder-description loading-placeholder"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="placeholder-banner loading-placeholder"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #notLoading>
+  <div class="sub-header">
+    <div class="masthead">
+      <div class="container position-relative">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/']">Tiendas</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a [contextRouterLink]="['/']">{{channelName$ | async}}</a>
+            </li>
+            <li class="breadcrumb-item">
+              <a [contextRouterLink]="['productores']">Productores</a>
+            </li>
+            <li class="breadcrumb-item" *ngIf="productor$ | async as productor; else notFound">
+              {{ productor.name }}
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container container-page" *ngIf="productor$ | async as productor; else notFound">
+      <div class="productor-top">
+        <div class="productor-logoWrapper">
+          <img
+            alt="Logo de {{ productor.name }}"
+            class="productor-image"
+            *ngIf="productor.logo"
+            [src]="productor.logo | assetPreview: 230:230"
+          />
+        </div>
+        <div class="productor-detailContainer">
+          <h4 class="title-page productor-name">{{ productor.name }}</h4>
+          <div class="productor-direccion">{{ assembleDireccion(productor) }}</div>
+          <div class="productor-descriptionOffered">{{ productor.descriptionOffered }}</div>
+          <div class="productor-sellos mb-2">
+            <vsf-sellos-products [sellos]="productor.sellos"></vsf-sellos-products>
+          </div>
+          <div>
+            <a href="{{ productor.webUrl }}" target="_blank" rel="noopener noreferrer"
+              >{{ productor.webUrl }}
+            </a>
+            <span *ngIf="productor.webUrl && productor.email"> - </span>
+            {{ productor.email }}
+          </div>
+          <div class="productor-links">
+            <vsf-link-rrss *ngFor="let linkRRSS of productor.linksRRSS" [value]="linkRRSS"></vsf-link-rrss>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="productor-description">{{ productor.description }}</div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="productor.banner">
+        <div class="col-12">
+          <div class="productor-bannerWrapper">
+            <img
+              alt="Banner de {{ productor.name }}"
+              class="productor-image"
+              *ngIf="productor.banner"
+              [src]="productor.banner | assetPreview: 500:100:'skipFP'"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container container-page" *ngIf="productor$ | async as productor; else notFound">
+    <div class="row">
+      <div class="col-12"><vsf-productor-product-list [productorId]="productor.id"></vsf-productor-product-list></div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #notFound>
+  <div class="container container-page">
+    <div class="row">
+      <div class="col-12">Productor no encontrado</div>
+    </div>
+  </div>
+</ng-template>

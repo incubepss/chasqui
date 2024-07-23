@@ -1,0 +1,25 @@
+<h4>Sellos</h4>
+<div class="sellosFilter-list">
+  <div *ngFor="let sello of sellosMenu$ | async">
+    <a (click)="navigateLink(['catalogo', {etiqueta: sello.facet.id +':'+ sello.id}])">
+      <vsf-sello [code]="sello.code">{{sello.name}}</vsf-sello>
+    </a>
+  </div>
+</div>
+<h4 class="d-flex justify-content-between">Categorías <button class="btn btn-secondary btn-sm"
+    (click)="navigateLink(['catalogo'])">Ver todas</button></h4>
+<ul class="collectionTree" *ngIf="collectionTree$ | async as tree">
+  <li class="level0" [class.active]="selectedSlug===collection.slug" *ngFor="let collection of tree.children">
+    <a class="" href="" (click)="onL0Click($event, collection)">{{ collection.name }}</a>
+    <ul *ngIf="collection.children.length" class="expandable" [class.expanded]="selected0 === collection.id">
+      <li class="level1" [class.active]="selectedSlug===level1.slug" *ngFor="let level1 of collection.children">
+        <a class="" href="" (click)="onL1Click($event, level1)">{{ level1.name }}</a>
+        <ul *ngIf="level1.children.length" class="expandable" [class.expanded]="selected1 === level1.id">
+          <li class="level2" *ngFor="let level2 of level1.children" [class.active]="selectedSlug===level2.slug">
+            <a class="" (click)="onL1Click($event, level2)">{{ level2.name }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>

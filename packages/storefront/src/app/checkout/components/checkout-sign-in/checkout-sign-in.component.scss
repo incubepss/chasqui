@@ -1,0 +1,119 @@
+@import 'bootstrap';
+
+::ng-deep {
+  .signIn-formsContainer {
+    .card {
+      border: 0;
+      padding: 0 !important;
+
+      .card-body {
+        padding: 0 !important;
+      }
+    }
+
+    
+  }
+}
+
+.signIn {
+  background-color: white;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: inherit;
+
+  min-width: 280px;
+  max-width: 850px;
+  margin-bottom: 2rem;
+  margin: auto;
+
+  &-title {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &-illustration {
+    flex: 0 0 350px;
+    margin-right: 2rem;
+    margin-right: 2rem;
+    border-right: 1px solid $gray-200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      transform: scaleX(-1);
+    }
+  }
+
+  &-asGuestContainer {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid $gray-200;
+   
+    a {
+      width: 100%;
+    }
+  }
+
+  .asGuestContainer {
+    display: flex;
+    flex-direction: column;
+    > * {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &-formsContainer {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    flex: 1 1 auto;
+  }
+
+
+
+  &-formGuest {
+    padding: 0 1rem 1rem 1rem;
+  }
+}
+
+
+@include media-breakpoint-down(md) {
+  .signIn {
+    padding: 0;
+
+    &-title { 
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      font-weight: normal;
+    }
+
+    &-illustration {
+      display: none;
+    }
+
+    &-formsContainer {     padding-left: 0;
+      padding-right: 0;
+    }
+
+    &-asGuestContainer {
+      text-align: initial;
+      background-color: $gray-200;
+      padding: 1.5rem;
+    }
+
+    .asGuestContainer {
+      &-title {
+        font-size: 1rem;
+        font-weight: normal;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .vsf-centered-card {
+      max-width: initial;
+    }
+  }
+}

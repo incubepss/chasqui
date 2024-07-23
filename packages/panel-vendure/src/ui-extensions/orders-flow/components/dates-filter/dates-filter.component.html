@@ -1,0 +1,33 @@
+<div class="datesFilter">
+  <div *ngIf="mode !== 'custom'; else customDates">
+    <vdr-dropdown >
+      <button class="btn" [class.btn-primary]="label === 'Fecha'" vdrDropdownTrigger>
+          {{label}}
+          <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <vdr-dropdown-menu vdrPosition="bottom-left" >
+        <div vdrDropdownItem (click)="setMode('simple')">Todos</div>
+          <div class="dropdown-divider"></div>
+          <div vdrDropdownItem *ngFor="let opt of options" (click)="setOption(opt)">{{opt.label}}</div>
+          <div class="dropdown-divider"></div>
+          <div vdrDropdownItem (click)="setMode('custom')">Personalizado</div>
+      </vdr-dropdown-menu>
+    </vdr-dropdown>
+  </div>
+  <ng-template #customDates>
+    <div>
+        <label>Desde</label>
+        <vdr-datetime-picker [(ngModel)]="startDate"></vdr-datetime-picker>
+    </div>
+    <div>
+        <label>Hasta</label>
+        <vdr-datetime-picker [(ngModel)]="endDate"></vdr-datetime-picker>
+    </div>
+    <div class="datesFilter-reset">
+      <button type="button" class="btn btn-link" (click)="setMode('simple')">
+        <clr-icon shape="undo"></clr-icon>
+        modo simple
+      </button> 
+    </div>
+  </ng-template>
+</div>

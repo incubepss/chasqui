@@ -1,0 +1,80 @@
+<div class="sub-header">
+  <div class="container" >
+    <vsf-collection-breadcrumbs [breadcrumbs]="breadcrumbs$"></vsf-collection-breadcrumbs>
+  </div>
+  <div class="container">
+    <form class="">
+        <div class="input-icons">
+          <input
+            id="search-pos"
+            type="text"
+            [formControl]="searchTerm"
+            (keydown.enter)="doSearch(searchTerm.value)"
+            (ngModelChange)="doChange($event)"
+            class="form-control input-field"
+            placeholder="Buscar por sku o nombre..."
+            aria-label="Search input"
+          />
+        </div>
+      </form>
+  </div>
+</div>
+
+<div class="container mb-4">
+  <div class="row">
+    <div class="col-md-6">
+      <ng-container *ngIf="(totalResults$ | async) !== 0; else noResults">
+        <div class="product-list-text">
+            <ng-container *ngIf="(totalResults$ | async) !== null">
+                <ul class="list-group">
+                  <li
+                    *ngFor="let product of products$ | async; trackBy: trackByProductId"
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <p class="mb-0">
+                        <span class="barcode">{{ product.sku }}</span> | <strong>{{ product.priceWithTax.value | formatPrice  }}</strong><br>
+                        {{ product.productName }}
+                    </p>
+
+                    <span *ngIf="!product.inStock" class="badge badge-danger">Sin stock</span>
+                    <button *ngIf="product.inStock" (click)="addToCart(product)" class="add-cart btn btn-outline-primary">
+                        <fa-icon icon="cart-arrow-down"></fa-icon>
+                    </button>
+                  </li>
+                </ul>
+            </ng-container>
+            <ng-container *ngIf="loading$ | async">
+                <vsf-product-card
+                *ngFor="let product of placeholderProducts"
+                [product]="product"
+                ></vsf-product-card>
+            </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <div class="col-md-6"><vsf-cart-drawer [visible]="true" class="cart"></vsf-cart-drawer></div>
+  </div>
+</div>
+
+<ng-template #noResults>
+  <div class="no-results" *ngIf="(hasErrorResult$ | async) !== true; else hasErrorTpl">
+    <fa-icon icon="search"></fa-icon>
+    <h1 class="h1">No se encontraron resultados</h1>
+    <p>
+      No hay productos con esas características <br/>
+      probá utilizando <strong>otra palabra clave</strong> o navegá por las categorías y los filtros.
+    </p>
+  </div>
+</ng-template>
+
+<ng-template #hasErrorTpl>
+  <div class="no-results">
+    <h1 class="h1">¡Uy! Ocurrio un error no esperado</h1>
+    <p>
+      Probá más tarde nuevamente, <br/>
+      si el error persiste, contactaté con el soporte, disculpas por las molestias
+    </p>
+  </div>
+</ng-template>
+
+<vsf-order-group-door #orderGroupDoor></vsf-order-group-door>

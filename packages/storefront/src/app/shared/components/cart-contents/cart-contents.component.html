@@ -1,0 +1,75 @@
+<div *ngIf="cart" class="cart-contents">
+  <div class="items">
+    <ng-container *ngFor="let line of cart.lines; trackBy: trackByFn">
+      <div class="item" [class.has-discount]="isDiscounted(line)">
+        <div class="thumb">
+          <img
+            *ngIf="line.featuredAsset"
+            [src]="environment.apiHost + line.featuredAsset?.preview + '?preset=tiny'"
+            alt=""
+          />
+        </div>
+        <div class="details">
+          <h4 class="name">{{ line.productVariant?.name }}</h4>
+          <p class="unit-price">Precio unitario: {{ line.unitPriceWithTax | formatPrice }}</p>
+          <div class="figures" [ngClass]="{'fixedQuantity' : !canAdjustQuantities}">
+            <h5 class="list-price">{{ line.linePriceWithTax | formatPrice }}</h5>
+            <div class="qty-controls">
+              <button class="btn btn-sm" *ngIf="canAdjustQuantities" (click)="decrement(line)">
+                <fa-icon aria-label="Remove 1" icon="minus"></fa-icon>
+              </button>
+              <div class="qty">{{ line.quantity }}</div>
+              <button class="btn btn-sm" *ngIf="canAdjustQuantities" (click)="increment(line)">
+                <fa-icon aria-label="Add 1" icon="plus"></fa-icon>
+              </button>
+            </div>  
+            <button *ngIf="canAdjustQuantities" class="btn btn-sm remove" (click)="remove(modalTemplate, line)" title="Remover del carrito">
+              <fa-icon icon="trash"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="order-adjustments" *ngIf="hasDiscountPromotions">
+    Descuento:
+    <div class="adjustment" *ngFor="let discount of discountPromotions">
+      <div>{{ discount.description }}</div>
+      <div>{{ discount.amountWithTax | formatPrice }}</div>
+    </div>
+  </div>
+  <div class="shipping" *ngIf="cart.shippingLines[0]">
+    <div class="shipping-price">
+      <span>Costo de envío:</span>
+      <span>{{ cart.shippingLines[0].priceWithTax | formatPrice }}</span>
+    </div>
+    <div class="shipping-method" *ngFor="let shippingLine of cart.shippingLines">
+      {{ shippingLine.shippingMethod.name }}
+    </div>
+  </div>
+  <ng-container *ngIf="cart.surcharges?.length">
+    <div class="customSurcharge" *ngFor="let surcharge of cart?.surcharges">
+      <div class="customSurcharge-price">
+        <span>{{ surcharge.description }}</span>
+        <span>{{ surcharge.priceWithTax | formatPrice }}</span>
+      </div>
+    </div>
+  </ng-container>
+  <div class="totals">
+    <span>Total:</span>
+    <span class="totals-amount">{{ cart.totalWithTax | formatPrice }}</span>
+  </div>
+</div>
+
+<ng-template #modalTemplate let-modal>
+  <div class="modal-body">
+    <h4 class="modal-title" id="modal-title">Eliminar</h4>
+    <p class="mt-3">¿Querés sacar este ítem del carrito?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn" (click)="modal.dismiss('cancel click')">
+      Cancelar
+    </button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Sacar</button>
+  </div>
+</ng-template>

@@ -1,0 +1,14 @@
+<form>
+  <div class="input-icons">
+    <label for="search" class="icon"><img src="/assets/icons/search.svg" alt="buscar" class="icon" /></label>
+    <input
+      id="search"
+      type="text"
+      [formControl]="searchTerm"
+      (keydown.enter)="doSearch(searchTerm.value)"
+      class="form-control input-field"
+      placeholder="Buscar en {{channelName$ | async}}..."
+      aria-label="Search input"
+    />
+  </div>
+</form>

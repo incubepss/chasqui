@@ -1,0 +1,74 @@
+:host {
+  line-height: initial;
+}
+
+.sello {
+  background-size: 28px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 35px;
+  line-height: 2em;
+  margin-bottom: 0;
+
+  &.sello-kilometro_cero {
+    background-image: url('/assets/images/sellos/kilometrocero.png');
+  }
+  &.sello-artesanal {
+    background-image: url('/assets/images/sellos/artesanal.png');
+  }
+  &.sello-en_red {
+    background-image: url('/assets/images/sellos/enred.png');
+  }
+  &.sello-agroecologico {
+    background-image: url('/assets/images/sellos/agroecologico.png');
+  }
+  &.sello-organico {
+    background-image: url('/assets/images/sellos/organico.png');
+  }
+  &.sello-reciclado {
+    background-image: url('/assets/images/sellos/reciclado.png');
+  }
+  &.sello-agricultura_familiar {
+    background-image: url('/assets/images/sellos/agricultura_familiar.png');
+  }
+  &.sello-cooperativas {
+    background-image: url('/assets/images/sellos/cooperativas.png');
+  }
+  &.sello-empresa_social {
+    background-image: url('/assets/images/sellos/empresasocial.png');
+  }
+  &.sello-recuperadas {
+    background-image: url('/assets/images/sellos/recuperadas.png');
+  }
+  ::ng-deep input {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+  }
+
+  &--icon {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-size: 50px;
+    margin: 0.5rem;
+  }
+
+  &--sm {
+    width: 1.8rem;
+    height: 1.8rem;
+    background-size: 1.8rem;
+    margin: 0;
+    padding-left: initial;
+    line-height: initial;
+  }
+
+  &--lg {
+    width: 3.8rem;
+    height: 3.8rem;
+    background-size: 3.8rem;
+    margin: 0;
+    padding-left: initial;
+    line-height: initial;
+  }
+}

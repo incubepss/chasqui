@@ -1,0 +1,130 @@
+{{> header this}}
+
+<mj-section css-class="section--strong">
+    <mj-column>
+        <mj-text mj-class="text-subject-main">
+            Hola {{ order.customer.firstName }} {{ order.customer.lastName }}!
+        </mj-text>
+        <mj-text mj-class="text-subject-secondary">
+            muchas gracias, hemos recibido tu pedido grupal!
+        </mj-text>
+    </mj-column>
+</mj-section>
+
+
+<mj-section css-class="section--strong no-padding-top">
+    <mj-column vertical-align="bottom">
+        <mj-text mj-class="field-value" align="center">{{ orderGroup.code }}</mj-text>
+        <mj-text mj-class="field-label" align="center">código pedido grupal</mj-text>
+    </mj-column>
+    <mj-column>
+        <mj-text mj-class="field-value field--big" align="center">{{ orders.length }}</mj-text>
+        <mj-text mj-class="field-label" align="center">pedidos</mj-text>
+    </mj-column>
+    <mj-column>
+        <mj-text mj-class="field-value field--big" align="center">{{ orderGroup.totalQuantity }}</mj-text>
+        <mj-text mj-class="field-label" align="center">artículos</mj-text>
+    </mj-column>
+    <mj-column>
+        <mj-text mj-class="field-value field--big" align="center">${{ formatMoney order.totalWithTax }}</mj-text>
+        <mj-text mj-class="field-label" align="center">{{ orderDateStr }}</mj-text>
+    </mj-column>
+</mj-section>
+
+
+{{#if shippingMethod}}
+   <mj-section css-class="section-order">
+        <mj-column>
+                <mj-text>
+                    {{#with shippingMethod }}
+                        <h3>Método de entrega</h3>
+                        <div> 
+                            <span class="text-field-label">
+                                {{#if isShowroom}} Retira en: {{else}} Envío a: {{/if}}
+                            </span>
+                            {{ name }} 
+                        </div>
+                        {{#if customFields.address_or_places}}
+                            <div>
+                                <span class="text-field-label">
+                                    {{#if isShowroom}} Dirección: {{else}} Zona: {{/if}}
+                                </span>
+                                {{ customFields.address_or_places}}
+                            </div>
+                        {{/if}}
+                        {{#if customFields.schedule}}
+                            <div> 
+                                <span class="text-field-label">Horarios: </span>
+                                {{ customFields.schedule}}
+                            </d>
+                        {{/if}}
+                        <div> {{description}} </div>
+                    {{/with}}
+                </mj-text>
+        </mj-column>
+    </mj-section>
+{{/if}}
+
+{{#if isShipping}}
+    {{#if order.shippingAddress}}
+        {{#if order.shippingAddress.streetLine1}}
+            <mj-section css-class="section-order">
+                <mj-column >
+                        <mj-text>
+                            {{#with order.shippingAddress }}
+                                <h3>Dirección de envío</h3>
+                                <div> {{ fullName }} </div>
+                                <div>
+                                    {{#if company}}<li>{{ company }}</li>{{/if}}
+                                    <div>
+                                        {{ streetLine1 }} | {{ city }}, {{province}}
+                                    </div>
+                                    {{#if postalCode}}<div><span class="text-field-label">CP: </span> {{ postalCode }}</div>{{/if}}
+                                    {{#if phoneNumber}}<div><span class="text-field-label">Teléfono: </span> {{ phoneNumber }}</div>{{/if}}
+                                </div>
+                            {{/with}}
+                        </mj-text>
+                    
+                </mj-column>
+            </mj-section>
+        {{/if}}
+    {{/if}}
+{{/if}}
+
+{{#each payments }}
+    <mj-section>
+        <mj-column>
+            <mj-text>
+                <h3>Pago</h3>
+                <div>
+                    <div><span class="text-field-label">Método: </span> {{paymentMethod.name}}</div>
+                    <div><span class="text-field-label">Monto: </span> ${{formatMoney amount }}</div>
+                    <div><span class="text-field-label">Estado: </span> {{state}}</div>
+                </div>
+                {{#if paymentMethod.customFields.paymentInstruction}}
+                    <div>
+                        <strong>Instrucciones para el pago:</strong>
+                        <div>
+                            {{paymentMethod.customFields.paymentInstruction}}
+                        </div>
+                    </div>   
+                {{/if}}
+            </mj-text>
+        </mj-column>
+    </mj-section>
+{{/each}}
+
+<mj-section>
+    <mj-column style="text-align: center;">
+        <mj-text>
+        Desde "Mi cuenta" vas a poder ver el detalle de cada pedido individual.<br/>
+        Además, podés descargar el remito con el detalle de todos los artículos que forman parte de la compra grupal.
+        </mj-text>
+        <mj-button 
+            background-color="#0c96a0"
+            color="white"
+            href="{{ detalleUrl }}">Ir a mi cuenta</mj-button>
+    </mj-column>
+</mj-section> 
+
+{{> footer }}

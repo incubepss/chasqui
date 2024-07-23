@@ -1,0 +1,20 @@
+<div class="card Payment" [class.--noCard]="noCard">
+  <div class="card-body">
+    <ul class="list-unstyled payment-method">
+      <li *ngIf="!payment.paymentMethod">{{ payment.method }}</li>
+      <li *ngIf="payment.paymentMethod" class="payment-method-name">{{ payment.paymentMethod.name }}</li>
+      <li class="payment-method-amount">{{ payment.amount | formatPrice }}</li>
+      <li class="payment-method-state" [class]="payment.state">
+          {{ payment.state | paymentStateFriendly}}
+          <a 
+            href="{{initLink}}" target="_blank" rel="noopener noreferrer"
+            class="payment-method-initLink btn btn-warning" 
+            *ngIf="initLink"
+          >Ir a pagar</a>
+      </li>
+      <li class="payment-method-instruction" [innerHTML]="payment.paymentMethod?.customFields?.paymentInstruction | paymentInstruction">
+      </li>
+    </ul>
+    <p class="payment-transactionId">{{payment.transactionId}}</p>
+  </div>
+</div>

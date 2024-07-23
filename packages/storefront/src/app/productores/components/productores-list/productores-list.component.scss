@@ -1,0 +1,51 @@
+@import 'variables';
+
+.masthead {
+  position: relative;
+  padding-bottom: 0.2rem;
+}
+
+.masthead-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.15;
+  background-color: #d4eefc;
+  background-size: cover;
+  background-position: top;
+  background-blend-mode: luminosity;
+}
+
+.container-list {
+  margin-bottom: 3rem;
+}
+
+.toolbar-list {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.productores-list {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 1rem;
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+.productores-list > * {
+  display: block;
+}
+
+@include media-breakpoint-down(sm) {
+  .container-page {
+    margin-top: 0;
+    padding: 0;
+  }
+}

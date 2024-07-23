@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2017",
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "sourceMap": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "resolveJsonModule": true
+  },
+  "exclude": [
+    "admin-ui",
+    "node_modules",
+    "populate.ts",
+    "gulpfile.ts",
+    "src/plugins/**/ui/*",
+    "src/*.dev.ts",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "src/ui-extensions/*",
+    "src/populate*.ts"
+  ]
+}

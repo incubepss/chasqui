@@ -1,0 +1,54 @@
+<div>
+  <ng-container *ngIf="orderGroup$ | async as detail; else NotFound">
+    <ng-container *ngIf="detail?.orders?.totalItems > 0; else NotFound">
+      <table class="tableOrders table table-noborder table-compact">
+        <thead>
+          <tr>
+            <th class="left">Persona </th>
+            <th class="left">Código y Fecha </th>
+            <th class="left">Teléfono </th>
+            <th class="left">Estado </th>
+            <th class="right">Total </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="lineRow" *ngFor="let order of detail?.orders?.items">
+            <td class="left">
+              <div><strong>{{order.customer?.firstName}} {{order.customer?.lastName}}</strong></div>
+              {{order.customer?.emailAddress}}
+            </td>
+            <td class="left" width="80">
+              <div><a [routerLink]="['./',order.id]" target="_blank"> {{order.code}} </a></div>
+              <small class="left" *ngIf="order.orderPlacedAt; else createdDate"> {{order.orderPlacedAt | localeDate: 'longDate'}} </small>
+              <ng-template #createdDate>
+                <small class="left"> {{order.createdAt | localeDate: 'longDate'}} </small>
+              </ng-template>
+            </td>
+            <td class="left">
+              {{order.customer?.phoneNumber}}
+            </td>
+            <td class="left"> <chq-ordergroup-state-label [state]="order.state"></chq-ordergroup-state-label> </td>
+            <td class="right">
+              <strong>{{order.totalWithTax | localeCurrency: detail.currencyCode}}</strong> 
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </ng-container>
+
+  <div class="loadingContainer" *ngIf="loading$ | async">
+    <span class="spinner spinner-md">Loading...</span>
+  </div>
+
+  <ng-template #NotFound>
+    <div class="emptyContainer" *ngIf="(loading$ | async )!== true">
+      <div class="emptyContainer-iconContainer">
+        <clr-icon shape="sun"></clr-icon>
+      </div>
+      <div class="emptyContainer-primaryMsg">
+        No hay pedidos participantes
+      </div>
+    </div>
+  </ng-template>
+</div>

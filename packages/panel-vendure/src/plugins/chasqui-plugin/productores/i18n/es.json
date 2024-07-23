@@ -1,0 +1,26 @@
+{
+  "productor-plugin": {
+    "search": "Buscar...",
+    "create-new-productor": "Nuevo Productor",
+    "download-csv": "Descarga CSV",
+    "name-label": "Nombre",
+    "pais-label": "Pais",
+    "provincia-label": "Provincia",
+    "localidad-label": "Localidad",
+    "direccion-label": "Dirección",
+    "descriptionOffered-label": "Productos/servicios ofrecidos",
+    "description-label": "Descripción de la organización",
+    "sellos-label": "Sellos",
+    "webUrl-label": "Sitio Web",
+    "webUrl-pattern-error": "url invalida",
+    "email-label": "E-Mail",
+    "email-pattern-error": "E-Mail invalido",
+    "linksRRSS-add": "Agregar link",
+    "confirm-delete-productor": "¿Eliminamos el productor?",
+    "PRODUCTOR_USED_ERROR": "El productor está en uso, no se puede eliminar",
+    "agricultura_familiar": "Agricultura familiar",
+    "cooperativas": "Cooperativas",
+    "empresa_social": "Empresa Social",
+    "recuperadas": "Recuperadas"
+  }
+}

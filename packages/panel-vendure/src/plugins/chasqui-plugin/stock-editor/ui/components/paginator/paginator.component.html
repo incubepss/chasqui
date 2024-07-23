@@ -1,0 +1,26 @@
+<div class="pagination">
+  <ul>
+      <li class="pagination-previous">
+          <a *ngIf="!isFirstPage()" (click)="previous()" (keyup.enter)="previous()" tabindex="0">«</a>
+          <div *ngIf="isFirstPage()">«</div>
+      </li>
+
+      <li *ngFor="let page of pages">
+          <a
+              (click)="setCurrent(page.value)"
+              (keyup.enter)="setCurrent(page.value)"
+              *ngIf="currentPage !== page.value"
+              tabindex="0"
+          >
+              {{ page.label }}
+          </a>
+
+          <div class="current" *ngIf="currentPage === page.value">{{ page.label }}</div>
+      </li>
+
+      <li class="pagination-next">
+          <a *ngIf="!isLastPage()" (click)="next()" (keyup.enter)="next()" tabindex="0">»</a>
+          <div *ngIf="isLastPage()">»</div>
+      </li>
+  </ul>
+</div>

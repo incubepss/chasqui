@@ -1,0 +1,115 @@
+<div class="container container-page">
+  <div class="row justify-content-md-center">
+    <div class="col-lg-10 body-container">
+      <h3>Solicitud de arrepentimiento</h3>
+      <div class="form-container" *ngIf="isRequestSended !== true; else requestSended">
+        <p>
+          La solicitud tendrá validez si es realizada dentro de los plazos determinados en la Resolución
+          424/2020 de la Secretaría de Comercio Interior y no se traten de productos exceptuados como
+          productos personalizados y todos los comprendidos en el art. 1116 del Código Civil y Comercial.
+        </p>
+        <form class="form-group" [formGroup]="arrepentimientoForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <lael for="name">Nombre completo *</lael>
+            <input
+              id="name"
+              placeholder="nombre y apellido"
+              type="text"
+              formControlName="name"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': f.name.invalid && f.name.touched
+              }"
+            />
+            <div *ngIf="f.name.invalid && f.name.touched" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required">El nombre es requerido</div>
+              <div *ngIf="f.name.errors.minlength">El nombre debe tener al menos de 4 caracteres.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <lael for="name">E-Mail de compra *</lael>
+            <input
+              id="email"
+              placeholder="ejemplo: miemail@ejemplo.com"
+              type="text"
+              formControlName="email"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': f.email.invalid && f.email.touched
+              }"
+            />
+            <div *ngIf="f.email.invalid && f.email.touched" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">El email es requerido</div>
+              <div *ngIf="f.email.errors.email">El email es invalido</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <lael for="phone">Teléfono de contacto *</lael>
+            <input
+              id="phone"
+              placeholder="ejemplo: 114442222"
+              type="tel"
+              formControlName="phone"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': f.phone.invalid && f.phone.touched
+              }"
+            />
+            <div *ngIf="f.phone.invalid && f.phone.touched" class="invalid-feedback">
+              <div *ngIf="f.phone.errors.required">El teléfono es requerido</div>
+              <div *ngIf="f.phone.errors.pattern">El teléfono es invalido</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <lael for="phone">¿Qué pasó con tu pedido? *</lael>
+            <textarea
+              placeholder=""
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="3"
+              formControlName="description"
+              [ngClass]="{
+                'is-invalid': f.description.invalid && f.description.touched
+              }"
+            ></textarea>
+            <div *ngIf="f.description.invalid && f.description.touched" class="invalid-feedback">
+              <div *ngIf="f.description.errors.required">El informe es requerido</div>
+              <div *ngIf="f.description.errors.minlength">El informe debe tener más de 20 caracteres.</div>
+            </div>
+          </div>
+          <div class="form-actions" *ngIf="showConfirmCancel === false; else confirmCancel">
+            <button type="submit" class="btn btn-primary btn-lg mr-1">Enviar</button>
+            <button type="reset" class="btn btn-link" (click)="onCancel()">cancelar</button>
+          </div>
+          <ng-template #confirmCancel>
+            <div class="form-actions">
+              <div><strong>¿Segura/o?</strong></div>
+              <button type="reset" class="btn btn-secondary" (click)="doCancel()">
+                Si, blanquear formulario
+              </button>
+              <button type="reset" class="btn btn-link" (click)="closeCancel()">
+                No, continuar editando
+              </button>
+            </div>
+          </ng-template>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #requestSended>
+  <div class="container container-page">
+    <div class="row">
+      <div class="col-12 text-center requestSended">
+        <div class="requestSended-body">
+          <h1><fa-icon icon="check-circle"></fa-icon></h1>
+          <h4>La solicitud fue enviada</h4>
+        </div>
+        <div class="requestSended-actions">
+          <button class="btn btn-secondary" contextRouterLink="/">Volver al inicio</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

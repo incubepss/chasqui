@@ -1,0 +1,13 @@
+<div class="container">
+  <vsf-landing-banner [images]="getImages()"></vsf-landing-banner>
+
+  <div class="body">
+    <div class="body-text" [innerHTML]="channel.customFields?.bodyAboutUs"></div>
+    <div class="body-imgSecondary" *ngIf="channel.customFields?.imgSecondaryAboutUs">
+      <img 
+        [src]="channel.customFields?.imgSecondaryAboutUs | assetPreview: 250" 
+         alt="imagen tienda quienes somos" 
+      />
+    </div>
+  </div>
+</div>

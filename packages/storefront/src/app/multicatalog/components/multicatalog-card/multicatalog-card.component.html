@@ -1,0 +1,38 @@
+<a class="TiendaBox" [class.--enabled]="tienda.customFields.storeEnabled" [routerLink]="['/', tienda.token]">
+  <div class="TiendaBox-circleContainer">
+    <figure>
+      <img
+        class="TiendaBox-header"
+        *ngIf="tienda.customFields?.imgPortada"
+        [src]="tienda.customFields?.imgPortada | assetPreview: 150:150"
+        [alt]="tienda.customFields?.nombre"
+      />
+    </figure>
+    <div
+      *ngIf="tienda.customFields.storeEnabled; else storeDisabledTemplate"
+      class="TiendaBox-signal TiendaBox-signal--enabled"
+    >
+      <fa-icon icon="store" class="storeStatus"></fa-icon>
+      <button class="comprar"><fa-icon icon="shopping-cart"></fa-icon> Ingresar</button>
+    </div>
+    <ng-template #storeDisabledTemplate>
+      <div class="TiendaBox-signal TiendaBox-signal--disabled">
+        <fa-icon icon="store-slash" class="storeStatus"></fa-icon>
+      </div>
+    </ng-template>
+  </div>
+  <div class="TiendaBox-body">
+    <div class="label" *ngIf="tienda.customFields?.zoneStore">
+      {{ tienda.customFields?.zoneStore }}
+    </div>
+    <h3 class="TiendaBox-nombre">
+      {{ tienda.customFields?.nombre }}
+    </h3>
+    <h4 class="TiendaBox-description">
+      {{ tienda.customFields?.description }}
+    </h4>
+    <p *ngIf="!tienda.customFields.storeEnabled" class="alert">
+      {{ tienda.customFields.messageStoreDisabled }}
+    </p>
+  </div>
+</a>

@@ -1,0 +1,62 @@
+<vsf-mobile-section title="Finalizar compra">
+  <div *ngIf="cart$ | async as cart" class="oneStep">
+    <vsf-mobile-card title="Pedido grupal de">
+      <div>{{cart.customFields.orderGroup.customer.firstName}} {{cart.customFields.orderGroup.customer.lastname}}</div>
+      <div>{{cart.customFields.orderGroup.customer.emailAddress}}</div>
+      <div>#{{cart.customFields.orderGroup.customer.phoneNumber}}</div>
+    </vsf-mobile-card>
+  
+    <vsf-mobile-card title="entrega" *ngIf="cart.shippingLines[0] as shippingLine">
+      <span *ngIf="shippingLine?.shippingMethod?.customFields.typeDelivery === 'shipping'">Envío </span>
+      <span *ngIf="shippingLine?.shippingMethod?.customFields.typeDelivery === 'showroom'">Retiro </span>
+      <span>{{shippingLine?.shippingMethod?.name}}</span>
+
+      <div class="address" *ngIf="cart?.shippingAddress as shippingAddress">
+        <div class="address-street">{{shippingAddress.streetLine1}}</div>
+        <div class="address-city" *ngIf="shippingAddress?.city">{{shippingAddress.city}}, {{shippingAddress.province}}</div>
+      </div>
+    </vsf-mobile-card>
+
+
+    <vsf-mobile-card title="forma de pago" *ngIf="paymentMethod">
+        <div>{{paymentMethod.name}}</div>
+        <small>{{paymentMethod.description}}</small>
+        <small *ngIf="!paymentMethod?.description">
+          Consultá con tu coordinador por pagos en efectivo, transferencia u otros medios digitales
+        </small>
+    </vsf-mobile-card>
+  
+    
+    <vsf-mobile-card title="Comentario:">
+      <textarea rows="3" maxlength="250" type="text" class="form-control" id="comments" name="comments" [(ngModel)]="comments"
+      placeholder="Dejale un comentario a quien coordina"></textarea>
+    </vsf-mobile-card>
+    
+    <vsf-mobile-card title="Artículos">
+      <vsf-cart-contents [cart]="cart"></vsf-cart-contents>
+    </vsf-mobile-card>
+  </div>
+
+  <div toolbar class="toolbar">
+    <div *ngIf="busy; else dataLoaded" class="text-center">
+      <span class="loading-indicator spinner-grow spinner-grow-sm"></span>
+    </div>
+    <ng-template #dataLoaded>
+      <ng-container *ngIf="paymentMethod; else noPaymentMethod">
+        <div class="toolbar-numbersContainer numbersContainer" *ngIf="cart$ | async as cart">
+          <div class="numbersContainer-total">{{cart.totalWithTax | formatPrice }}</div>
+          <div class="numbersContainer-quantityItems">{{cart.totalQuantity}} unidades</div>
+        </div>
+        <button type="button" class="btn btn-primary toolbar-submitBtn" (click)="completeOrder()">
+          confirmar pedido
+          <fa-icon icon="arrow-right"></fa-icon>
+        </button>
+      </ng-container>
+    </ng-template>
+    <ng-template #noPaymentMethod>
+      <div class="text-danger">
+        No hay métodos de pago disponibles, comuníquese con la tienda para poder comprar
+      </div>
+    </ng-template>
+  </div>
+</vsf-mobile-section>

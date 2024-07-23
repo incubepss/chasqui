@@ -1,0 +1,19 @@
+<div class="card-header" *ngIf="(questions$ | async)?.length > 0">Adicionales</div>
+<div class="card" *ngFor="let q of questions$ | async">
+  <div class="card-title">{{ q.question || q.name }}</div>
+  <div class="card-body">
+    <div class="custom-control custom-radio" *ngFor="let option of q.options">
+      <input
+        type="radio"
+        class="custom-control-input"
+        [id]="option.id"
+        [name]="q.id"
+        [value]="option.id"
+        mdbInput
+        [checked]="isOptionUsed(q, option)"
+        (click)="useSurchargeOption(option)"
+      />
+      <label class="custom-control-label" [for]="option.id">{{ option.description }}</label>
+    </div>
+  </div>
+</div>

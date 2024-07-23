@@ -1,0 +1,27 @@
+@import 'variables';
+
+:host {
+  display: block;
+}
+
+.card.--noCard {
+  border: 0;
+  padding: 0;
+  .card-body, .card-footer {
+    padding: 0;
+  }
+}
+
+.card-footer {
+  &:empty {
+    display: none;
+  }
+}
+
+.address-name {
+  font-size: 1.1rem;
+}
+
+.address-street {
+  font-weight: bold;
+}

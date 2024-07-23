@@ -1,0 +1,125 @@
+@import 'variables';
+@import 'bootstrap';
+
+:host {
+  display: flex;
+  background-color: $gray-100;
+}
+
+.container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  padding-right: 0;
+  padding-left: 0;
+  max-width: 1024px;
+  
+  &-menu {
+    flex: 1 1 30%;
+  }
+
+  &-section {
+    flex: 1 1 70%;
+    margin-left: 2rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.isSignedIn.container {
+  background-color: $gray-100;
+}
+
+.container-section {
+  background-color: white;
+  margin: 0;
+}
+
+
+.avatar {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  width: 100%;
+  color: white;
+  background-color: $chq2color-primary-comunity;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  position: relative;
+  
+  &-name {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  &-email {
+    font-size: 0.9rem;
+  }
+
+  .icon-edit {
+    cursor: pointer;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .btn-signOut {
+    margin-top: 0.5rem;
+    background-color: white;
+    width: fit-content;
+
+    &:hover {
+      background-color: rgb(236, 234, 234);
+    }
+  }
+}
+
+
+@include media-breakpoint-down(md) {
+
+  .container {
+    margin-top: 0;
+    flex-direction: column;
+    position: relative;
+
+    &-list {
+      flex: 1 1 100%;
+    }
+  
+    &-section {
+      position: relative;
+      margin-left: 0;
+      margin: 1rem;
+      flex: 1 1 100%;
+    }
+  }
+
+  .container-section {
+    margin: 0;
+  }
+
+  .avatar {
+    .icon-edit {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+  }
+
+  .container-menu {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+  }
+}
+
+@media print {
+  .container-menu {
+    display: none;
+  }
+}

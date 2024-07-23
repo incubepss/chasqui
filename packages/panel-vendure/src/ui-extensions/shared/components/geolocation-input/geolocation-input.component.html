@@ -1,0 +1,19 @@
+
+<div class="box" (click)="doSelect()">
+  <ng-container *ngIf="formControl.value">
+    <clr-icon *ngIf="this.mode === 'point'; else zoneIcon"  shape="map-marker"></clr-icon>
+    <ng-template #zoneIcon>
+      <clr-icon shape="map"></clr-icon>
+    </ng-template>    
+  </ng-container>
+</div>
+<div class="actions">
+  <button type="button" class="btn btn-link" (click)="doSelect()">
+    <clr-icon shape="link"></clr-icon>
+    Cambiar
+  </button>
+  <button type="button" class="btn btn-link" (click)="doClear()">
+    <clr-icon shape="times"></clr-icon>
+    borrar
+  </button>
+</div>

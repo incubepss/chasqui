@@ -1,0 +1,48 @@
+@import 'variables';
+@import '../checkout-shared.scss';
+
+.payment-form {
+  max-width: 400px;
+  margin: auto;
+}
+
+.PaymentMethodBox {
+  font-size: 1.2rem;
+  background: #c4c4c434;
+  border-radius: 0.5rem;
+  border: 1px solid #fff;
+  padding: 1rem;
+  margin: 0 0 1rem 0;
+  cursor: pointer;
+  display: flex;
+
+  &-icon {
+    flex: 0 0 75px;
+    ::ng-deep {
+      img {
+        width: 4rem;
+        height: 4rem;
+      }
+    }
+  }
+
+  &-description {
+    font-size: 1rem;
+    color: $gray-600;
+  }
+
+  &-instructions {
+    font-size: 0.8rem;
+  }
+
+
+  &:hover {
+    background-color: #C4C4C4;
+  }
+
+  &.isSelected {
+    border-color: var(--info);
+    background: #0c96a01c;
+    color: var(--info);
+  }
+}

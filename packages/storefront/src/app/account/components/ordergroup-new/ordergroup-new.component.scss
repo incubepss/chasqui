@@ -1,0 +1,188 @@
+@import 'variables';
+
+:host {
+  display: block;
+  margin-bottom: $spacer * 3;
+}
+
+.accordion {
+  padding: 1rem;
+  background-color: white;
+}
+
+.form-check-input {
+  visibility: hidden;
+}
+
+.form-check-label {
+  @include media-breakpoint-down(sm) {
+    justify-content: center;
+  }
+}
+
+.customer-address {
+  display: inline-block;
+  width: 100%;
+  font-size: $font-size-sm;
+  padding: $spacer;
+  margin-right: $spacer;
+  margin-bottom: $spacer;
+  border-radius: $border-radius;
+  cursor: pointer;
+  border: 1px solid $gray-200;
+  transition: background-color 0.2s;
+  background-color: #c4c4c434;
+
+  &.isSelected{
+    border: 1px solid $info;
+    background: #0c96a01c;
+  }
+
+  &:hover {
+    background-color: #C4C4C4;
+  }
+}
+
+.toolbar-actions {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  > button {
+    flex: 0 1 50%;
+  }
+}
+
+.cancel-container {
+  margin-top: 0.5rem;
+}
+
+.accordion > .card > .card-header {
+  margin-bottom: 0.5rem;
+}
+
+.card-body {
+  margin-bottom: 1rem;
+}
+
+.shipping-method {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  .price {
+    margin-left: $spacer;
+  }
+}
+
+.form-check{
+  padding: 0 !important;
+}
+
+.contaninerJoinGroup {
+  &-btnContinue {
+    margin-top: 1rem;
+  }
+}
+
+.paddingOff {
+  padding: 0;
+}
+
+.boxJoinGroup {
+  padding: 1.5rem;
+  border: 1px solid $gray-300;
+  background-color: $gray-100;
+  border-radius: $border-radius;
+}
+
+.shippingMethodCard {
+  width: 100%;
+  background-color: $gray-200;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 0.2rem;
+
+  &-name {
+    font-weight: bold;
+    color: $gray-800;
+    font-size: 0.95rem;
+  }
+
+  &-description {
+    font-size: 0.8rem
+  }
+
+  &.isSelected {
+    border: 1px solid $info;
+    background: #0c96a01c;
+  }
+
+  &:hover {
+    background: #C4C4C4;
+  }
+
+}
+
+
+.thanks {
+  
+  &-main {
+    background-color: white;
+    padding: 1rem;
+  }
+
+  &-icon {
+    font-size: 2rem;
+    color: $success;
+  }
+
+  &-message {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  &-textSecondary {
+    font-size: 0.9rem;
+    color: $gray-800;
+  }
+
+  &-block {
+    margin-bottom: 1rem;
+  }
+
+  .footer {
+    background-color: $gray-100;
+    margin-top: 2rem;
+    padding: 1rem;
+
+    &-textPrimary {
+      font-weight: bold;
+    }
+  
+    &-textSecondary {
+      font-size: 0.9rem;
+      color: $gray-800;
+    }
+  
+    &-actions {
+      margin-top: 1rem;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+}
+
+
+
+@include media-breakpoint-down(sm) {
+  .toolbar-actions {
+    > button {
+      flex: 1 1 100%;
+    }
+  }
+
+  .accordion > .card > .card-header {
+    font-size: 1.2rem;
+  }
+  
+}

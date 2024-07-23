@@ -1,0 +1,117 @@
+@import 'variables';
+@import '../../account.scss';
+
+:host {
+  display: block;
+}
+
+.cell-total, .header-total {
+  text-align: right;
+}
+
+.cell-center {
+  text-align: center;
+}
+
+.card {
+  cursor: pointer;
+  transition: border-color 200ms ease-in;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  &:hover {
+    border-color: #0c96a0;
+  }
+}
+
+.card:last-child {
+  border-bottom-color: $gray-400;
+}
+
+.orderBodyCard {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  color: $gray-800;
+
+  .left {
+    flex: 1 1 50%;
+    overflow-wrap: anywhere;
+  }
+
+  .right {
+    flex: 1 1 auto;
+    text-align: right;
+    padding-left: 0.5rem;
+  }
+
+  &-date {
+    font-size: 0.9rem;
+    font-weight: bold;
+  }
+
+  &-code {
+    color: $gray-900;
+    font-size: 0.8rem;
+  }
+
+  &-groupFlag {
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: $gray-600;
+    margin-left: 0.5rem;
+  }
+
+  &-description {
+    flex: 1 1 auto;
+    font-size: 0.9rem;
+  }
+
+  &-description-secondary {
+    font-size: 0.9rem;
+    color: $gray-600;
+  }
+
+  &-detailContainer {
+    display: flex;
+    margin-top: 0.2rem;
+    align-items: center;
+  }
+
+  &-total {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: right;
+    color: $chq2color-primary-comunity;
+  }
+}
+
+.footerActions {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+
+  &-loading {
+    margin-bottom: 2rem;
+  }
+}
+
+.emptyResult {
+  margin-top: 2rem;
+  color: $gray-600;
+  font-size: 1.5rem;
+  min-height: 150px;
+
+  fa-icon {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .title {
+    font-size: 1.2rem;
+    margin-top: 0.75rem;
+    margin-bottom: 1rem;
+  }
+}

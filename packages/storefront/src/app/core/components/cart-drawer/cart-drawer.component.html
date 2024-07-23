@@ -1,0 +1,62 @@
+<div class="cart-drawer-header">
+  <h3 class="cart-title">Carrito</h3>
+  <button class="btn" (click)="dismiss()">
+    <fa-icon icon="times"></fa-icon>
+  </button>
+</div>
+
+
+
+<div class="orderGroup" *ngIf="orderGroup$ | async as orderGroup">
+  Tu pedido forma parte del grupo {{orderGroup.code}} <br>
+  <div class="orderGroup-labelOwner">coordina:</div>
+  {{orderGroup.customer.firstName}} {{orderGroup.customer.lastName}} ·
+  {{orderGroup.customer.emailAddress}}
+</div>
+
+<div *ngIf="(isEmpty$ | async) !== true; else empty" class="cart-drawer-contents">
+  <vsf-cart-contents [cart]="cart$ | async" [canAdjustQuantities]="(isStoredDisabled$ | async) !== true"
+    (setQuantity)="setQuantity($event)"></vsf-cart-contents>
+
+  <div class="promotionCodeContainer">
+    <vsf-promotion-code [visible]="(hasDiscounts$ | async) !== true"></vsf-promotion-code>
+  </div>
+
+  <div class="removeall-button">
+    <a class="btn btn-light" *ngIf="cart$ | async as cart" (click)="clearCart(content, cart.couponCodes)">
+      <fa-icon icon="trash"></fa-icon>
+      Vaciar carrito
+    </a>
+  </div>
+  <div class="checkout-button">
+    <button class="btn btn-block btn-primary" color="primary" [disabled]="isStoredDisabled$ | async"
+      (click)="confirmOrder()">
+      <span>Finalizar compra</span>
+      <span class="totals-amount" *ngIf="cart$ | async as cart">{{ cart.totalWithTax | formatPrice }}</span>
+    </button>
+  </div>
+</div>
+
+<ng-template #empty>
+  <div class="empty">
+    <fa-icon icon="inbox"></fa-icon>
+    <div class="message">
+      El carrito está vacío
+    </div>
+    <button class="btn btn-block btn-secondary" (click)="dismiss()">
+      Volver atrás
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-body">
+    <h4 class="modal-title" id="modal-title">¿Querés vaciar tu carrito de compras?</h4>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" (click)="modal.dismiss('cancel click')">
+      cancelar
+    </button>
+    <button type="button" class="btn btn-danger" (click)="modal.close('Ok click')">Vaciar carrito</button>
+  </div>
+</ng-template>

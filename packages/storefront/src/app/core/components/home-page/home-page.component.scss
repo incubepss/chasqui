@@ -1,0 +1,36 @@
+@import 'bootstrap';
+
+$spacer: 1rem;
+
+.hero {
+  margin-bottom: 1em;
+  padding-top: 3em;
+  img {
+    width: 100%;
+  }
+}
+
+@import 'variables';
+
+:host {
+  > .container {
+    margin-top: $spacer * 2;
+    padding-bottom: 2rem;
+  }
+}
+
+.body {
+  padding: 2rem 0;
+
+  &-imgSecondary {
+    img {
+      width: 100%;
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+:host ::ng-deep .collectionTree {
+  overflow: auto;
+  max-height: 144px;
+}

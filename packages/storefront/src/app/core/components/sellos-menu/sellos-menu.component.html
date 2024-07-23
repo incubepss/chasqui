@@ -1,0 +1,15 @@
+<div
+  class="nav-wrapper"
+  [class.active]="overlayIsOpen$ | async"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="close()"
+>
+  <span class="nav-title">Sellos  <fa-icon icon="chevron-down"></fa-icon></span>
+  <ul class="nav">
+    <li class="nav-item">
+      <a class="nav-link" *ngFor="let sello of sellosMenu$ | async" [routerLink]="['/catalogo', {etiqueta: sello.facet.id + ':'+ sello.id}]" (click)="close()">
+        <vsf-sello [code]="sello.code">{{sello.name}}</vsf-sello>
+      </a>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,34 @@
+<div class="channelConfig">
+  <vdr-action-bar>
+    <vdr-ab-left>
+      <vdr-entity-info [entity]="entity$ | async"></vdr-entity-info>
+    </vdr-ab-left>
+
+    <vdr-ab-right>
+      <button
+        class="btn btn-primary"
+        (click)="save()"
+        *vdrIfPermissions="['UpdateChannel']"
+        [disabled]="!saveButtonEnabled()"
+      >
+        {{ 'common.update' | translate }}
+      </button>
+    </vdr-ab-right>
+  </vdr-action-bar>
+
+  <form class="form" [formGroup]="detailForm">
+    <section formGroupName="customFields" *ngIf="customFields.length">
+      <vdr-tabbed-custom-fields
+        entityName="Channel"
+        [customFields]="customFields"
+        [customFieldsFormGroup]="detailForm.get('customFields')"
+        [readonly]="!(updatePermission | hasPermission)"
+      ></vdr-tabbed-custom-fields>
+    </section>
+    <vdr-custom-detail-component-host
+      locationId="channel-detail"
+      [entity$]="entity$"
+      [detailForm]="detailForm"
+    ></vdr-custom-detail-component-host>
+  </form>
+</div>

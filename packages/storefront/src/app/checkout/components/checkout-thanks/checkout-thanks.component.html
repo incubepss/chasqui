@@ -1,0 +1,17 @@
+<div class="thanks" *ngIf="(order$ | async) as order">
+  <ng-container *ngIf="order.customFields?.isOrderHeadOfGroup; else single">
+    <vsf-checkout-thanks-group [order]="order"></vsf-checkout-thanks-group>
+  </ng-container>
+    
+  <ng-template #single>
+    <vsf-checkout-thanks-single [order]="order"></vsf-checkout-thanks-single>
+  </ng-template>
+</div>
+
+<ng-container *ngIf="loading$ | async">
+  <h2 class="display-4">Cargando...</h2>
+</ng-container>
+
+<ng-container *ngIf="(loading$ | async) !== true && (notFound$ | async)">
+  <vsf-content-not-found message="No se encontró el pedido"></vsf-content-not-found>
+</ng-container>

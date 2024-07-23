@@ -1,0 +1,29 @@
+<div class="orderGroupContainer" [class.disabled]="(isSignedIn$ | async )!== true">
+  <p>¡Crea un pedido grupal y compartilo! </p>
+  <p>Sus compras se incluirán en tu pedido y llegarán todos juntos a la 
+  dirección seleccionada por vos.</p>
+
+  <div>
+    <div *ngIf="orderGroup; else noActived">
+      <div class="boxShare">
+        <p class="text-success"> grupo activado </p>
+        <p>código: <strong>{{orderGroup.code}}</strong></p>
+
+        <vsf-share-ordergroup [orderGroup]="orderGroup"></vsf-share-ordergroup>  
+      </div>
+      <div>
+        <button class="btn btn-link" (click)="deactivateGroup()" [disabled]="loading$ | async">Desactivar grupo</button>
+      </div>
+    </div>
+    <ng-template #noActived>
+      <div>
+        <button class="btn btn-secondary" (click)="activateGroup()" [disabled]="(loading$ | async) || ((isSignedIn$ | async) !== true)">Activar un grupo</button>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="disabledBox" *ngIf="(isSignedIn$ | async )!== true"></div>
+</div>
+<div *ngIf="(isSignedIn$ | async) !== true" class="text-warning">
+  Debés ingresar con tu cuenta para crear una compra grupal
+</div>

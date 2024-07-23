@@ -1,0 +1,13 @@
+<button 
+  type="button" 
+  class="btn btn-secondary btn-sm" 
+  (click)="toClipboard()"
+  title="Copiar al portapapeles"
+  [disabled]="loading"
+>
+  <clr-icon shape="clipboard" *ngIf="loading !== true; else loadingTpl"></clr-icon>
+  <ng-template #loadingTpl>
+    <span class="spinner spinner-sm"></span>
+  </ng-template>
+  Copiar listado
+</button>

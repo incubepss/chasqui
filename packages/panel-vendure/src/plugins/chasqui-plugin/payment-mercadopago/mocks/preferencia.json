@@ -1,0 +1,108 @@
+{
+  "additional_info": "",
+  "auto_return": "",
+  "back_urls": {
+    "failure": "",
+    "pending": "",
+    "success": ""
+  },
+  "binary_mode": false,
+  "client_id": "5801432826855047",
+  "collector_id": 74956627,
+  "coupon_code": "",
+  "coupon_labels": "",
+  "date_created": "2021-10-04T20:46:21.379+00:00",
+  "date_of_expiration": "",
+  "expiration_date_from": "",
+  "expiration_date_to": "",
+  "expires": false,
+  "external_reference": "D357LW8WM554FRTW",
+  "id": "74956627-89337bad-8422-42ef-b57b-3de916f4cc55",
+  "init_point": "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=74956627-89337bad-8422-42ef-b57b-3de916f4cc55",
+  "internal_metadata": "",
+  "items": [
+    {
+      "id": "",
+      "category_id": "",
+      "currency_id": "ARS",
+      "description": "",
+      "title": "Mermelada de Frutos rojos",
+      "quantity": 1,
+      "unit_price": 330
+    },
+    {
+      "id": "",
+      "category_id": "",
+      "currency_id": "ARS",
+      "description": "",
+      "title": "Fideos guiseros La Capitana  500 gr",
+      "quantity": 2,
+      "unit_price": 55
+    }
+  ],
+  "marketplace": "NONE",
+  "marketplace_fee": 0,
+  "metadata": {},
+  "notification_url": "",
+  "operation_type": "regular_payment",
+  "payer": {
+    "phone": {
+      "area_code": "",
+      "number": ""
+    },
+    "address": {
+      "zip_code": "",
+      "street_name": "",
+      "street_number": ""
+    },
+    "email": "",
+    "identification": {
+      "number": "",
+      "type": ""
+    },
+    "name": "",
+    "surname": "",
+    "date_created": "",
+    "last_purchase": ""
+  },
+  "payment_methods": {
+    "default_card_id": "",
+    "default_payment_method_id": "",
+    "excluded_payment_methods": [
+      {
+        "id": ""
+      }
+    ],
+    "excluded_payment_types": [
+      {
+        "id": ""
+      }
+    ],
+    "installments": "",
+    "default_installments": ""
+  },
+  "processing_modes": "",
+  "product_id": "",
+  "redirect_urls": {
+    "failure": "",
+    "pending": "",
+    "success": ""
+  },
+  "sandbox_init_point": "https://sandbox.mercadopago.com.ar/checkout/v1/redirect?pref_id=74956627-89337bad-8422-42ef-b57b-3de916f4cc55",
+  "site_id": "MLA",
+  "shipments": {
+    "default_shipping_method": "",
+    "receiver_address": {
+      "zip_code": "",
+      "street_name": "",
+      "street_number": "",
+      "floor": "",
+      "apartment": "",
+      "city_name": "",
+      "state_name": "",
+      "country_name": ""
+    }
+  },
+  "total_amount": "",
+  "last_updated": ""
+}

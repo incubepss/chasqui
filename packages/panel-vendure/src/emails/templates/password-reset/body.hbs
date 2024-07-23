@@ -1,0 +1,23 @@
+{{> header title="Recupero de contraseña" }}
+
+<mj-section>
+    <mj-column>
+        <mj-text color="#525252">
+            Alguien pidió una nueva contraseña para tu cuenta
+        </mj-text>
+
+        <mj-button background-color="#0c96a0"
+                   color="white"
+                   href="{{ passwordResetUrl }}?token={{ passwordResetToken }}">
+            Generar nueva contraseña
+        </mj-button>
+
+        <mj-text color="#525252">
+            Si vos no pediste este cambio, podes ignorar este email con seguridad. No se ha realizado ningún cambio sobre tu cuenta.
+        </mj-text>
+
+    </mj-column>
+</mj-section>
+
+
+{{> footer }}

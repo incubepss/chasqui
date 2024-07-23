@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card-header" *ngIf="title || subTitle">
+    <h5 class="card-title" *ngIf="title">{{ title }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted" *ngIf="subTitle">{{ subTitle }}</h6>
+  </div>
+  <div class="card-body">
+    <div class="illustration-container" *ngIf="illustration">
+      <img src="../../../../assets/illustrations/woman-sit-computer-300.png" alt="login imagen" />
+    </div>
+    <div class="content-container">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

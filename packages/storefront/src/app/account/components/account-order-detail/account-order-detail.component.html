@@ -1,0 +1,120 @@
+<vsf-mobile-section title="Detalle del pedido" [showHeaderDropdown]="showCancelButton$ | async">
+  <div headerDropdownMenu>
+    <button ngbDropdownItem class="btn-sm text-danger" (click)="cancelOrder(cancelConfirmModalContent)">
+      <fa-icon icon="trash"></fa-icon> Cancelar este pedido
+    </button>
+    <button ngbDropdownItem class="btn-sm text-primary" (click)="confirmOrder(confirmModalContent)">
+      <fa-icon icon="cart-arrow-down"></fa-icon> Agregar a mi carrito
+    </button>
+  </div>
+
+  <ng-container *ngIf="order$ | async as order">
+    <vsf-mobile-card>
+      <div class="cardHeader">
+        <span class="cardHeader-state">
+          <vsf-state-tag
+            [state]="order.state"
+            [stateGroup]="order.customFields?.orderGroup?.state"
+            [mode]="order"
+          ></vsf-state-tag>
+        </span>
+        <div class="cardHeader-mainContainer">
+          <div class="cardHeader-code">#{{ order.code }}</div>
+          <div class="cardHeader-date">{{ order.orderPlacedAt | date: 'fullDate':'-0300' }}</div>
+        </div>
+      </div>
+    </vsf-mobile-card>
+
+    <vsf-mobile-card title="Consumidor/a" *ngIf="isGroupManagerContext$ | async">
+      <div class="customer">
+        <div class="customer-name">
+          {{ order.customer?.firstName }} {{ order.customer?.lastName }}
+          <small>{{ order.customFields.alias }}</small>
+        </div>
+        <div class="customer-emailAddress">{{ order.customer?.emailAddress }}</div>
+        <div class="customer-phoneNumber" *ngIf="order.customer">#{{ order.customer?.phoneNumber }}</div>
+      </div>
+    </vsf-mobile-card>
+
+    <vsf-mobile-card title="Compra grupal" *ngIf="order.customFields?.orderGroup?.code">
+      <p class="text-muted">Este pedido forma parte del grupo</p>
+      <div>
+        estado pedido grupal:
+        <vsf-state-tag [state]="order.customFields.orderGroup.state" [mode]="orderGroup"></vsf-state-tag>
+      </div>
+      <div>
+        código: <strong>{{ order.customFields.orderGroup.code }}</strong>
+      </div>
+    </vsf-mobile-card>
+
+    <vsf-mobile-card title="entrega" *ngIf="order.shippingLines?.length">
+      <vsf-shipping-line-card noCard="true" [shippingLine]="order.shippingLines[0]"></vsf-shipping-line-card>
+    </vsf-mobile-card>
+
+    <vsf-mobile-card title="Dirección" *ngIf="order.shippingAddress?.streetLine1">
+      <vsf-address-card noCard="true" [address]="order.shippingAddress"></vsf-address-card>
+    </vsf-mobile-card>
+
+    <vsf-mobile-card title="Pagos">
+      <div *ngFor="let payment of order.payments">
+        <vsf-payment-card noCard="true" [payment]="payment"></vsf-payment-card>
+      </div>
+    </vsf-mobile-card>
+
+    <vsf-mobile-card title="Comentarios" *ngIf="comments$ | async as comments">
+      {{ comments }}
+    </vsf-mobile-card>
+
+    <vsf-mobile-card title="Artículos">
+      <vsf-cart-contents [cart]="order"></vsf-cart-contents>
+    </vsf-mobile-card>
+
+    <div class="moreActions">
+      <button
+        class="btn btn-danger"
+        *ngIf="showCancelButton$ | async"
+        (click)="cancelOrder(cancelConfirmModalContent)"
+      >
+        Cancelar este pedido <fa-icon icon="trash"></fa-icon>
+      </button>
+      <button class="btn btn-primary" (click)="confirmOrder(confirmModalContent)">
+        <fa-icon icon="cart-arrow-down"></fa-icon> Agregar a mi carrito
+      </button>
+    </div>
+
+    <div class="footerActions">
+      <button class="btn btn-link" (click)="back()"><fa-icon icon="arrow-left"></fa-icon> Volver</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="notFound$ | async">
+    <vsf-content-not-found message="No se encontró el pedido">
+      <span actions></span>
+    </vsf-content-not-found>
+  </ng-container>
+</vsf-mobile-section>
+
+<ng-template #cancelConfirmModalContent let-modal>
+  <div class="modal-body">
+    <h5>¿Querés cancelar este pedido en el grupo?</h5>
+    <p>No afecta al resto de los participantes</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" (click)="modal.dismiss(false)">No</button>
+    <button type="button" class="btn btn-danger" (click)="modal.close(true)">
+      Cancelar pedido participante
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #confirmModalContent let-modal>
+  <div class="modal-body">
+    <h5>¿Querés agregar estos artículos a tu compra?</h5>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-link" (click)="modal.dismiss(false)">No</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close(true)">
+      Sí, agregar a mi carrito
+    </button>
+  </div>
+</ng-template>

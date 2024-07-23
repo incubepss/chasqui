@@ -1,0 +1,19 @@
+<div [ngClass]="{'product-quantity-selector':true, 'small': size === 'small'}">
+    <button class="btn btn-primary product-quantity-selector__button" (click)="onSubstract()" [disabled]="isValidatingAmount">-</button>
+    <input 
+        class="product-quantity-selector__input"
+        type="number" 
+        min="0"
+        [value]="internalValue"
+        (input)="onInput($event.target.value)"
+        (keydown.enter)="onInput($event.target.value)"
+        [ngClass]="{'product-quantity-selector__input--busy': isValidatingAmount, 'product-quantity-selector__input--error':hasError}"
+        [disabled]="isValidatingAmount"
+        (blur)="restoreInternalValue($event)"
+        #inputRef
+    />
+    <button class="btn btn-primary product-quantity-selector__button" (click)="onAdd()" [disabled]="isValidatingAmount">+</button>
+    <div class="product-quantity-selector__spinner-container" *ngIf="isValidatingAmount">
+        <span class="spinner-border spinner-border-sm"></span>
+    </div>
+</div>

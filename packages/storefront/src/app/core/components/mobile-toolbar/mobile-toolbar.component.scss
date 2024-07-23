@@ -1,0 +1,95 @@
+@import 'bootstrap.scss';
+
+:host {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  border-top: 1px solid $gray-400;
+  background-color: white;
+  z-index: 1500;
+  box-shadow: 0px 3px 7px 2px rgba($color: #000000, $alpha: 0.3);
+
+  @include media-breakpoint-up(lg) {
+    display: none;
+  }
+}
+
+.isMulticatalogo {
+  :host {
+    display: none;
+  }
+}
+
+.cartTotal {
+  font-weight: bold;
+}
+
+.mobileToolbar {
+  display: flex;
+  height: 100%;
+
+  &-item {
+    flex: 1 1 20%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+
+    color: $gray-900;
+    cursor: pointer;
+
+    &:hover {
+      color: $gray-600;
+    }
+
+    > * {
+      flex: 1 1 50%;
+    }
+
+    > fa-icon {
+      padding-top: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    img {
+      padding-top: 0.4rem;
+    }
+
+    > span {
+      display: inline-flex;
+      align-items: flex-end;
+      font-size: 0.75rem;
+      padding-bottom: 0.2rem;
+    }
+
+    &--main {
+      fa-icon {
+        font-size: 1.2rem;
+        position: absolute;
+        top: -70%;
+        background-color: $secondary;
+        color: white;
+        padding: 0.8rem;
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 7px 0 rgba($color: #000000, $alpha: 0.3);
+      }
+
+      span {
+        flex: 1 1 100%;
+        align-self: center;
+        justify-self: flex-end;
+        display: inline-flex;
+        align-items: flex-end;
+      }
+    }
+  }
+}

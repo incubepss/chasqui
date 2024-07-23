@@ -1,0 +1,79 @@
+<div> 
+  <vdr-action-bar>
+    <vdr-ab-left>
+      <h3>Nueva Tienda</h3>      
+    </vdr-ab-left>
+
+    <vdr-ab-right>
+        <button
+            class="btn btn-primary"
+            (click)="create()"
+            *vdrIfPermissions="['SuperAdmin', 'CreateChannel']"
+            [disabled]="!saveButtonEnabled()"
+        >
+            Crear Tienda
+        </button>
+    </vdr-ab-right>
+</vdr-action-bar>
+
+  <form class="form" [formGroup]="detailForm">
+    <h4>Tienda</h4>
+    <vdr-form-field [label]="'common.code' | translate" for="code">
+      <input
+        id="code"
+        type="text"
+        formControlName="code"
+      />
+    </vdr-form-field>
+    <vdr-form-field [label]="'settings.channel-token' | translate">
+      <input
+        id="token"
+        type="text"
+        formControlName="token"
+      />
+    </vdr-form-field>
+    <vdr-form-field label="Ciudad">
+      <input
+        id="city"
+        type="text"
+        formControlName="city"
+      />
+    </vdr-form-field>
+    <vdr-form-field label="Provincia">
+      <select formControlName="province">
+        <option value="">Elegir</option>
+        <option *ngFor="let item of provinces" [value]="item">{{item}}</option>
+      </select>
+    </vdr-form-field>
+    <h4>Administrador</h4>
+    <vdr-form-field label="Email" for="emailAdmin">
+      <input
+        id="emailAdmin"
+        type="email"
+        formControlName="emailAdmin"
+      />
+    </vdr-form-field>
+    <vdr-form-field label="Nombre" for="nameAdmin">
+      <input
+        id="nameAdmin"
+        type="text"
+        formControlName="nameAdmin"
+      />
+    </vdr-form-field>
+    <vdr-form-field label="Apellido" for="lastNameAdmin">
+      <input
+        id="lastNameAdmin"
+        type="text"
+        formControlName="lastNameAdmin"
+      />
+    </vdr-form-field>
+    <vdr-form-field label="Contraseña" for="password">
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+      />
+    </vdr-form-field>
+  </form>
+
+</div>

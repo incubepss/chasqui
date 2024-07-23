@@ -1,0 +1,118 @@
+<mjml>
+    
+    <mj-head>
+        <mj-title>{{ title }}</mj-title> 
+        <mj-style inline="inline">
+            body {
+                background-color: #f5f5f5;
+            }
+
+            h3 {
+                font-size: 16px;
+                color: #555;
+                font-weight: normal;
+            }
+
+            a {
+                color: #263238;
+            }
+
+            table tr th {
+                color: #464444;
+                font-weight: normal;
+            }
+
+            .no-padding-v >  table tbody tr td{
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+
+            .no-padding-top >  table tbody tr td{
+                padding-top: 0 !important;
+            }
+
+            .no-padding-h >  table tbody tr td{
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+
+            .section--strong {
+                margin: 0 !important;
+            }
+
+            .section--strong > table {
+                background-color: #e1f5fe;
+            }
+
+            .section-order > table tbody tr td {
+                padding: 0 10px 10px 10px !important;
+            }
+
+            .order-table-lines > table {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .order-table-lines > table tbody tr td {
+                padding: 5px !important;
+                font-size: 0.7rem;
+            }
+
+            .order-table-lines > table tr.order-row td {
+                border-bottom: 1px dashed #eee;
+                font-size: 0.7rem;
+            } 
+
+            .order-table-lines tr.total-row {
+                font-weight: bold;
+            }
+            .order-table-lines tr.subtotal-row  {
+                color: #375a67 !important;
+                font-weight: bold;
+            }
+
+            .order-table-lines tr.aditional-row  {
+                color: #375a67 !important;
+            }
+
+            .text-field-label {
+                color: #464444;
+            }
+
+        </mj-style>
+        <mj-attributes>
+            <mj-class name="text-subject-main" font-size="20px" align="center"  />
+            <mj-class name="text-subject-secondary" font-size="16px" align="center"  />
+
+            <mj-class name="field-label" color="#464444" />
+            <mj-class name="field-value" font-size="14px" />
+            <mj-class name="field--big" font-size="22px"  />
+            
+            <mj-class name="text--large" font-size="20px" />
+            <mj-class name="section" font-size="40px" padding="0" />
+            <mj-class name="step-number" font-weight="bold"/>
+            <mj-class name="step-title" font-weight="bold" />
+        </mj-attributes>
+    </mj-head>
+
+    <mj-body>
+        <mj-section>
+            <mj-column>
+                <mj-text font-size="18px">
+                {{#if tiendaNombre}} 
+                    {{ tiendaNombre }}
+                {{else}}
+                    Tiendas Chasqui
+                {{/if}}
+                </mj-text>
+            </mg-column>
+        </mj-section>
+        {{#if title}} 
+            <mj-section>
+                <mj-column>
+                    <mj-text font-size="20px">{{title}}</mj-text>
+                </mj-column>    
+            </mj-section>
+        {{/if}}
+
+        <mj-wrapper background-color="#FFF" border="1px solid #eeeeee" padding="0">

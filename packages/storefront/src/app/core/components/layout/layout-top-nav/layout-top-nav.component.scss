@@ -1,0 +1,51 @@
+@import 'bootstrap';
+
+:host {
+  display: flex;
+  width: auto;
+
+  > * {
+    margin: 0 1rem;
+  }
+}
+
+.top-nav {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0;
+  justify-content: center;
+
+  > * {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  > a {
+    color: $link-color;
+    padding: 0.2rem;
+    text-decoration: none;
+    font-family: $headings-font-family;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-right: 0.5em;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    &.active {
+      color: $primary;
+    }
+  }
+}
+
+.gap {
+  flex: 0 0 3rem;
+}

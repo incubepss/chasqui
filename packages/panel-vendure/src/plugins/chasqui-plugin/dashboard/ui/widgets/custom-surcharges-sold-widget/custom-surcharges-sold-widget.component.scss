@@ -1,0 +1,42 @@
+@import "variables";
+
+.row {
+  display: flex;
+
+  .right {
+    text-align: right;
+    flex: 1 0 auto;
+  }
+}
+
+.date-range {
+  font-size: 0.6rem; 
+}
+
+::ng-deep {
+  .rows-table {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 0;
+    position: relative;
+
+    table {
+      margin-top: 0;
+    }
+
+    table thead {
+      position: sticky;
+      top: 0;
+    }
+
+    /* últimas dos columnas */
+    table thead th:nth-last-child(-n+2) {
+      text-align: right !important;
+    }
+  }
+  
+  thead th {
+    position: initial !important;
+    top: 0 !important;
+  }
+} 

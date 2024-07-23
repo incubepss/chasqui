@@ -1,0 +1,20 @@
+{{> header title="Verificá tu E-Mail" }}
+
+<mj-section>
+    <mj-column>
+        <mj-text color="#525252">
+            Gracias por crear una cuenta. Haz click en el botón debajo para verificar tu dirección de E-Mail y 
+            completar el proceso de registración:
+        </mj-text>
+
+        <mj-button 
+                   background-color="#0c96a0"
+                   color="white"
+                   href="{{ verifyEmailAddressUrl }}?token={{ verificationToken }}">
+            Verificar E-Mail!
+        </mj-button>
+    </mj-column>
+</mj-section>
+
+
+{{> footer }}

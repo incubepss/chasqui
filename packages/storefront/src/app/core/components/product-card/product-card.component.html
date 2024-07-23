@@ -1,0 +1,87 @@
+<ng-template [ngIf]="product" [ngIfElse]="placeholder">
+  <div class="product-details">
+    <a class="image-wrapper" (click)="openProductModal(productmodal)">
+      <img class="product-image" *ngIf="product.productAsset" [src]="product.productAsset | assetPreview: 180:180"
+        [alt]="'imagen de ' + product.productName" />
+    </a>
+    <vsf-sellos-products [sellos]="sellos" size="sm"></vsf-sellos-products>
+    <div class="product-channel" *ngIf="product.channel">
+      <figure>
+        <img class="TiendaBox-header" *ngIf="product.channel.customFields?.imgPortada"
+          [src]="product.channel.customFields?.imgPortada | assetPreview: 50:50"
+          [alt]="product.channel.customFields?.nombre" />
+      </figure>
+    </div>
+    <a class="product-details__name" (click)="openProductModal(productmodal)">
+      {{ product.productName | truncateText: 10:'...':40 }}
+    </a>
+  </div>
+
+  <div class="product-details__action" *ngIf="isAvailable && addEnabled">
+    <div class="product-details__row">
+      <div class="product-details__price" *ngIf="isAvailable; else withoutVariant">
+        <div class="product-details__fromLabel" *ngIf="product.priceWithTax.min !== product.priceWithTax.max">
+          desde
+        </div>
+        {{ product.priceWithTax.min | formatPrice }}
+      </div>
+      <ng-template #withoutVariant>
+        <span class="product-details__price --no-variant">No disponible</span>
+      </ng-template>
+    </div>
+    <ng-container *ngIf="product.priceWithTax.min === product.priceWithTax.max; else detalle">
+      <ng-container *ngIf="!productInCartData; else editQuantitiesInCart">
+        <button (click)="addToCart(product)" class="add-cart btn btn-outline-primary">
+          <fa-icon icon="cart-arrow-down"></fa-icon>
+        </button>
+      </ng-container>
+      <ng-template #editQuantitiesInCart>
+        <vsf-product-quantity-selector [product]="productInCartData"> </vsf-product-quantity-selector>
+      </ng-template>
+    </ng-container>
+    <ng-template #detalle>
+      <button class="add-cart btn btn-outline-primary" (click)="openProductModal(productmodal)">
+        <fa-icon icon="plus"></fa-icon>
+      </button>
+    </ng-template>
+  </div>
+</ng-template>
+
+<ng-template #placeholder>
+  <div class="placeholder-image loading-placeholder"></div>
+  <div class="card-body">
+    <div class="placeholder-title loading-placeholder"></div>
+    <div class="placeholder-body loading-placeholder"></div>
+  </div>
+</ng-template>
+
+<ng-template #sellosDetails>
+  <div class="tooltip">
+    <vsf-sellos-products [sellos]="sellos"></vsf-sellos-products>
+  </div>
+</ng-template>
+
+<ng-template #productmodal let-modal>
+  <div class="modal-header modal-header-productDetail">
+    <button type="button" class="close" aria-label="Cerrar" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body modal-body-productDetail">
+    <vsf-product-detail [showBreadcrumbs]="false" [productSlug]="product.slug"
+      [channel]="product.channel"></vsf-product-detail>
+  </div>
+</ng-template>
+
+<ng-template #addedToCartTemplate let-variant="variant" let-quantity="quantity" let-close="closeFn">
+  <div class="add-to-cart-notification">
+    <div class="thumb mr-2">
+      <img class="" *ngIf="product.productAsset" [src]="product.productAsset | assetPreview: 200:200"
+        alt="product thumbnail" />
+    </div>
+    <div>{{ quantity }} x {{ variant.name }}</div>
+  </div>
+  <button class="btn btn-sm btn-outline-primary btn-block" (click)="viewCartFromNotification(close)">
+    Ver carrito
+  </button>
+</ng-template>

@@ -1,0 +1,67 @@
+<div class="sub-footer pt-3">
+  <div class="container">
+    <div class="sub-footer-container" *ngIf="channel$ | async as channel">
+      <div class="sub-footer-column sub-footer-contact">
+        <h3>Contactanos</h3>
+        <ul class="list-unstyled">
+          <li *ngIf="channel?.customFields?.scheduleStore">
+            {{ channel.customFields.scheduleStore }}
+          </li>
+          <li *ngIf="channel.customFields?.emailStore">
+            <a
+              href="mailto:{{ channel.customFields.emailStore }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ channel.customFields.emailStore }}</a
+            >
+          </li>
+          <li>
+            <vsf-link-rrss
+              *ngIf="channel.customFields?.telegramStore"
+              [value]="'https://t.me/' + channel.customFields.telegramStore"
+            ></vsf-link-rrss>
+
+            <vsf-link-rrss
+              *ngIf="channel.customFields?.whatsappStore"
+              [value]="'https://wa.me/' + channel.customFields.whatsappStore"
+            ></vsf-link-rrss>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="channel.customFields?.rrssStore?.length" class="sub-footer-column sub-footer-social">
+        <h3>Seguinos</h3>
+        <ul class="list-unstyled">
+          <li *ngFor="let rrssLink of channel.customFields.rrssStore">
+            <vsf-link-rrss [value]="rrssLink"></vsf-link-rrss>
+          </li>
+        </ul>
+      </div>
+      <div class="sub-footer-column">
+        <h3>Medios de pago disponibles en la tienda</h3>
+        <ul class="list-unstyled">
+          <li *ngFor="let paymentMethod of paymentMethods$ | async">
+            <vsf-icon-payment-method [paymentMethod]="paymentMethod"></vsf-icon-payment-method>
+            {{ paymentMethod.name }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="sub-footer-column">
+        <vsf-help-button
+          icon="pregunta"
+          title="Botón de arrepentimiento"
+          subtitle="Contanos cómo podemos ayudarte"
+          url="/arrepentimiento"
+        ></vsf-help-button>
+
+        <vsf-help-button
+          icon="preguntas"
+          title="Términos y condiciones"
+          subtitle=""
+          url="/terminosycondiciones"
+        >
+        </vsf-help-button>
+      </div>
+    </div>
+  </div>
+</div>

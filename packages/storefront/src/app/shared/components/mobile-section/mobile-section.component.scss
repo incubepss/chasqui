@@ -1,0 +1,116 @@
+@import 'variables';
+
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.mobileSection {
+  background-color: $gray-100;
+  padding: 0;
+  position: relative;
+
+  &-header {
+    display: flex;
+    height: 3rem;
+    align-items: center;
+    background-color: $chq2color-primary-comunity;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: white;
+    
+    .mobileHeader-icon {
+      width: 2rem;
+    }
+    
+    fa-icon, .btn-link {
+      color: white;
+    }
+
+    .mobileHeader-title{
+      flex: 1 1 auto;
+      text-align: left;
+      font-size: 1.3rem;
+    }
+
+  }
+
+  &-body {
+    position: relative;
+    height: 100%;
+    min-height: 1px;
+    overflow-y: auto;
+    padding: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  &-toolbar {
+    display: flex;
+    position: sticky;
+    bottom: 0;
+    left: initial;
+    right: initial;
+    justify-content: center;
+    padding: 1rem;
+
+    > button {
+      flex: 0 1 50%;
+    }
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+
+  .mobileSection {
+    position: fixed;
+    z-index: 1600; 
+    left:0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding-bottom: 3rem;
+
+    &-header {
+      display: flex;
+
+      .mobileHeader-title{
+        font-size: 1.1rem;
+      }
+    }
+
+    &-body {
+      padding-bottom: 4rem;
+    }
+
+    &-toolbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: white;
+      padding: 0.5rem;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  
+      > button {
+        flex: 1 1 100%;
+      }
+    }
+  }
+
+}
+
+@media print {
+  .mobileSection {
+    &-header {
+      display: none;
+    }
+
+    &-toolbar {
+      display: none;
+    }
+  }
+}

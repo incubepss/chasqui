@@ -1,0 +1,19 @@
+{{> header this title="Tu pedido venció" }}
+
+<mj-section background-color="#FFF">
+    <mj-column>
+        <mj-text color="#525252">
+            Tu pedido {{orderCode}} que creaste el {{ formatDate orderCreatedAt "d/mm/yyyy" }} venció por inactividad.
+        </mj-text>
+
+        <mj-button
+            background-color="#0c96a0"
+            color="white"
+            href="{{ myOrdersUrl }}">
+            Ver mis pedidos
+        </mj-button>
+    </mj-column>
+</mj-section>
+
+
+{{> footer }}

@@ -1,0 +1,197 @@
+<div class="filterContainer">
+  <input class="filterContainer-inptKey" type="text" placeholder="Buscar por productor, código o nombre producto" [(ngModel)]="filterKeyString" (keyup.enter)="applyFilters()" />
+  <select name="filterEnabled" [(ngModel)]="filterEnabled" (change)="applyFilters()">
+    <option value="" class="placeholder">Estado Variante</option>
+    <option value="true">Habilitada</option>
+    <option value="false">No habilitada</option>
+  </select>
+  <input class="filterContainer-inptStock" type="number" placeholder="Por stock menor a..." [(ngModel)]="filterStockLowerThan" (keyup.enter)="applyFilters()" />
+
+  <button class="btn btn-sm" (click)="clearFilters()"> <clr-icon shape="times"></clr-icon> resetear filtros</button>
+  <button class="btn btn-sm" (click)="toClipboard()" [disabled]="coping">  
+    <clr-icon shape="clipboard" *ngIf="coping !== true; else copingTpl"></clr-icon> 
+    <ng-template #copingTpl>
+      <span class="spinner spinner-sm"></span>
+    </ng-template>
+    copiar
+  </button>
+</div>
+<table class="table table-compact">
+  <thead>
+    <tr>
+      <th class="left"> 
+        Productor
+      </th>
+      <th class="left sortable" (click)="applySortBy('sku')">
+        Sku
+        <ng-container *ngIf="sortBy === 'sku'"> 
+          <clr-icon shape="caret up" *ngIf="sortDirection === 'ASC'; else sortDesc"></clr-icon>
+            <ng-template #sortDesc>
+              <clr-icon shape="caret down"></clr-icon>
+            </ng-template>
+        </ng-container>
+      </th>
+      <th class="left sortable"  (click)="applySortBy('name')"> 
+        Nombre de variante
+        <ng-container *ngIf="sortBy === 'name'"> 
+            <clr-icon shape="caret up" *ngIf="sortDirection === 'ASC'; else sortDesc"></clr-icon>
+            <ng-template #sortDesc>
+              <clr-icon shape="caret down"></clr-icon>
+            </ng-template>
+        </ng-container>
+      </th>
+      <th class="sortable" (click)="applySortBy('priceWithTax')">
+        Precio
+        <ng-container *ngIf="sortBy === 'priceWithTax'"> 
+            <clr-icon shape="caret up" *ngIf="sortDirection === 'ASC'; else sortDesc"></clr-icon>
+            <ng-template #sortDesc>
+              <clr-icon shape="caret down"></clr-icon>
+            </ng-template>
+        </ng-container>
+      </th>
+      <th class="sortable" (click)="applySortBy('stockOnHand')">
+        Stock
+        <ng-container *ngIf="sortBy === 'stockOnHand'"> 
+            <clr-icon shape="caret up" *ngIf="sortDirection === 'ASC'; else sortDesc"></clr-icon>
+            <ng-template #sortDesc>
+              <clr-icon shape="caret down"></clr-icon>
+            </ng-template>
+        </ng-container>
+      </th>
+      <th class="sortable" (click)="applySortBy('stockAllocated')">
+        Reservado
+        <ng-container *ngIf="sortBy === 'stockAllocated'"> 
+          <clr-icon shape="caret up" *ngIf="sortDirection === 'ASC'; else sortDesc"></clr-icon>
+          <ng-template #sortDesc>
+            <clr-icon shape="caret down"></clr-icon>
+          </ng-template>
+      </ng-container>
+      </th>
+      <th>estado Variante</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pv of productVariants$ | async" [class.--editing]="pv.id === editRecord?.id">
+      <ng-container *ngIf="pv.id !== editRecord?.id; else editRow">
+        <td class="left">{{pv.product.customFields?.productor?.name}}</td>
+        <td class="left">{{pv.sku}}</td>
+        <td class="left">{{pv.name}}</td>
+        <td class="cellPrice cellEditable" (click)="edit(pv, 'inptPrice')">
+            <ng-container *ngIf="channelPriceIncludesTax; else priceWithoutTax">
+              {{pv.priceWithTax | localeCurrency: pv.currencyCode}}
+            </ng-container>
+            <ng-template #priceWithoutTax>
+              {{pv.price | localeCurrency: pv.currencyCode}}
+            </ng-template>
+        </td>
+        <td class="cellStock cellEditable" (click)="edit(pv, 'stockOnHand')">
+          {{pv.stockOnHand}} 
+        </td>
+        <td class="cellStockAllocated">{{pv.stockAllocated}}</td>
+        <td class="cellEditable" (click)="edit(pv)"> 
+           <ng-container *ngIf="pv.enabled && !pv.product.enabled; else normalStateVariant">
+            <span role="tooltip" aria-haspopup="true" class="tooltip tooltip-lg tooltip-bottom-left">
+              <vdr-chip [colorType]="'warning'">
+                <clr-icon shape="exclamation-triangle"></clr-icon>
+                Habilitada
+              </vdr-chip>
+              <span class="tooltip-content">El producto no está habilitado pero la variante si. Para que se visualice en el catálogo, puede editar y guardar, o abrir el producto para editar.</span>
+            </span>
+           </ng-container> 
+
+           <ng-template #normalStateVariant>
+              <vdr-chip [colorType]="pv.enabled ? '': 'error'" >{{ pv.enabled ? 'Habilitada' : 'No habilitada' }}</vdr-chip>
+           </ng-template>
+        </td>
+        <td class="cellActions left">
+          <ng-container *vdrIfPermissions="updatePermission">
+            <button 
+              (click)="edit(pv)"
+              class="btn btn-link btn-sm" 
+              *ngIf="!editRecord"
+            >
+              <clr-icon shape="edit" ></clr-icon> Editar
+            </button>
+            <a 
+              class="btn btn-link btn-sm" 
+              *ngIf="!editRecord"
+              [routerLink]="['/catalog/products/', pv.product.id]"
+            >
+              abrir producto
+            </a>
+          </ng-container>
+        </td>
+      </ng-container>
+    </tr>
+  </tbody>
+  <ng-template #editRow>
+    <td class="left">{{editRecord.product.customFields?.productor?.name}}</td>
+    <td>{{editRecord.sku}}</td>
+    <td class="left">{{editRecord.name}}</td>
+    <td class="cellPrice cellEditable">
+      <vdr-currency-input 
+        *ngIf="channelPriceIncludesTax"
+        clrInput 
+        name="inptPrice"
+        [(ngModel)]="editRecord.priceWithTax" 
+        [currencyCode]="editRecord.currencyCode"
+        (keyup.enter)="save()"
+        (keyup.esc)="cancel()"
+      ></vdr-currency-input>
+      <vdr-currency-input 
+        *ngIf="!channelPriceIncludesTax"
+        clrInput 
+        name="inptPrice"
+        [(ngModel)]="editRecord.price" 
+        [currencyCode]="editRecord.currencyCode"
+      ></vdr-currency-input>
+    </td>
+    <td class="cellStock cellEditable"> 
+      <input 
+        type="number" 
+        name="stockOnHand" 
+        [(ngModel)]="editRecord.stockOnHand" 
+        (keyup.enter)="save()"
+        (keyup.esc)="cancel()"
+      />
+    </td>
+    <td>{{editRecord.stockAllocated}}</td>
+    <td class="cellEnabled cellEditable">
+      <clr-toggle-wrapper>
+        <input type="checkbox" clrToggle name="enabled" value="true" [(ngModel)]="editRecord.enabled" />
+      </clr-toggle-wrapper>
+    </td>
+    <td class="cellActions left" *ngIf="!saving"> 
+      <ng-container  *vdrIfPermissions="updatePermission">
+        <button class="btn btn-sm btn-primary" (click)="save()">
+          guardar
+        </button>
+        <button class="btn btn-sm btn-secondary" (click)="cancel()">cancelar</button>
+      </ng-container>
+    </td>
+    <td class="cellActions left" *ngIf="saving">
+      <span class="spinner spinner-sm"></span>
+    </td>
+  </ng-template>
+</table>
+<div class="paginatorContainer">
+  <div class="left">
+    <vdr-items-per-page-controls
+        [itemsPerPage]="itemsPerPage"
+        (itemsPerPageChange)="onChangePerPage($event)"
+    ></vdr-items-per-page-controls>
+    <div class="statsCount">
+      <label>Cantidad resultados:</label>
+      <span class="statsCount-value">{{totalItems}}</span>
+    </div>
+  </div>
+  <div class="right">
+    <chq-paginator
+        [currentPage]="currentPage"
+        [itemsPerPage]="itemsPerPage"
+        [totalItems]="totalItems"
+        (pageChange)="onChangePage($event)"
+    ></chq-paginator>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="orderGroupJoin" >
+  Ingresá el código del grupo:
+  <div class="form-row">
+    <div class="col-auto">
+      <input type="text" class="form-control"  [(ngModel)]="codeOrderGroup" (keyup.enter)="searchGroup()"/>
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-secondary" (click)="searchGroup()">Buscar grupo</button>
+    </div>
+  </div>
+
+  <div class="detail" *ngIf="orderGroup$ | async as orderGroup">
+    <ng-container *ngIf="isSameChannel$ | async; else anotherChannel">
+      <h6>código: <strong>{{orderGroup.code}}</strong></h6> <br/>
+      
+      Coordina:<br />
+      {{orderGroup.customer.firstName}} {{orderGroup.customer.lastName}} <br />
+      {{orderGroup.customer.emailAddress}}<br /> 
+      {{orderGroup.customer.phoneNumber}}
+      
+      <ng-container *ngIf="orderGroup.active; else noActivo">
+        <div class="detail-action">
+          <button type="button" class="btn btn-primary" (click)="confirmJoin()">
+              Sumar mi pedido 
+              <fa-icon icon="arrow-right"></fa-icon>
+          </button>
+          <div *ngIf="errorMsg" class="text-danger">{{errorMsg}}</div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noActivo>
+      <div class="not-activo">
+        El grupo ya no está activo para sumar pedidos
+      </div>
+    </ng-template>
+    <ng-template #anotherChannel>
+      <div class="not-activo">
+        El grupo pertenece a otra tienda
+      </div>
+    </ng-template>
+  </div>
+  
+  
+  <div class="not-found" *ngIf="notFound$ | async">
+    no se encontró el grupo
+  </div>
+</div>

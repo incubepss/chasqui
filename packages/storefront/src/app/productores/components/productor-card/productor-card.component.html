@@ -1,0 +1,46 @@
+<ng-container>
+  <ng-template [ngIf]="productor" [ngIfElse]="placeholder">
+    <div class="productor-card productor-card--link" [contextRouterLink]="['productores', productor.id]">
+      <a class="image-wrapper">
+        <img
+          alt="Logo de {{ productor.name }}"
+          class="productor-image"
+          *ngIf="productor.logo"
+          [src]="productor.logo | assetPreview: 100:100"
+        />
+      </a>
+      <div class="productor-detailsContainer">
+        <div class="productor-details">
+          <a [contextRouterLink]="['productores', productor.id]" class="productor-name">
+            {{ productor.name | truncateText: 12:'...':80 }}
+          </a>
+          <span class="productor-place">{{ productorPlace }}</span>
+        </div>
+        <div class="productor-moreDetails">
+          <span>{{ productor.descriptionOffered }}</span>
+          <div class="cart-and-sellos">
+            <div class="sellos-card-container" [ngbTooltip]="sellosDetails" triggers="click:blur">
+              <span *ngFor="let sello of productor.sellos" [ngClass]="'dot sello-' + sello"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #placeholder>
+    <div class="productor-card">
+      <div class="placeholder-image loading-placeholder"></div>
+      <div class="card-body">
+        <div class="placeholder-title loading-placeholder"></div>
+        <div class="placeholder-body loading-placeholder"></div>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>
+
+<ng-template #sellosDetails>
+  <div class="tooltip">
+    <vsf-sellos-products [sellos]="productor.sellos"></vsf-sellos-products>
+  </div>
+</ng-template>

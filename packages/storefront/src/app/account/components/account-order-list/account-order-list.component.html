@@ -1,0 +1,52 @@
+<vsf-mobile-section  [backRouterLink]="['/micuenta']">
+  <div title *ngIf="channelName$ | async as channelName">Mis pedidos en {{channelName}}</div>
+
+  <div class="table-responsive" *ngIf="displayEmptyResult === false; else emptyResult">
+    <div 
+      class="card" 
+      *ngFor="let order of orders" 
+      [routerLink]="['/micuenta/pedidos/', order.code]"
+    >
+      <div class="card-body orderBodyCard">
+        <div class="left">
+          <div class="orderBodyCard-date">{{ order.orderPlacedAt | date: 'longDate' }}</div>
+          <div class="orderBodyCard-detailContainer">
+            <vsf-state-tag [state]="order.state" [stateGroup]="order.customFields?.orderGroup?.state" [mode]="order"></vsf-state-tag>
+            <div class="orderBodyCard-groupFlag" *ngIf="order.customFields?.orderGroup?.code">en grupo</div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="orderBodyCard-total">{{ order.totalWithTax | formatPrice }}</div>          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center footerActions">
+    <div *ngIf="loading">
+      <span
+          class="footerActions-loading spinner-grow spinner-grow-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+    </div>
+    <div class="footerActions-loadMore flex-fill" *ngIf="displayLoadMore">
+      <button
+        class="btn btn-secondary"
+        (click)="loadMore()"
+        [disabled]="loading"
+      >
+        Cargar más
+      </button>
+    </div>
+  </div>
+
+  <ng-template #emptyResult>
+    <div class="text-center emptyResult" >
+      <fa-icon icon="inbox"></fa-icon>
+      <div>
+        Todavía no hiciste pedidos <br/>en <em>{{channelName$ | async}}</em>
+      </div>
+    </div>
+  </ng-template>
+
+</vsf-mobile-section>

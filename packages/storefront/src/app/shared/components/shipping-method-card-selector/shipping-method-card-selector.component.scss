@@ -1,0 +1,196 @@
+@import 'variables';
+
+:host {
+  width: 100%;
+  margin: 0 0 1em 0;
+  background: #c4c4c434;
+  border-radius: 0.5em;
+  border: 1px solid #fff;
+  &:hover{
+    background: #C4C4C4;
+  }
+}
+
+.card.--noCard {
+  border: 0;
+  padding: 0;
+  .card-body, .card-footer {
+    padding: 0;
+  }
+}
+
+.shippingMethodContainer {
+  display: flex;
+  cursor: pointer;
+  padding: 1rem;
+
+  &-logo {
+    margin: 1rem;
+    padding: 1rem;
+    display: flex;
+    max-height: 94px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-logoImg {
+    background-size: 5rem;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 5rem;
+    display: block;
+  }
+
+  &-logoLabel {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &-detail {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  &-primary {
+    .shippingMethodContainer-logoImg {
+      display: none;
+    }
+  }
+
+  &-name {
+    color: $gray-900;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  &-description {
+    font-size: 0.85rem;
+  }
+
+  &-address {
+    color: $gray-600;
+  }
+
+  &-schedule {
+    color: $gray-600;
+  } 
+
+  &-price {
+    color: $gray-900;
+    font-size: 1.3rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+    text-align: center;
+  }
+
+  .labelType {
+    font-size: 0.8rem;
+  }
+}
+
+.--selected {
+  &.shippingMethodContainer {
+    border: 1px solid $info;
+    border-radius: 0.5rem;
+    background: #0c96a01c;
+  }
+}
+
+.--showroom {
+  .shippingMethodContainer {
+    &-logoImg {
+      background-image: url('/assets/images/geo_point.png');
+    }
+  }
+
+  .labelType--showroom {
+      display: initial;
+  }
+  .labelType--delivery {
+      display: none;
+  }
+}
+
+.--shipping {
+  .shippingMethodContainer {
+    &-logoImg {
+      background-image: url('/assets/images/truck.png');
+    }
+  }
+
+  .labelType--showroom {
+      display: none;
+  }
+  .labelType--delivery {
+      display: initial;
+  }
+}
+
+
+@include media-breakpoint-down(lg) {
+  .shippingMethodContainer {
+    padding: 0.5rem;
+
+    &-logo {
+      display: none;
+    }
+
+    &-primary {
+      display: flex;
+      align-items: center;
+
+      .shippingMethodContainer-logoImg {
+        display: inline-block;
+        width: 2.1rem;
+        height: 2.1rem;
+        background-size: 2rem;
+        margin-right: 0.5rem;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}
+
+
+@include media-breakpoint-down(md) {
+  .shippingMethodContainer {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+
+    &-detail {
+      text-align: center;
+      margin: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    &-description {
+      font-size: 0.8rem;
+    }
+
+    &-price {
+      font-size: 1.1rem;
+    }
+
+    &-name {
+      font-size: 1rem;
+      line-height: 0.9rem;
+    }
+
+    .details{
+        text-align: left;
+        padding: 0;
+    }
+    .price {
+        display: flex;
+        margin: 0.5em 0 0 0;
+        padding: 0;
+    }
+  }
+}

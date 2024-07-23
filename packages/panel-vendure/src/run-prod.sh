@@ -1,0 +1,1 @@
+node ./dist/migration.js run & node ./dist/index.js & node ./dist/index-worker.js

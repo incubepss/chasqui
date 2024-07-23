@@ -1,0 +1,146 @@
+<vsf-mobile-section styleBody="padding: 0"  [backRouterLink]="['/micuenta']" *ngIf="isShowingThanks === false">
+  <span title>Crear pedido grupal</span>
+  <div class="accordion">
+    <div class="card card--borderless">
+      <div class="card-header">Seleccionar método de entrega </div>
+      <div class="card-body" [class.show]="step === 'selectMethod'">
+        <ng-container *ngIf="loadingShippingMethods$ | async; else showShippingMethods">
+          <span class="loading-indicator spinner-grow"></span>
+        </ng-container>
+        <ng-template #showShippingMethods>
+          <ng-container *ngIf="(shippingMethods$ | async)?.length; else withoutShippingMethods">
+            <div
+              class="form-check"
+              *ngFor="let method of shippingMethods$ | async"
+              (click)="clickOnShippingMethod($event, method)"
+            >
+              <input
+                class="form-check-input"
+                type="radio"
+                [(ngModel)]="shippingMethodId"
+                [value]="method.id"
+                [id]="method.id"
+                />
+              <label class="form-check-label shipping-method" [for]="method.id">
+                <vsf-shipping-method-card-selector 
+                  [method]="method"
+                  [selected]="shippingMethodId === method.id"
+                  [showPrice]="false"
+                ></vsf-shipping-method-card-selector>
+              </label>
+            </div>
+          </ng-container>
+        </ng-template>
+        <ng-template #withoutShippingMethods>
+          <h5>La tienda todavía no tiene configurada los métodos de entrega</h5>
+          <h6>Comunicate por los medios públicados en el pie de página para poder concretar la compra</h6>
+          <div>Tu número de pedido: <strong>{{(cart$ | async)?.code}}</strong></div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="card card--borderless card-direccion" *ngIf="(customerAddresses$ | async)?.length && (step === 'selectAddress' && !this.skipStepAddress)">
+      <div class="card-header">
+        Seleccionar dirección
+      </div>
+      <div class="card-body">
+        <div>
+          <div
+            class="customer-address"
+            [class.isSelected]="selectedAddressId === address.id"
+            *ngFor="let address of customerAddresses$ | async"
+            (click)="setShippingAddress(address)"
+          >
+            <div class="address-line" *ngFor="let line of getLines(address)">
+              {{ line }}
+            </div>
+          </div>
+          <div class="d-flex align-items-end ml-3 mb-3">
+            <button class="btn btn-secondary" (click)="createAddress()">Nueva dirección</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card card--borderless card-direccion" 
+      *ngIf="((signedIn$ | async) !== true || (customerAddresses$ | async)?.length === 0) && (step === 'editAddress' && !this.skipStepAddress)"
+    >
+      <div class="card-header">
+        Dirección
+      </div>
+      <div class="card-body">
+        <vsf-address-form
+          #addressForm
+          [address]="shippingAddress$ | async"
+          [availableCountries]="availableCountries$ | async"
+        ></vsf-address-form>
+
+      </div>
+    </div>
+    
+  </div>
+
+  <div toolbar class="toolbar-actions" *ngIf="addressForm">
+    <button
+      class="btn btn-secondary"
+      [disabled]="addressForm.addressForm.invalid || isBusy === true"
+      (click)="setShippingAddress(addressForm.addressForm.value)"
+    >
+      Crear
+      <fa-icon icon="arrow-right" *ngIf="isBusy !== true; else busyTpl"></fa-icon>
+      <ng-template #busyTpl>
+        <span class="loading-indicator spinner-grow spinner-grow-sm"></span>
+      </ng-template>
+    </button>
+  </div>
+
+  <div toolbar class="toolbar-actions" *ngIf="!addressForm">
+    <button
+      class="btn btn-secondary"
+      (click)="createOrderGroup()"
+      [disabled]="(canContinue$ | async) !== true || isBusy === true"
+    >
+      Crear
+      <fa-icon icon="arrow-right" *ngIf="isBusy !== true; else busyTpl"></fa-icon>
+      <ng-template #busyTpl>
+        <span class="loading-indicator spinner-grow spinner-grow-sm"></span>
+      </ng-template>
+    </button>
+  </div>         
+</vsf-mobile-section> 
+
+<vsf-mobile-section styleBody="padding: 0" [hideHeader]="true" *ngIf="isShowingThanks">
+  <div class="thanks">
+    <div class="thanks-main text-center mb-4">
+      <fa-icon class="thanks-icon" icon="check-circle"></fa-icon>
+      <h2 class="thanks-message">
+        ¡Gracias por crear <br/> un pedido en grupo!
+      </h2>
+      <div class="thanks-block">
+        Compartí el siguiente enlace <br/> para invitar a tu compra grupal:
+      </div>
+      <div class="thanks-block thanks-textSecondary">{{shareUrl}}</div>
+      <vsf-share-ordergroup [orderGroup]="orderGroup"></vsf-share-ordergroup>
+    </div>
+
+    <div class="text-center footer">
+      <div class="footer-textPrimary thanks-block">
+        ¡IMPORTANTE!<br/>
+        Recordá enviar el pedido grupal
+      </div>
+      <div class="footer-textSecondary thanks-block">
+        Cuando los participantes confirmen sus compras, <br/>
+        entrá en el detalle del grupo y Envía el pedido
+      </div>
+
+      <div class="footer-actions">
+        <button class="btn btn-primary" [routerLink]="'/micuenta'">Volver a mi cuenta</button>
+      </div>
+    </div>
+
+    <div class="text-center cancel-container">
+      <button class="btn btn-link" [disabled]="isBusy" (click)="cancelOrderGroup(orderGroup)">
+        Cancelar grupo
+        <span class="loading-indicator spinner-grow spinner-grow-sm" *ngIf="isBusy === true"></span>
+      </button>
+    </div>
+  </div>
+</vsf-mobile-section>

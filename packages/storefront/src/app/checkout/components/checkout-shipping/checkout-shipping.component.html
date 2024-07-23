@@ -1,0 +1,109 @@
+<div class="accordion">
+  <div class="card card--borderless card-shippingMethods">
+    <div class="card-body" [class.show]="step === 'selectMethod'">
+      <div class="contaninerJoinGroup" *ngIf="isOrderPartOfGroup$ | async; else individual">
+        <div class="boxJoinGroup" *ngIf="orderGroup$ | async as orderGroup">
+          <h5>Tu pedido forma parte del grupo</h5>
+
+          <p>Tu compra se incluirá en el pedido grupal y <b>llegará a la dirección seleccionada en el grupo</b></p>
+
+          <p>Podés pagar tu parte con los medios de pago del siguiente paso o arreglar con la persona que coordina</p>
+
+          <h6>código: <strong>{{orderGroup.code}}</strong></h6> <br />
+
+          Coordina:<br />
+          {{orderGroup.customer.firstName}} {{orderGroup.customer.lastName}} <br />
+          {{orderGroup.customer.emailAddress}}<br />
+          {{orderGroup.customer.phoneNumber}}
+        </div>
+        <button *ngIf="orderSinglesAllowed$ |  async" type="button" class="btn btn-link"
+          (click)="unsetForOrderGroup()">Desvincular del grupo</button>
+      </div>
+      <ng-template #individual>
+        <!-- deshabilitado la opcion de suma por codigo para simplificar, solo por url-->
+        <!--ng-container  *ngIf="(isOrderHeadOfGroup$ | async) !== true">
+          <h4> Sumá tu pedido a una compra grupal</h4>
+          <vsf-checkout-ordergroup-join class="boxJoinGroup" (joined)="continueToPayment()"></vsf-checkout-ordergroup-join>
+        </ng-container-->
+
+        <div class="card card--borderless">
+          <div class="card-header">
+            Seleccionar el método de entrega:
+          </div>
+          <div class="card-body"
+            *ngIf="(isOrderHeadOfGroup$ | async) === false && (activeOrderGroups$ | async).length > 0">
+            <vsf-checkout-ordergroup-join-to-my></vsf-checkout-ordergroup-join-to-my>
+          </div>
+          <div class="card-body">
+            <ng-container *ngIf="loadingShippingMethods$ | async; else showShippingMethods">
+              <span class="loading-indicator spinner-grow"></span>
+            </ng-container>
+            <ng-template #showShippingMethods>
+              <ng-container *ngIf="(eligibleShippingMethods$ | async)?.length; else withoutShippingMethods">
+                <div class="form-check" *ngFor="let method of eligibleShippingMethods$ | async"
+                  (click)="clickOnShippingMethod($event, method)">
+                  <input class="form-check-input" type="radio" [(ngModel)]="shippingMethodId" [value]="method.id"
+                    [id]="method.id" />
+                  <label class="form-check-label shipping-method" [for]="method.id">
+                    <vsf-shipping-method-card-selector [method]="method"
+                      [selected]="shippingMethodId === method.id"></vsf-shipping-method-card-selector>
+                  </label>
+                </div>
+              </ng-container>
+            </ng-template>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #withoutShippingMethods>
+        <h5>La tienda todavía no tiene configurada los métodos de entrega</h5>
+        <h6>Comunicate por los medios públicados en el pie de página para poder concretar la compra</h6>
+        <div>Tu número de pedido: <strong>{{(cart$ | async)?.code}}</strong></div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="card card--borderless card-direccion"
+    *ngIf="(signedIn$ | async) && (customerAddresses$ | async)?.length && (step === 'selectAddress' || step === 'orderGroupStep' && !this.skipStepAddress)">
+    <div class="card-header">
+      Seleccionar dirección
+    </div>
+    <div class="card-body">
+      <div class="">
+        <div class="customer-address" [class.isSelected]="selectedAddressId === address.id"
+          *ngFor="let address of customerAddresses$ | async" (click)="setShippingAddress(address)">
+          <div class="address-line" *ngFor="let line of getLines(address)">
+            {{ line }}
+          </div>
+        </div>
+        <div class="d-flex align-items-end ml-3 mb-3">
+          <button class="btn btn-secondary" (click)="createAddress()">Nueva dirección</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card card--borderless card-direccion"
+    *ngIf="((signedIn$ | async) !== true || (customerAddresses$ | async)?.length === 0) && (step === 'editAddress' || step === 'orderGroupStep' && !this.skipStepAddress)">
+    <div class="card-header">
+      Dirección
+    </div>
+    <div class="card-body">
+      <vsf-address-form #addressForm [address]="shippingAddress$ | async"
+        [availableCountries]="availableCountries$ | async"></vsf-address-form>
+
+    </div>
+    <div class="checkout-actions">
+      <button class="btn btn-secondary" [disabled]="addressForm.addressForm.invalid"
+        (click)="setShippingAddress(addressForm.addressForm.value)">
+        Continuar
+        <fa-icon icon="arrow-right"></fa-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="checkout-actions" *ngIf="!addressForm">
+    <button class="btn btn-secondary" (click)="continueToPayment()"
+      [disabled]="(canContinue$ | async) !== true && (isOrderPartOfGroup$ | async) !== true">
+      Continuar
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+@import 'bootstrap';
+
+.form {
+  &-btnSubmit {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.message {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+
+  &-main {
+    color: $danger;
+    font-size: 0.9rem;
+  }
+
+  &-detail {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    > * {
+      margin-bottom: 1rem;
+    }
+  }
+}

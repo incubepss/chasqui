@@ -1,0 +1,23 @@
+.container {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.body-container {
+  padding-top: 2rem;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.requestSended {
+  &-body {
+    margin-top: 2rem;
+    color: var(--success);
+  }
+  &-actions {
+    margin-top: 2rem;
+  }
+}

@@ -1,0 +1,48 @@
+<vdr-action-bar>
+  <vdr-ab-left>
+    <span *ngIf="resultMsg">{{resultMsg}}</span>
+    <button *ngIf="selected" class="btn btn-primary" (click)="doImport()">Importar de Odoo</button>
+  </vdr-ab-left>
+  <vdr-ab-right>
+    <a class="btn btn-primary" id="createbtn" (click)="refreshGrid()">
+      <clr-icon shape="refresh"></clr-icon>
+      {{ 'odoo-plugin.refresh' | translate }}
+    </a>
+  </vdr-ab-right>
+</vdr-action-bar>
+
+<h3>Importador de catálogo de odoo v1</h3>
+
+<div *ngIf="!selected" class="TiendasContainer">Cargando...</div>
+
+<vdr-data-table id="datatable" [items]="products$ | async">
+  <vdr-dt-column>Imagen</vdr-dt-column>
+  <vdr-dt-column>Nombre y descripción</vdr-dt-column>
+  <vdr-dt-column>Categoría</vdr-dt-column>
+  <vdr-dt-column>Precio</vdr-dt-column>
+  <vdr-dt-column>Código de barra (SKU)</vdr-dt-column>
+  <vdr-dt-column>Cantidad</vdr-dt-column>
+
+  <ng-template let-product="item">
+    <td class="left align-middle">
+      <div class="image-placeholder">
+        <img *ngIf="product.image_128 !== 'false'"
+          [src]="sanitizer.bypassSecurityTrustUrl('data:image/png;base64,' + product.image_128)" [alt]="product.name" />
+      </div>
+    </td>
+    <td class="left align-middle image-col">
+      <strong>{{ product.name }}</strong><br />
+      <span>{{product.product_tooltip}}</span>
+    </td>
+    <td class="left align-middle">
+      <vdr-chip icon="tag" *ngIf="product.pos_categ"> {{ product.pos_categ }}</vdr-chip>
+    </td>
+
+    <td class="left align-middle">
+      <strong>{{ price(product.list_price) | localeCurrency: (currencyCode$ | async)}}</strong><br />
+      {{ product.tax_string }}
+    </td>
+    <td class="left align-middle">{{product.barcode}}</td>
+    <td class="left align-middle">{{product.qty_available}}</td>
+  </ng-template>
+</vdr-data-table>

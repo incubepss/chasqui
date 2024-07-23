@@ -1,0 +1,46 @@
+
+<div class="signIn">
+  <div class="signIn-illustration">
+    <img src="../../../../assets/illustrations/woman-cart.png" width="300" height="300" alt="mujer comprando" />
+  </div>
+
+  <div class="signIn-formsContainer">
+    <div *ngIf="mode === 'sign-in'">
+      <h3 class="signIn-title">¿Ya tenés una cuenta?</h3>
+      <vsf-sign-in 
+        [navigateToOnSuccess]="['/finalizar-compra', 'entrega']"
+        [displayRegisterLink]="false"
+        [illustration]="false"
+      >
+    </vsf-sign-in>
+
+    <div class="signIn-asGuestContainer asGuestContainer">
+      <h5 class="asGuestContainer-title">¿No tenés una cuenta?</h5>
+
+      <a class="btn btn-primary" (click)="createNewAccount()">
+        Crear cuenta
+      </a>
+      <a class="btn btn-secondary" (click)="continueAsGuest()">
+        Continuá como visitante
+      </a>
+    </div>
+    
+    </div>
+    <div class="signIn-formGuest" *ngIf="mode === 'guest-form'">
+      <h3 class="signIn-title" *ngIf="isEnabledAutoCreateAccount$ | async; else asGuestTitleTpl">
+        Completa tus datos
+      </h3>
+      <ng-template #asGuestTitleTpl>
+        <h3 class="signIn-title">Continuá como visitante</h3>
+      </ng-template>
+
+      <vsf-checkout-guest (back)="mode = 'sign-in'" [showLastName]="isEnabledAutoCreateAccount$ | async"></vsf-checkout-guest>
+
+      <a class="btn btn-link" (click)="mode = 'sign-in'">
+        <fa-icon icon="arrow-left"></fa-icon> volver 
+      </a>
+    </div>
+
+  </div>
+
+</div>

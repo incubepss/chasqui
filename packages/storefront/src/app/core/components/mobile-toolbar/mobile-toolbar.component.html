@@ -1,0 +1,28 @@
+<div class="mobileToolbar" [style.backgroundColor]="backgroundColor">
+  <div class="mobileToolbar-item" [routerLink]="['/']">
+    <img src="/assets/favicons/favicon-32x32.png" width="20" height="20" />
+    <span>Chasqui</span>
+  </div>
+
+  <div class="mobileToolbar-item" [routerLink]="['/micuenta']">
+    <fa-icon icon="user"></fa-icon>
+    <span>Mi cuenta</span>
+  </div>
+  <div class="mobileToolbar-item mobileToolbar-item--main" (click)="toggleCart()">
+    <fa-icon icon="shopping-cart"></fa-icon>
+    <span *ngIf="(cartTotal$ | async) === 0; else amount">Carrito</span>
+    <ng-template #amount>
+      <span class="cartTotal">{{ cartTotal$ | async | formatPrice }}</span>
+    </ng-template>
+  </div>
+
+  <div class="mobileToolbar-item" (click)="toggleCateMenu()">
+    <fa-icon icon="bookmark"></fa-icon>
+    <span>Filtros</span>
+  </div>
+
+  <div class="mobileToolbar-item" (click)="toggleNavMenu()">
+    <fa-icon icon="bars"></fa-icon>
+    <span>Más</span>
+  </div>
+</div>

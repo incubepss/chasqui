@@ -1,0 +1,59 @@
+<div class="sub-header">
+  <div class="container">
+    <vsf-collection-breadcrumbs></vsf-collection-breadcrumbs>
+    <ng-container *ngIf="channel$ | async as channel; else quienes">
+      <vsf-landing-banner [images]="bannerImages$"></vsf-landing-banner>
+    </ng-container>
+    <ng-template #quienes>
+      <div></div>
+    </ng-template>
+
+    <div class="row">
+      <div class="col-12 collections">
+        <vsf-collections-tree-nav [selectedSlug]="collections$ | async"></vsf-collections-tree-nav>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <ng-container *ngIf="topSold$ | async as topSold; else placeholders">
+        <h3 class="display-5 mt-2" *ngIf="topSold.length > 0">Más vendidos</h3>
+        <div class="product-list">
+          <vsf-product-card *ngFor="let product of topSold; trackBy: trackByProductId" [product]="product"
+            [facetValues]="facetValues$ | async" [cartOrderLines]="cart$ | async"
+            [addEnabled]="addToCartAllowed$ | async"></vsf-product-card>
+        </div>
+      </ng-container>
+
+      <ng-template #placeholders>
+        <ng-container>
+          <h3 class="display-5 mt-2">Más vendidos</h3>
+          <div class="product-list">
+            <vsf-product-card [product]="null"></vsf-product-card>
+            <vsf-product-card [product]="null"></vsf-product-card>
+            <vsf-product-card [product]="null"></vsf-product-card>
+            <vsf-product-card [product]="null"></vsf-product-card>
+            <vsf-product-card [product]="null"></vsf-product-card>
+          </div>
+        </ng-container>
+      </ng-template>
+
+    </div>
+  </div>
+  <ng-container *ngIf="channel$ | async as channel; else quienes">
+    <div class="row body">
+      <div class="body-text col-12 col-md-6" *ngIf="channel.customFields?.bodyAboutUs">
+        <h4>Quiénes somos</h4>
+        <div class="body-text" [innerHTML]="channel.customFields?.bodyAboutUs"></div>
+      </div>
+      <div class="body-imgSecondary col-12 col-md-6" *ngIf="channel.customFields?.imgSecondaryAboutUs">
+        <img [src]="channel.customFields?.imgSecondaryAboutUs | assetPreview: 250" alt="imagen tienda quienes somos" />
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #quienes>
+    <div class="row body"></div>
+  </ng-template>
+</div>

@@ -1,0 +1,131 @@
+@import 'bootstrap';
+
+:host {
+  display: block;
+}
+
+.orderGroupRemito {
+
+  &-storeData {
+    font-style: italic;
+    font-size: 1rem;
+
+    h4 {
+      font-size: 1.1rem;
+    }
+  }
+
+  &-header {
+    display: flex;
+  }
+
+  &-headerLeft {
+    flex: 1 1 30%;
+    margin-right: 0.5rem;
+  }
+
+  &-headerCenter {
+    flex: 1 1 40%;
+    margin-right: 0.5rem;
+    text-align: center;
+  }
+  
+  &-headerRight {
+    flex: 1 1 30%;
+    text-align: right;
+  }
+}
+
+.linesList {
+  font-size: 0.8rem;
+
+
+  &-cellListPrice {
+    width: 100px;
+    color: $gray-600
+  }
+
+  &-cellCantidad {
+    color: $gray-600;
+  }
+
+  &-flagFactorCant {
+    display: none;
+  }
+
+  &-disclaimer {
+    font-size: 0.8rem;
+    color: $gray-600;
+  }
+}
+
+.totalContainer {
+  text-align: right;
+  font-weight: bold;
+}
+
+.chqCard {
+  background-color: white;
+  padding: 1rem;
+  border: 1px solid $gray-200;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  small {
+    font-size: 0.9rem;
+    color: $gray-600;
+    margin-bottom: 1rem;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+
+  .orderGroupRemito {
+    &-header {
+      flex-wrap: wrap;
+
+      > * {
+        margin-bottom: 1rem;
+        flex: 1 1 100%;
+        margin-right: initial;
+        margin-bottom: 0.5rem;
+        text-align: left;
+      }
+    }
+  }
+
+  .linesList {
+    thead {
+      display: none;
+    }
+
+    tbody tr {
+      display: flex;
+      flex-wrap: wrap;
+      border-top: 1px solid $gray-200;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+
+      td {
+        border: 0;
+        padding: 0;
+        padding-right: 0.3rem;
+      }
+    }
+
+    &-cellProductoNombre {
+      width:100%;
+    }
+
+    &-cellListPrice {
+      width:fit-content;
+    }
+
+    &-cellCantidad {
+      width:fit-content;
+    }
+    &-flagFactorCant {
+      display: initial;
+    }
+  }
+}

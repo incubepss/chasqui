@@ -1,0 +1,7 @@
+{
+  "odoo-plugin": {
+    "confirm-export": "Confirma la exportación del pedido a Odoo?",
+    "export": "Exportar",
+    "refresh": "Recargar"
+  }
+}

@@ -1,0 +1,17 @@
+overwrite: true
+generates:
+  ./src/plugins/chasqui-plugin/productores/generated-types2.ts:
+    documents: './src/plugins/chasqui-plugin/productores/ui/**/*.graphql.ts'
+    schema: 'http://localhost:3000/panel-api'
+    plugins:
+      - add:
+          content: '// tslint:disable'
+      - typescript
+      #- typescript-compatibility
+      - typescript-operations
+    config:
+      namingConvention:
+        enumValues: 'keep'
+      maybeValue: 'T'
+      strict: true
+      avoidOptionals: true

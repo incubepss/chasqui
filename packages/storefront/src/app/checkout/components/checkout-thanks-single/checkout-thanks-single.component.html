@@ -1,0 +1,71 @@
+<div class="thanks" *ngIf="order">
+  <div class="text-center mb-4">
+    <fa-icon class="thanks-icon" icon="check-circle"></fa-icon>
+    <h2 class="thanks-message">
+      ¡Gracias por tu compra<span *ngIf="order.customFields.orderGroup"> en grupo</span>!
+    </h2>
+    <div>
+      te mandaremos a {{order.customer.emailAddress}} el detalle
+    </div>
+    <ul class="order-details list-unstyled">
+      <li><span class="text-muted">Código del pedido:</span> {{ order.code }}</li>
+      <li><span class="text-muted">Fecha:</span> {{ order.updatedAt | date: 'medium' }}</li>
+    </ul>
+  </div>
+
+  <div class="text-center">
+    <ng-container *ngFor="let payment of order.payments">
+      <div 
+        class="payment" 
+        *ngIf="payment.state==='Authorized'"        
+      >
+        <div class="payment-detail">
+          <div class="paymentDetail-status">Pago pendiente</div>
+          <div class="paymentDetail-amount"> Monto: {{payment.amount | formatPrice}}  </div>
+        </div>
+        <div 
+          class="payment-instruction" 
+          *ngIf="payment.paymentMethod.customFields?.paymentInstruction"
+          [innerHTML]="payment.paymentMethod.customFields?.paymentInstruction | paymentInstruction"
+        ></div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="hasNoAccount" class="account-signup">
+    
+    <ng-container *ngIf="isBusyAutorRegistering; else registationOfferTpl">
+      <div class="account-signup-body">
+          <span class="loading-indicator spinner-grow spinner-grow-sm"></span> 
+          registrando cuenta...
+        </div>
+    </ng-container>
+
+    <ng-template #registationOfferTpl>
+      <ng-container *ngIf="registrationSent === false; else registrationSentTpl">
+        <div class="account-signup-title" *ngIf="registrationSent === false">También podés crear una cuenta</div>
+        <div class="account-signup-body">
+            <p>
+              Creá una cuenta y disfrutá de compras más rápidas, seguimiento, historial de pedidos y más!
+            </p>
+            <button class="btn btn-primary btn-block" (click)="register()" [disabled]="registrationSent">
+              Crear cuenta
+            </button>
+          </div>
+      </ng-container>
+    </ng-template>
+
+    <ng-template #registrationSentTpl>
+        <div class="account-signup-title">Creamos tu cuenta!</div>
+        <div class="account-signup-body">
+          Ahora verificá tu E-Mail <strong>{{ order.customer.emailAddress }}</strong>
+          para completar la registración. 
+        </div>
+    </ng-template>
+  </div>
+
+
+  <div class="footer-actions" *ngIf="order.customer.user">
+    <button class="btn btn-secondary" [routerLink]="'/micuenta/pedidos'">Ver mis pedidos</button>
+  </div>
+</div>

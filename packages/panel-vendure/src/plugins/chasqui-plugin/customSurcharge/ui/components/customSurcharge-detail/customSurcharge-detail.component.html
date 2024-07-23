@@ -1,0 +1,97 @@
+<vdr-action-bar>
+  <vdr-ab-left>
+    <div class="review-info">
+      <vdr-entity-info [entity]="entity$ | async"></vdr-entity-info>
+      <clr-toggle-wrapper>
+        <input type="checkbox" clrToggle name="enabled" [formControl]="detailForm.get('enabled')" />
+        <label>Habilitado</label>
+      </clr-toggle-wrapper>
+    </div>
+  </vdr-ab-left>
+  <vdr-ab-right *ngIf="['CreateCustomSurcharge', 'UpdateCustomSurcharge'] | hasPermission">
+    <button
+      class="btn btn-primary"
+      *ngIf="isNew$ | async; else updateButton"
+      (click)="create()"
+      [disabled]="!(detailForm.valid && detailForm.dirty)"
+    >
+      {{ 'common.create' | translate }}
+    </button>
+    <ng-template #updateButton>
+      <button class="btn btn-primary" (click)="save()" [disabled]="detailForm.invalid || detailForm.pristine">
+        {{ 'common.update' | translate }}
+      </button>
+    </ng-template>
+  </vdr-ab-right>
+</vdr-action-bar>
+
+<div class="clr-row">
+  <div class="clr-col">
+    <form class="form" [formGroup]="detailForm">
+      <section class="form-block">
+        <vdr-form-field label="Concepto" for="name">
+          <input id="name" type="text" formControlName="name" />
+        </vdr-form-field>
+        <vdr-form-field label="Pregunta" for="question">
+          <input id="question" type="text" formControlName="question" />
+        </vdr-form-field>
+      </section>
+
+      <div class="optionsSection" formArrayName="options">
+        <button
+          (click)="addOption()"
+          class="btn btn-sm btn-secondary"
+          type="button"
+          *ngIf="['CreateCustomSurcharge', 'UpdateCustomSurcharge'] | hasPermission"
+        >
+          <clr-icon shape="plus"></clr-icon> {{ 'customSurcharge-plugin.option-add' | translate }}
+        </button>
+
+        <div class="clr-row optionsSection-optionGroupHeader" *ngIf="options?.controls?.length > 0">
+          <div class="clr-col clr-col-sm-3">Respuesta</div>
+          <div class="clr-col-md-auto">Monto</div>
+        </div>
+        <div
+          class="clr-row option-row"
+          *ngFor="let option of options.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <div class="clr-col clr-col-sm-3">
+            <input
+              id="optionName-{{ i }}"
+              type="text"
+              class="input-description"
+              formControlName="description"
+              required
+            />
+            <span class="clr-error">
+              <clr-control-error
+                *ngIf="
+                  option.get('description').hasError('required') &&
+                  (option.get('description').dirty || option.get('description').touched)
+                "
+              >
+                Es requerido
+              </clr-control-error>
+            </span>
+          </div>
+          <div class="clr-col-md-auto">
+            <vdr-form-field>
+              <vdr-currency-input
+                id="optionListPrice-{{ i }}"
+                type="number"
+                formControlName="listPrice"
+                currencyCode="ARS"
+              ></vdr-currency-input>
+            </vdr-form-field>
+          </div>
+          <div class="clr-col-md-auto">
+            <button (click)="removeOption(i)" class="btn btn-sm btn-link" type="button">
+              <clr-icon shape="trash" class="is-danger"></clr-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

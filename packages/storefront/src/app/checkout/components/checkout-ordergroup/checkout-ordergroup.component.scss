@@ -1,0 +1,53 @@
+@import 'bootstrap';
+
+.orderGroupContainer {
+  position: relative; 
+
+  &.disabled {
+    padding: 1rem;
+    color: $gray-500;
+  }
+
+  .disabledBox {
+    background-color: rgba(0, 0 ,0, 0.2);
+    position: absolute;
+    top: 0;
+    left:0;
+    right:0;
+    bottom:0;
+  }
+}
+
+.boxShare {
+  background-color: $gray-200;
+  padding: 1rem;
+  border: 1px solid #CCC;
+  position: relative;
+
+  &-copylink {
+    position: absolute;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    color: $gray-700;
+    cursor: pointer;
+
+    fa-icon {
+      background-color: $gray-300;
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    &:hover {
+      fa-icon {
+        background-color: $gray-500;
+      }
+    }
+  }
+}

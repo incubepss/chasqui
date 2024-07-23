@@ -1,0 +1,176 @@
+<vdr-action-bar class="action-bar">
+  <vdr-ab-left>
+    <clr-toggle-wrapper *vdrIfPermissions="['CreateProductor', 'UpdateProductor']">
+      <input type="checkbox" clrToggle name="enabled" [formControl]="detailForm.get('enabled')" />
+      <label>Visible</label>
+    </clr-toggle-wrapper>
+  </vdr-ab-left>
+  <vdr-ab-right>
+    <button
+      class="btn btn-primary"
+      id="custbtn"
+      *ngIf="isNew$ | async; else updateButton"
+      (click)="create()"
+      [disabled]="!(detailForm.valid && detailForm.dirty)"
+    >
+      {{ 'common.create' | translate }}
+    </button>
+    <ng-template #updateButton>
+      <button
+        class="btn btn-primary"
+        id="editbtn"
+        (click)="save()"
+        [disabled]="!(detailForm.valid && detailForm.dirty)"
+      >
+        {{ 'common.update' | translate }}
+      </button>
+    </ng-template>
+  </vdr-ab-right>
+</vdr-action-bar>
+
+<form class="form" enctype="multipart/form-data" [formGroup]="detailForm">
+  <vdr-form-field [label]="'productor-plugin.name-label' | translate" for="name">
+    <input
+      id="name"
+      type="text"
+      formControlName="name"
+      [readonly]="!'UpdateSettings'"
+      (input)="updateSlug($event.target.value)"
+    />
+  </vdr-form-field>
+  <vdr-form-field
+    [label]="'catalog.slug' | translate"
+    for="slug"
+    [errors]="{ pattern: 'catalog.slug-pattern-error' | translate }"
+  >
+    <input
+      id="slug"
+      type="text"
+      formControlName="slug"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    />
+  </vdr-form-field>
+  <vdr-form-field [label]="'productor-plugin.descriptionOffered-label' | translate" for="descriptionOffered">
+    <textarea
+      id="descriptionOffered"
+      formControlName="descriptionOffered"
+      rows="2"
+      cols="50"
+      maxlength="255"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    >
+    </textarea>
+  </vdr-form-field>
+  <vdr-form-field [label]="'productor-plugin.description-label' | translate" for="description">
+    <textarea
+      id="description"
+      formControlName="description"
+      rows="8"
+      cols="50"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    >
+    </textarea>
+  </vdr-form-field>
+
+  <vdr-form-field label="Sellos" for="sellos">
+    <sellos-productor-selector
+      id="sellos"
+      [selectedSellos]="detailForm.value.sellos"
+      (change)="onChangeSellos($event)"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    ></sellos-productor-selector>
+  </vdr-form-field>
+
+  <h4 class="section-title">Imagenes</h4>
+
+  <vdr-form-field label="Logo" for="logo">
+    <vdr-relation-asset-input [parentFormControl]="detailForm.get('logo')" [config]="configLogo">
+    </vdr-relation-asset-input>
+  </vdr-form-field>
+  <vdr-form-field label="Banner" for="banner">
+    <vdr-relation-asset-input [parentFormControl]="detailForm.get('banner')" [config]="configLogo">
+    </vdr-relation-asset-input>
+  </vdr-form-field>
+
+  <h4 class="section-title">Ubicación principal</h4>
+
+  <vdr-form-field [label]="'productor-plugin.direccion-label' | translate" for="direccion">
+    <input
+      id="direccion"
+      type="text"
+      formControlName="direccion"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    />
+  </vdr-form-field>
+  <vdr-form-field [label]="'productor-plugin.localidad-label' | translate" for="localidad">
+    <input
+      id="localidad"
+      type="text"
+      formControlName="localidad"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    />
+  </vdr-form-field>
+  <vdr-form-field [label]="'productor-plugin.provincia-label' | translate" for="provincia">
+    <input
+      id="provincia"
+      type="text"
+      formControlName="provincia"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    />
+  </vdr-form-field>
+  <vdr-form-field [label]="'productor-plugin.pais-label' | translate" for="pais">
+    <input
+      id="pais"
+      type="text"
+      formControlName="pais"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    />
+  </vdr-form-field>
+
+  <h4 class="section-title">Mundo Virtual</h4>
+
+  <vdr-form-field
+    [label]="'productor-plugin.webUrl-label' | translate"
+    for="webUrl"
+    [errors]="{ pattern: 'productor-plugin.webUrl-pattern-error' | translate }"
+  >
+    <input
+      id="webUrl"
+      type="text"
+      formControlName="webUrl"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    />
+  </vdr-form-field>
+  <vdr-form-field
+    [label]="'productor-plugin.email-label' | translate"
+    for="email"
+    [errors]="{ pattern: 'productor-plugin.email-pattern-error' | translate }"
+  >
+    <input
+      id="email"
+      type="text"
+      formControlName="email"
+      [readonly]="!(['CreateProductor', 'UpdateProductor'] | hasPermission)"
+    />
+  </vdr-form-field>
+  <div class="linksRRSS" formArrayName="linksRRSS">
+    <h5 class="linksRRSS-title">Links Sociales</h5>
+    <button (click)="addLinkRRSS()" class="btn btn-sm btn-secondary" type="button">
+      <clr-icon shape="plus"></clr-icon> {{ 'productor-plugin.linksRRSS-add' | translate }}
+    </button>
+
+    <!-- The repeated alias template -->
+    <vdr-form-field
+      class="linksRRSS-field"
+      *ngFor="let linkRRSS of linksRRSS.controls; let i=index"
+      label="Url {{i+1}}."
+      for="linkRRSS-{{ i }}"
+      [errors]="{ pattern: 'productor-plugin.webUrl-pattern-error' | translate }"
+    >
+      <input id="linkRRSS-{{ i }}" type="text" [formControl]="linkRRSS" />
+      <button (click)="removeLinkRRSS(i)" class="btn btn-sm btn-link" type="button">
+        <clr-icon shape="trash" class="is-danger"></clr-icon>
+      </button>
+    </vdr-form-field>
+  </div>
+</form>

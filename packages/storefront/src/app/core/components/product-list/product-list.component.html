@@ -1,0 +1,102 @@
+<div class="sub-header">
+  <div class="container">
+    <vsf-collection-breadcrumbs [breadcrumbs]="breadcrumbs$ | async"></vsf-collection-breadcrumbs>
+  </div>
+  <div class="container">
+    <div class="row d-none d-lg-block">
+      <div class="col-12">
+        <vsf-collections-tree-nav [selectedSlug]="collectionSlug$ | async"></vsf-collections-tree-nav>
+      </div>
+    </div>
+    <h1 class="collection-title text-muted" *ngIf="searchTerm$ | async as term">
+      Resultados para <span class="text-dark">"{{ term }}"</span>
+    </h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <vsf-alert-selfclose *ngIf="orderGroup$ | async as orderGroup">
+        <fa-icon icon="user-friends"></fa-icon>
+        Estás participando del pedido en grupo coordinado por {{ orderGroup.customer.firstName }}
+      </vsf-alert-selfclose>
+
+      <ng-container *ngIf="(orderGroup$ | async) === null">
+        <div class="alert alert-warning" *ngIf="hasUrlOrderGroupCode$ | async; else cartNotAllowedTemplate">
+          <fa-icon icon="user-friends"></fa-icon>
+          Todavía no estás participando del pedido en grupo
+          <button class="btn btn-primary btn-sm" (click)="orderGroupDoor.openUseUrlCode()">
+            Entrar en el pedido
+          </button>
+        </div>
+      </ng-container>
+
+      <div class="product-toolbar">
+        <vsf-product-list-controls
+          [sortOptions]="sortOptions"
+          [facetValues]="facetValues"
+          [activeFacetValueGrouped]="activeFacetValueGrouped$ | async"
+          [totalResults]="unfilteredTotalItems"
+        ></vsf-product-list-controls>
+      </div>
+      <ng-container *ngIf="(totalResults$ | async) !== 0; else noResults">
+        <div class="product-list">
+          <ng-container *ngIf="(totalResults$ | async) !== null">
+            <vsf-product-card
+              *ngFor="let product of products$ | async; trackBy: trackByProductId"
+              [product]="product"
+              [facetValues]="facetValues"
+              [cartOrderLines]="cartLines$ | async"
+              [addEnabled]="addToCartAllowed$ | async"
+            ></vsf-product-card>
+          </ng-container>
+          <ng-container *ngIf="loading$ | async">
+            <vsf-product-card
+              *ngFor="let product of placeholderProducts"
+              [product]="product"
+            ></vsf-product-card>
+          </ng-container>
+        </div>
+        <div class="load-more flex-fill" *ngIf="displayLoadMore$ | async">
+          <button
+            class="btn btn-secondary d-inline-flex align-items-center"
+            (click)="loadMore()"
+            [disabled]="loading$ | async"
+          >
+            Cargar más productos
+            <span
+              [class.show]="loading$ | async"
+              class="loading-indicator spinner-grow spinner-grow-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #noResults>
+  <div class="no-results" *ngIf="(hasErrorResult$ | async) !== true; else hasErrorTpl">
+    <fa-icon icon="search"></fa-icon>
+    <h1 class="h1">No se encontraron resultados</h1>
+    <p>
+      No hay productos con esas características <br />
+      probá utilizando <strong>otra palabra clave</strong> o navegá por las categorías y los filtros.
+    </p>
+  </div>
+</ng-template>
+
+<ng-template #hasErrorTpl>
+  <div class="no-results">
+    <h1 class="h1">¡Uy! Ocurrio un error no esperado</h1>
+    <p>
+      Probá más tarde nuevamente, <br />
+      si el error persiste, contactaté con el soporte, disculpas por las molestias
+    </p>
+  </div>
+</ng-template>
+
+<vsf-order-group-door #orderGroupDoor></vsf-order-group-door>

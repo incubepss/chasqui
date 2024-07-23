@@ -1,0 +1,448 @@
+<div class="orderFlowList" [class.--print-mode]="printMode$ | async">
+  <div class="toolbarFilters">
+    <div class="toolbarFilters-group">
+      <chq-shipping-method-filter [selected]="filterShippingMethod" (change)="onFilterShippingMethod($event)"></chq-shipping-method-filter>
+      <chq-dates-filter (change)="onFilterDatesChange($event)"></chq-dates-filter>
+      <button type="button" class="btn btn-link btn-icon" (click)='onRefresh()'>
+        <clr-icon shape="refresh"></clr-icon>
+      </button>
+    </div>
+    <div 
+      class="toolbarFilters-group filterGroupByCode" 
+      [class.filterGroupByCode--expanded]="stateUI.filterKeyString || isFocusFilterCode"
+    >
+      <input 
+        type="text" 
+        placeholder="Busca por código, nombre o E-mail" 
+        [(ngModel)]="stateUI.filterKeyString" 
+        (keyup.enter)="applyCodeFilter()" 
+        (focus)="isFocusFilterCode = true" 
+        (focusout)="isFocusFilterCode = false" 
+      />
+      <button 
+        class="btn btn-link filterGroupByCode-clearBtn" 
+        (click)="clearFilterByKey()">
+        <clr-icon shape="times"></clr-icon>
+      </button>
+    </div>
+  </div>
+
+  <clr-tabs class="statusesTab">
+    <clr-tab *ngIf="((countByState$ | async)?.['MODIFICANDO'].count || 0) > 0"> 
+        <button clrTabLink [class.active]="currentVirtualState==='MODIFICANDO'" (click)='onFilterState("MODIFICANDO")'>
+          <clr-icon shape="exclamation-triangle" class="is-solid is-warning"></clr-icon>
+          Modificando
+          <chq-count-badge [value]="(countByState$ | async)?.['MODIFICANDO'].count || 0"></chq-count-badge>
+        </button>
+    </clr-tab>
+    <clr-tab>
+      <button clrTabLink [class.active]="currentVirtualState==='NUEVOS'" (click)='onFilterState("NUEVOS")'>
+        <clr-icon shape="inbox" size="18"></clr-icon>
+        Nuevos
+        <chq-count-badge [value]="(countByState$ | async)?.['NUEVOS'].count || 0"></chq-count-badge>
+      </button>
+    </clr-tab>
+    <clr-tab>
+        <button clrTabLink [class.active]="currentVirtualState==='EN_PREPARACION'" (click)='onFilterState("EN_PREPARACION")'>
+          <clr-icon shape="bundle"></clr-icon>
+          En preparación
+          <chq-count-badge [value]="(countByState$ | async)?.['EN_PREPARACION'].count || 0"></chq-count-badge>
+        </button>
+    </clr-tab>
+    <clr-tab>
+        <button clrTabLink [class.active]="currentVirtualState==='EN_ENTREGA'" (click)='onFilterState("EN_ENTREGA")'>
+          <clr-icon shape="truck"></clr-icon>
+          En entrega
+          <chq-count-badge [value]="(countByState$ | async)?.['EN_ENTREGA'].count || 0"></chq-count-badge>
+        </button>
+    </clr-tab>
+    <clr-tab>
+        <button clrTabLink [class.active]="currentVirtualState==='ENTREGADOS'" (click)='onFilterState("ENTREGADOS")'>
+          <clr-icon shape="happy-face"></clr-icon>
+          Entregados
+          <chq-count-badge [value]="(countByState$ | async)?.['ENTREGADOS'].count || 0"></chq-count-badge>
+        </button>
+    </clr-tab>
+    <clr-tab>
+        <button clrTabLink [class.active]="currentVirtualState==='FINALIZADOS'" (click)='onFilterState("FINALIZADOS")'>
+          <clr-icon shape="sad-face"></clr-icon>
+          <chq-count-badge [value]="(countByState$ | async)?.['FINALIZADOS'].count || 0"></chq-count-badge>
+        </button>
+    </clr-tab>
+    <clr-tab>
+        <button clrTabLink [class.active]="currentVirtualState==='ACTIVOS'" (click)='onFilterState("ACTIVOS")'>
+          <clr-icon shape="shopping-cart"></clr-icon>
+          <chq-count-badge [value]="(countByState$ | async)?.['ACTIVOS'].count || 0"></chq-count-badge>
+        </button>
+    </clr-tab>
+  </clr-tabs>
+
+  <div class="printPreviewToolbar no-print">
+    <div class="left">
+      <button class="btn btn-primary" (click)="toPrint()">
+        <clr-icon shape="printer"></clr-icon>
+        Imprimir 
+      </button>
+    </div>
+    <div class="right">
+      <button class="btn btn-secondary" (click)="previewMode(false)">
+        <clr-icon shape="close"></clr-icon>
+        Cerrar vista previa
+      </button>
+    </div>
+  </div>
+
+  <div class="dataGridContainer" *ngIf="(ordersAndGroups$ | async)?.length > 0 || (loading$ | async); else NoRecords">
+    <div class="listContainer">
+        <div class="listContainer-toolbar">
+          <chq-button-export 
+            *ngIf="currentVirtualState !== 'ENTREGADOS' && currentVirtualState !== 'FINALIZADOS'"
+            [orderListOptions]="orderListOptions"
+          ></chq-button-export>
+        </div>
+        <div class="listContainer-list">
+          <div class="itemRow" [class.selected]="item?.code === detail?.code"  *ngFor="let item of ordersAndGroups$ | async" (click)="openDetail(item)">
+            <div class="itemRow-cellStatusColor --{{item.state}}"></div>
+            <div class="itemRow-cell">
+              <div class="itemRow-title">
+                <span *ngIf="isOrderGroup(item)" style="color: cornflowerblue">
+                  <clr-icon shape="employee-group"></clr-icon> {{item.customFields?.orderGroup?.id}}
+                </span>
+                {{item.customer?.firstName}} {{item.customer?.lastName}}
+              </div>
+              <div class="itemRow-titleDetail">
+                {{item.customer?.emailAddress}}
+              </div>
+              <div class="itemRow-updatedAt">{{ item.updatedAt | timeAgo }}</div>          
+            </div>
+            <div class="itemRow-cell itemRow-cellStats right">
+              <div class="statsCount">
+                <span class="statsCount-value">{{item.totalWithTax | localeCurrency: item.currencyCode}} </span>
+              </div>
+              <div class="statsCount" *ngIf="isOrderGroup(item); else statCountForOrder">
+                <div class="statsCount-label">{{item.ordersQuantity}} pedidos</div>
+                <div class="statsCount-label">{{item.totalQuantity}} unidades</div>
+              </div>
+              <ng-template #statCountForOrder>
+                <div class="statsCount">
+                  <span class="statsCount-label">{{item.totalQuantity}} unidades</span>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="listContainer-footer">
+          <div class="statsCount">
+            <span class="statsCount-label">suma</span>
+            <span class="statsCount-value">{{(countByState$ | async)?.[currentVirtualState].sumAmount || 0 | localeCurrency: 'ARS'}}</span>
+          </div>
+        </div>
+        <div class="listContainer-list" *ngIf="false">
+          <div class="itemRow"  *ngFor="let item of ordersGroup$ | async" (click)="openDetail(item)">
+            <div class="itemRow-cellStatusColor --{{item.state}}"></div>
+            <div class="itemRow-cell">
+              <div class="itemRow-title">
+                <span style="color: cornflowerblue"> <clr-icon shape="employee-group"></clr-icon> </span>
+                {{item.id}} {{item.alias}}  {{item.code}}
+              </div>
+              <div class="itemRow-titleDetail">
+                {{item.customer?.firstName}} {{item.customer?.lastName}} {{item.customer?.emailAddress}}
+              </div>
+              <div class="itemRow-updatedAt">{{ item.updatedAt | timeAgo }}</div>          
+            </div>
+            <div class="itemRow-cell itemRow-cellStats right">
+              <div class="statsCount">
+                <span class="statsCount-value">{{item.totalWithTax | localeCurrency: 'ARS'}} </span>
+              </div>
+              <div class="statsCount">
+                <span class="statsCount-value">{{item.ordersQuantity}}</span>
+                <span class="statsCount-label">pedidos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="detailContainer">
+      <ng-container *ngIf="detail?.id && !isOrderGroup(detail); else orderGroupDetail">
+        <div class="detailContainer-toolbar">
+          <button 
+            type="button" 
+            class="btn btn-secondary btn-sm no-print" 
+            (click)="orderToClipboard(detail)"
+            title="Copiar al portapapeles"
+          >
+          <clr-icon shape="clipboard"></clr-icon>
+            Copiar
+        </button>
+          <button 
+            *ngIf="currentVirtualState !== 'NUEVOS'"
+            type="button" 
+            class="btn btn-secondary btn-sm"  
+            (click)="previewMode(true)"
+          >
+            <clr-icon shape="printer"></clr-icon>
+            Remito
+          </button>
+          <button 
+            *ngIf="currentVirtualState === 'NUEVOS'"
+            type="button" 
+            class="btn btn-secondary btn-sm"
+            (click)="transitionToModifying(detail)"
+          >
+            <clr-icon shape="edit"></clr-icon> Modificar artículos
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary btn-sm"
+            *ngIf="canToEnPreparacion(detail)"
+            (click)="doAsEnPreparacion(detail)"
+          >
+            <clr-icon shape="employee"></clr-icon>
+            Aceptar pedido
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary btn-sm"
+            *ngIf="canToEnviado(detail)"
+            (click)="doAsEnviado(detail)"
+          >
+            <clr-icon shape="truck"></clr-icon>
+            Marcar <i>En entrega</i>
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary btn-sm"
+            *ngIf="canToEntregado(detail)"
+            (click)="doAsEntregado(detail)"
+          >
+            <clr-icon shape="check-circle"></clr-icon>
+            Marcar como <i>entregado</i>
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary btn-sm"
+            *ngIf="detail.state === 'Modifying'"
+            [routerLink]="['./', detail.id, 'modify']"
+          >
+            <clr-icon shape="check-circle"></clr-icon>
+            Continuar con la modificación
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary btn-sm"
+            *ngIf="detail.state === 'ArrangingAdditionalPayment'"
+            [routerLink]="['./', detail.id]"
+          >
+            <clr-icon shape="check-circle"></clr-icon>
+            Gestionar el pago adicional
+          </button>
+          <vdr-dropdown>
+            <button class="btn btn-secondary btn-sm" vdrDropdownTrigger >
+                <clr-icon shape="ellipsis-vertical"></clr-icon>
+            </button>
+            <vdr-dropdown-menu vdrPosition="bottom-left" >
+                <div vdrDropdownItem [routerLink]="['./',detail.id]">
+                  <clr-icon shape="terminal"></clr-icon> Vista avanzada
+                </div>
+                <ng-container *ngIf="currentVirtualState!=='NUEVOS' && detail.nextStates.includes('Modifying')">
+                  <div class="dropdown-divider"></div>
+                  <div vdrDropdownItem (click)="transitionToModifying(detail)">
+                    <clr-icon shape="edit"></clr-icon> Modificar artículos
+                  </div>
+                </ng-container>
+            </vdr-dropdown-menu>
+          </vdr-dropdown>
+        </div>
+
+        <div class="detailContainer-body">
+
+          <div class="channelDetailHeader" *ngIf="(activeChannel$ | async) as activeChannel">  
+            {{activeChannel.code}}
+          </div>
+          
+          <div class="detailHeader">
+            <div class="headerData left">
+              <div class="headerData-label">{{getTypeDelivery(detail)}}</div>
+              <div class="headerData-value">{{getShippingMethod(detail)}}</div>
+              <div  class="headerData-detail">
+                <clr-icon shape="map-marker"></clr-icon>
+                {{getAddressDelivery(detail)}}
+              </div>
+              <div class="headerData-detail" *ngIf="detail?.shippingAddress?.phoneNumber">
+                <clr-icon shape="phone-handset"></clr-icon>
+                {{detail?.shippingAddress?.phoneNumber}}
+              </div>
+            </div>
+            <div class="headerData">
+              <div class="headerData-label">Pedido individual</div>
+              <div class="headerData-value"> {{detail.customer?.firstName}} {{detail.customer?.lastName}}</div>
+              <div class="headerData-detail"> 
+                {{detail.customer?.emailAddress}}
+              </div>
+              <div class="headerData-detail" *ngIf="detail.customer?.phoneNumber">
+                <clr-icon shape="phone-handset"></clr-icon>
+                {{detail.customer?.phoneNumber}}
+              </div>
+              <div class="headerData-detail" *ngIf="detail.customer?.customFields?.codeCustomer">
+                {{detail.customer?.customFields?.codeCustomer}}
+              </div>
+            </div>
+            <div class="headerData right">
+              <div>
+                <div class="headerData-label"> Fecha y Nº Pedido</div>
+                <div class="headerData-value"> {{detail.orderPlacedAt | localeDate: 'longDate'}}</div>
+              </div>
+              <div>
+                <div class="headerData-detail"> {{detail.code}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="detailHeader detailHeader--box">
+            <div class="headerData left">
+              <div class="stateContainer-item">
+                <label>Estado del pago:</label>
+                <div class="stateContainer-item-value">
+                  <chq-payment-state 
+                    *ngFor="let payment of detail?.payments" 
+                    [payment]="payment"
+                    [printMode]="printMode$ | async"
+                    (onToSettled)="transitionPaymentToSettled($event)"
+                  ></chq-payment-state>
+                </div>
+                <div *ngIf="(printMode$ | async) && !hasAllPayment(detail)" class="manualStateToolbar"> <!-- solo para en modo imprimir -->
+                  <div> Realizado <span class="check"></span> </div>
+                  <div class="manualComplete"> 
+                    <label>Fecha</label> 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="headerData right">
+              <div class="stateContainer">
+                <div class="stateContainer-item">
+                  <label>Estado del pedido:</label>
+                  <span class="stateContainer-item-value" *ngIf="(printMode$ | async) === false">
+                    <chq-ordergroup-state-label [state]="detail.state"></chq-ordergroup-state-label>
+                  </span>
+                  <div *ngIf="printMode$ | async" class="manualStateToolbar">
+                    <div> Baja <span class="check"></span> </div>
+                    <div> Armado <span class="check"></span> </div>
+                    <div> Revisado <span class="check"></span> </div> 
+                    <div> Cargado <span class="check"></span> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <table class="table table-noborder table-compact">
+            <thead>
+              <tr>
+                <th class="left" colspan="2"> {{getQuantityDescription(detail)}} </th>
+                <th class="right">P. Lista</th>
+                <th class="right">Cantidad</th>
+                <th class="right">P. Final</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="lineRow" *ngFor="let v of detail?.lines">
+                <td class="left">
+                  {{v.productVariant.sku}}
+                </td>
+                <td class="left strong">
+                  {{v.productVariant.name}}
+                </td>
+                <td class="right">{{v.unitPriceWithTax | localeCurrency: detail.currencyCode}}</td>
+                <td class="right strong">{{v.quantity}}</td>
+                <td class="right strong">{{v.linePriceWithTax | localeCurrency: detail.currencyCode}}</td>
+              </tr>
+              <tr class="lineRow" *ngFor="let discount of detail?.discounts">
+                <td class="left">
+                </td>
+                <td class="left" colspan="3">
+                  Descuento: {{discount.description}}
+                </td>
+                <td class="right">{{discount.amountWithTax | localeCurrency: detail.currencyCode}}</td>
+              </tr>
+              <tr class="lineRow" *ngFor="let surcharge of detail.surcharges">
+                <td class="left"> </td>
+                <td class="left" colspan="3">
+                  Adicional: {{surcharge.description}}
+                </td>
+                <td class="right line">
+                  {{surcharge.priceWithTax | localeCurrency: detail.currencyCode}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        
+          <div class="detailFooter">
+            <div class="subTotalContainer">
+                <table class="table table-noborder table-compact">
+                  <tr>
+                    <td class="right">
+                      Subtotal
+                    </td>
+                    <td class="right">
+                      {{detail.subTotalWithTax | localeCurrency: detail.currencyCode}}
+                    </td>
+                  </tr>
+                  <tr *ngIf="detail.shippingLines[0]">
+                    <td class="right">
+                      Envio: {{detail.shippingLines[0].shippingMethod?.name}}
+                    </td>
+                    <td class="right">
+                      {{detail.shippingWithTax | localeCurrency: detail.currencyCode}}
+                    </td>
+                  </tr>
+                  <tr class="totalRow">
+                    <td class="right line">
+                      Total
+                    </td>
+                    <td class="right line">
+                      {{detail.totalWithTax | localeCurrency: detail.currencyCode}}
+                    </td>
+                  </tr>
+                </table>
+            </div>
+          </div>
+    
+          <div>
+            Nota del consumidor: {{getComment(detail)}}
+          </div>
+
+          <chq-remito-talon *ngIf="printMode$ | async" [order]="detail"></chq-remito-talon>
+        </div>
+     
+
+      </ng-container>
+      <ng-template #orderGroupDetail>
+        <vsf-orderGroup-detail [orderGroup]="detail" (change)="onRefresh()"></vsf-orderGroup-detail>
+      </ng-template>
+    </div>
+    <div class="loadingContainer" *ngIf="loading$ | async">
+      <span class="spinner spinner-md">Loading...</span>
+    </div>
+  </div>
+
+  <ng-template #NoRecords>
+    <div class="emptyContainer">
+      <div class="emptyContainer-iconContainer">
+        <clr-icon shape="sun"></clr-icon>
+      </div>
+      <div class="emptyContainer-primaryMsg">
+        No hay pedidos {{'virtual-states.'+currentVirtualState.toLowerCase() | translate}}
+      </div>
+      <div class="emptyContainer-suggestNextActionMsg" *ngIf="currentVirtualState==='NUEVOS'">
+        Ahora te <strong>falta crear remitos en la solapa de <i>en preparación</i></strong> para poder armar los pedidos
+      </div>
+      <div class="emptyContainer-suggestNextActionMsg" *ngIf="currentVirtualState==='EN_PREPARACION'">
+        Listo! solo falta que el repartidor fije el pedido como entregado
+      </div>
+      <div class="emptyContainer-secondaryMsg">
+        Si terminó tu trabajo, ya podés ir a disfrutár del día
+      </div>
+    </div>
+  </ng-template>
+</div>

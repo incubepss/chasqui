@@ -1,0 +1,21 @@
+<div class="card" [class.--noCard]="noCard">
+  <div class="card-body">
+    <h6 class="card-title" *ngIf="title">{{ title }}</h6>
+    <ul class="list-unstyled mb-0 address-lines">
+      <li class="address-name">
+        {{ address.fullName }}
+      </li>
+      <li class="address-street">
+        <fa-icon icon="map-marked"></fa-icon>
+        {{ address.streetLine1 }}
+      </li>
+      <li>
+        {{ address.city }}, {{ address.province }}
+      </li>
+      <li> <span>CP:</span> {{ address.postalCode }}</li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="orderGroupStateTag --{{state}}">
+  <vdr-chip [colorType]="chipColorType">
+    {{state | stateI18nToken | translate}}
+    <ng-content></ng-content>
+  </vdr-chip>
+</div>

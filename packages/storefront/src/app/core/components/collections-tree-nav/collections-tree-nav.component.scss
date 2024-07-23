@@ -1,0 +1,103 @@
+@import 'bootstrap';
+
+.btn {
+  border-radius: 4px;
+}
+
+.collectionTree {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1px;
+  margin-bottom: 2em;
+
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include media-breakpoint-up(xl) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  a:hover {
+    text-decoration: none;
+    color: #0c96a0;
+  }
+  .level0 {
+    padding: 0.5rem;
+    border-radius: 0rem;
+    background-color: #fff;
+    font-size: 0.8rem;
+    &.active {
+      li {
+        font-weight: 400;
+      }
+      > a {
+        color: #0c96a0;
+        font-weight: 600;
+      }
+    }
+  }
+  .level0 li {
+    color: #6c757d;
+    font-size: 0.8rem;
+    position: relative;
+    padding-left: 0.7rem;
+    &:before {
+      position: absolute;
+      left: 0;
+      color: #6c757d;
+      content: '›';
+    }
+    &.active {
+      > a {
+        font-weight: 600;
+        color: #0c96a0;
+      }
+    }
+  }
+}
+
+ul {
+  list-style-type: none;
+  margin-bottom: 1rem;
+  padding-left: 0;
+}
+
+ul.expandable {
+  &.expanded {
+    display: block;
+  }
+}
+
+.sellosFilter-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+  margin-bottom: 2em;
+  @include media-breakpoint-up(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include media-breakpoint-up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include media-breakpoint-up(xl) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  div {
+    display: flex;
+    justify-content: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background: #fff;
+    padding: 1rem 0;
+  }
+
+  * {
+    color: $link-color;
+
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+}

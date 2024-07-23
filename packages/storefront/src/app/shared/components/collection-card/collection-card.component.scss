@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  position: relative;
+  //padding: $spacer / 2 $spacer;
+  //overflow: hidden;
+  margin: 0.5em 0;
+  &:last-child {
+    margin-bottom: 0;
+    a { border-bottom: none; }
+    h5 { margin-bottom: 0; }
+  }
+}
+
+.card-background {
+  display:none;
+}
+a {
+  display: block;
+  border-bottom: 1px solid #fff;
+}
+
+
+
+.collection-name {
+  z-index: 1;
+  position: relative;
+  text-decoration: none;
+}
+
+.collection-title {
+    font-size: 16px;
+}

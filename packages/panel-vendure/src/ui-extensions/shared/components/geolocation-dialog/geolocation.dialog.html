@@ -1,0 +1,34 @@
+<ng-template vdrDialogTitle>
+  Edita 
+  <ng-container *ngIf="mode === 'point'">el punto</ng-container>
+  <ng-container *ngIf="mode === 'zone'">la zona</ng-container>
+</ng-template>
+
+<div class="search-container">
+  <chq-geolocation-search (change)="onSelectGeoPoint($event)"></chq-geolocation-search>
+</div>
+
+<div>
+  <div leaflet style="height: 450px;"
+      leafletDraw
+      [leafletOptions]="options"
+      [(leafletCenter)]="center"
+      [leafletFitBounds]="fitBounds"
+      [(leafletZoom)]="zoom"
+      (leafletMapReady)="onMapReady($event)"
+      [leafletDrawOptions]="drawOptions"
+      (leafletDrawCreated)="onDrawCreated($event)"
+    >
+
+    <div [leafletLayer]="drawnItems"></div>
+  </div>
+</div>
+
+<ng-template vdrDialogButtons>
+  <button type="button"
+          class="btn"
+          (click)="cancel()">Cancelar</button>
+  <button type="button"
+          class="btn btn-primary"
+          (click)="okay()">Aceptar</button>
+</ng-template>

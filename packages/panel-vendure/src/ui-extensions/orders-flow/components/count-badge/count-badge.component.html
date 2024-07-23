@@ -1,0 +1,4 @@
+<span [ngClass]="{'badge': value > 0}">
+  <ng-container *ngIf="value<1000; else bigNum">{{value || 0}}</ng-container>
+  <ng-template #bigNum>+999</ng-template>
+</span>

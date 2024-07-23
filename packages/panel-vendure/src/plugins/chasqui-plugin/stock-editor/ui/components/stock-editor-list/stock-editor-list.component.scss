@@ -1,0 +1,117 @@
+:host ::ng-deep {
+  tr td {
+    vertical-align: middle;
+  }
+  tr:hover td {
+    background-color: var(--clr-color-neutral-200);
+  }
+
+  .clr-control-label {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .btn {
+    min-width: initial;
+  }
+
+  tr.--editing td {
+    height: 45px;
+  }
+}
+
+th.sortable {
+  cursor: pointer;
+  clr-icon {
+    margin-left: 0.25rem;
+  }
+}
+
+tr.--editing td {
+  background-color: var(--clr-color-neutral-100);
+}
+
+table input[type="number"] {
+  width: 100%;
+}
+
+.cellEditable {
+  cursor: pointer;
+}
+
+.cellPrice {
+  width: 150px;
+  color: var(--clr-color-action-600);
+}
+
+.cellStock {
+  width: 100px;
+  color: var(--clr-color-action-600);
+}
+
+.cellStockAllocated {
+  width: 110px;
+}
+
+.cellActions {
+  width: 250px;
+  padding: 0;
+
+  .btn {
+    margin-top:0;
+    margin-bottom:0;
+  }
+}
+
+.statsCount {
+  label {
+    color: var(--clr-color-neutral-500);
+    margin-right: 0.5rem;
+  }
+  &-value {
+    color: var(--clr-color-neutral-800);
+  }
+}
+
+.paginatorContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+
+  .left {
+    display: flex;
+    align-items: center;
+    > * {
+      margin-right: 0.5rem;
+    }
+  }
+
+  > * {
+    flex: 1 1 auto;
+  }
+
+  .right {
+    text-align: right;
+  }
+}
+
+.filterContainer {
+  display: flex;
+
+  input, select, button {
+    margin-right: 0.5rem;
+    height: 1.2rem;
+  }
+
+  &-inptKey {
+    width: 300px;
+  }
+
+  &-inptStock {
+    width: 160px;
+  }
+
+  .placeholder {
+    color: var(--clr-color-neutral-400);
+  }
+}

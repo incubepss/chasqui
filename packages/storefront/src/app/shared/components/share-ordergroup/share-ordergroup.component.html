@@ -1,0 +1,47 @@
+<div class="shareContainer" *ngIf="mode === 'button'; else actionItemMode">
+  <button
+    *ngIf="shareAvailable; else copyMode"
+    type="button"
+    class="btn btn-secondary"
+    (click)="doShare()"
+    title="Compartir la dirección web del pedido grupal"
+  >
+    <fa-icon icon="share-alt"></fa-icon> Compartir
+  </button>
+  <ng-template #copyMode>
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="doCopyToClipboard()"
+      title="Copiar la dirección del pedido grupal al portapapeles"
+    >
+      <fa-icon icon="file"></fa-icon> Copiar enlace
+    </button>
+  </ng-template>
+</div>
+
+<ng-template #actionItemMode>
+  <vsf-mobile-list-action
+    *ngIf="shareAvailable; else copyMode"
+    (click)="doShare()"
+    icon="share-alt"
+    label="Compartir enlace"
+    secondaryText="Compartir el enlace para invitar a más personas"
+  ></vsf-mobile-list-action>
+  <ng-template #copyMode>
+    <vsf-mobile-list-action
+      (click)="doCopyToClipboard()"
+      icon="file"
+      label="Copiar enlace"
+      secondaryText="Podés copiar el enlace al portapapeles para invitar a más personas"
+    ></vsf-mobile-list-action>
+  </ng-template>
+</ng-template>
+
+<vsf-mobile-list-action
+  [routerLink]="'/' + activeChannel + '/catalogo'"
+  [queryParams]="{ gcode: orderGroup.code }"
+  icon="shopping-cart"
+  label="Iniciar un nuevo pedido en el grupo"
+  secondaryText="Podés identificarlo con un apodo"
+></vsf-mobile-list-action>

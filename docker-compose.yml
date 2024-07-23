@@ -1,0 +1,72 @@
+version: "3.3"
+
+## DEVELOP VERSION
+
+services:
+  panel-vendure:
+    image: chasqui-panel:2.0.4
+    ##build:
+    ##  context: ./packages/panel-vendure
+    volumes:
+      - ./packages/panel-vendure/static/assets:/app/static/assets
+    environment:
+      - TZ=UTC
+      - FROM_ADDRESS=Chasqui2 No responder <noreply@proyectowow.com.ar>
+      - EMAIL_SUBJECT_ENVIRONMENT_FLAG
+      - VERIFY_EMAIL_ADDRESS_URL=http://${HOST_NAME}/micuenta/verificar
+      - PASSWORD_RESET_URL=http://${HOST_NAME}/micuenta/blanqueo-de-password
+      - CHANGE_EMAIL_ADDRESS_URL=http://${HOST_NAME}/micuenta/cambio-email
+      - MERCADOPAGO_WEBHOOK_CONTROLLER=https://webhook.site/2085609c-945f-45ba-a698-db689d468005
+      - MERCADOPAGO_BACK_URL_SUCCESS=https://webhook.site/71260de2-1ce1-4462-867c-cae84d490c6d
+      - MERCADOPAGO_BACK_URL_PENDING=https://webhook.site/71260de2-1ce1-4462-867c-cae84d490c6d
+      - MERCADOPAGO_BACK_URL_FAILURE=https://webhook.site/71260de2-1ce1-4462-867c-cae84d490c6d
+      - EXPIRATION_CART_MINUTES
+      - ENABLED_GRAPHQL_PLAYGROUND
+      - IMPORT_ASSETS_DIR
+      - EMAIL_DEVMODE
+      - EMAIL_HOST
+      - EMAIL_PORT
+      - EMAIL_USERNAME
+      - EMAIL_PASSWORD
+      - SUPERADMIN_ID
+      - SUPERADMIN_PASSWORD
+      - SUPERADMIN_EMAIL
+      - DB_HOST
+      - DB_PORT
+      - DB_USERNAME
+      - DB_PASSWORD
+      - DB_NAME
+      - REDIS_HOST
+      - REDIS_DB
+    ports:
+      - 3001:3000
+    depends_on:
+      - chasqui-db
+  storefront:
+    build:
+      context: ./packages/storefront
+      dockerfile: Dockerfile.nginx
+    ports:
+      - 4001:4000
+    depends_on:
+      - panel-vendure
+  chasqui-db:
+    image: postgres:13-alpine3.14
+    volumes:
+      - datadb-incubepss-pg:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+  redis:
+    image: bitnami/redis:6.2
+    hostname: redis
+    container_name: redis
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    ports:
+      - "6379:6379"
+volumes:
+  datadb-incubepss-pg:

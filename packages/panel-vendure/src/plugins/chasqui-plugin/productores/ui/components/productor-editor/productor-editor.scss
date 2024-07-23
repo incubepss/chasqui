@@ -1,0 +1,25 @@
+@import 'variables';
+
+.action-bar {
+  align-items: center;
+}
+
+.search-input {
+  margin-top: 6px;
+  min-width: 300px;
+}
+
+.section-title {
+  font-weight: bold;
+  font-size: 1rem;
+  color: rgb(136, 133, 133);
+  margin-bottom: 0.5rem;
+}
+
+.linksRRSS {
+  &-title {
+    font-weight: bold;
+    font-size: 0.65rem;
+    color: var(--clr-forms-label-color, #454545);
+  }
+}

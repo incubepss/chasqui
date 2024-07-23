@@ -1,0 +1,64 @@
+<button type="button" class="close" aria-label="Close" (click)="closeAndCancel()">
+  <span aria-hidden="true">&times;</span>
+</button>
+<ng-container *ngIf="navMenu">
+  <a [contextRouterLink]="['']" class="logo-link mb-3" (click)="close()">
+    <vsf-img-logo-tienda></vsf-img-logo-tienda>
+  </a>
+
+  <div class="divider"></div>
+
+  <ul>
+    <li class="level0"><a (click)="close()" [contextRouterLink]="['/']">Inicio</a></li>
+    <li class="level0">
+      <a (click)="close()" [contextRouterLink]="['catalogo']" routerLinkActive="active">Catálogo</a>
+    </li>
+    <li class="level0"><a (click)="close()" [contextRouterLink]="['/productores']">Productores</a></li>
+    <li class="level0"><a (click)="close()" [contextRouterLink]="['/entregas']">Entregas</a></li>
+  </ul>
+
+  <vsf-layout-footer></vsf-layout-footer>
+
+  <div class="divider"></div>
+
+  <vsf-account-link class="mr-2 account" (click)="close()"></vsf-account-link>
+
+  <div class="divider"></div>
+  <ul>
+    <li class="level0">
+      <a (click)="close()" [routerLink]="['/']">
+        <fa-icon icon="store"></fa-icon>
+        Ir a Chasqui
+      </a>
+    </li>
+  </ul>
+</ng-container>
+
+<ng-container *ngIf="cateMenu">
+  <vsf-collections-tree-nav
+    [selectedSlug]="collectionTree$ | async"
+    class="menu-mobile-list"
+  ></vsf-collections-tree-nav>
+  <!-- <ul class="cate-list" *ngIf="collectionTree$ | async as tree">
+    <li class="level0" *ngFor="let collection of tree.children">
+      <a class="" href="" (click)="onL0Click($event, collection)">{{ collection.name }}</a>
+      <ul *ngIf="collection.children.length" class="expandable" [class.expanded]="selected0 === collection.id">
+        <li class="level1" *ngFor="let level1 of collection.children">
+          <a class="" href="" (click)="onL1Click($event, level1)">{{ level1.name }}</a>
+          <ul *ngIf="level1.children.length" class="expandable" [class.expanded]="selected1 === level1.id">
+            <li class="level2" *ngFor="let level2 of level1.children">
+              <a class="" (click)="close()" (click)="navigateItem(level2)">{{ level2.name }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul> -->
+
+  <!-- <h4>Sellos</h4>
+  <ul>
+    <li class="level0" *ngFor="let sello of sellosMenu$ | async">
+      <a (click)="close()" [routerLink]="makeLink(['catalogo', {etiqueta: sello.facet.id +':'+ sello.id}])" ><vsf-sello [code]="sello.code">{{sello.name}}</vsf-sello></a>
+    </li>
+  </ul> -->
+</ng-container>

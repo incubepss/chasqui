@@ -1,0 +1,30 @@
+<ng-container *ngIf="channel$ | async as channel">
+  <div class="alert store-disabled" *ngIf="channel.customFields?.storeEnabled !== true">
+    <div class="container">
+      <div class="alert-icon">
+        <fa-icon icon="store-slash"></fa-icon>
+      </div>
+      <div>
+        <h4 class="alert-title">La tienda tiene las compras deshabilitadas</h4>
+        <div class="alert-content" [innerHTML]="channel.customFields?.messageStoreDisabled || ''"></div>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="channel.customFields?.storeEnabled === true && (addToCartAllowed$ | async) === false"
+    class="alert alert-warning"
+  >
+    <div class="container">
+      <div class="alert-icon">
+        <fa-icon icon="exclamation-triangle"></fa-icon>
+      </div>
+      <div>
+        <h4 class="alert-title">Esta tienda solo permite las compras a los usuarios habilitados</h4>
+        <div
+          class="alert-content"
+          [innerHTML]="channel.customFields?.messageOrderSinglesDisabled || ''"
+        ></div>
+      </div>
+    </div>
+  </div>
+</ng-container>

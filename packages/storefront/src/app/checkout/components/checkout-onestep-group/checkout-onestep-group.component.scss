@@ -1,0 +1,87 @@
+@import 'variables';
+
+
+vsf-mobile-card {
+  small {
+    line-height: 1rem;
+    display: block;
+  }
+}
+
+.oneStep {
+  &-total {
+    font-size: 1.4rem;
+  }
+
+  &-quantityLines {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    background-color: $chq2color-primary-comunity;
+    color: white;
+    border-radius: 0.6rem;
+  }
+}
+
+.address {
+  font-size: 0.8rem;
+
+  &-street {
+    font-weight: bold;
+  }
+}
+
+
+.btn-primary {
+  width: 100%;
+}
+
+textarea.form-control {
+  background-color: $gray-100;
+  font-size: 0.85rem;
+  resize: none;
+}
+
+.toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+
+  &-numbersContainer {
+    text-align: left;
+    flex: 1 0 50%;
+    color: $chq2color-primary-comunity;
+  }
+
+  &-submitBtn {
+    flex: 1 1 50%;
+    font-size: 0.9rem;
+  }
+}
+
+.numbersContainer {
+  &-total {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  
+  &-quantityItems {
+    font-size: 0.7rem;
+  }
+}
+
+@include media-breakpoint-up(xs) {
+  .toolbar {
+  
+    &-submitBtn {
+      font-size: 1rem;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .oneStep {
+    margin-bottom: 3rem;
+  }
+}

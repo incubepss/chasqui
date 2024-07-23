@@ -1,0 +1,41 @@
+<div class="accordion">
+  <div class="card card--borderless">
+    <div class="card-header" (click)="selectPayment()">Seleccionar el método de pago</div>
+    <div class="card-body">
+      <div class="alert alert-danger" role="alert" *ngIf="paymentErrorMessage">
+        {{ paymentErrorMessage }}
+      </div>
+      <ng-container *ngFor="let paymentMethod of paymentMethods$ | async">
+        <div
+          class="PaymentMethodBox"
+          [class.isSelected]="selectedPaymentMethod === paymentMethod"
+          (click)="selectMethodCode(paymentMethod)"
+        >
+          <div class="PaymentMethodBox-icon">
+            <vsf-icon-payment-method [paymentMethod]="paymentMethod"></vsf-icon-payment-method>
+          </div>
+          <div class="PaymentMethodBox-detail">
+            <div class="PaymentMethodBox-name">{{ paymentMethod.name }}</div>
+            <div class="PaymentMethodBox-description" [innerHTML]="paymentMethod.description"></div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="card card--borderless card-adicionales" *ngIf="stepPayment === 'selectSurcharge'">
+    
+    <div class="card-body" >
+      <vsf-checkout-surcharge></vsf-checkout-surcharge>
+    </div>
+  </div>
+  <div class="checkout-actions">
+    <button 
+      class="btn btn-secondary"   
+      [disabled]="(canContinue$ |async) !== true"
+      (click)="goToConfirm()">
+      Continuar
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+</div>
+  

@@ -1,0 +1,23 @@
+<div
+  class="nav-wrapper"
+  *ngIf="collectionTree$ | async as tree"
+  [class.active]="overlayIsOpen$ | async"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="close($event)"
+>
+  <span class="nav-title">Categorías <fa-icon icon="chevron-down"></fa-icon></span>
+  <ul class="nav">
+    <li class="nav-item" *ngFor="let collection of tree.children">
+      <a class="nav-link" [routerLink]="['/categoria', collection.slug]" (click)="close()">
+        {{collection.name}} 
+      </a>
+      <ul class="collections-menu-sub-collections" *ngIf="collection.children.length > 0">
+        <li *ngFor="let level1 of collection.children">
+          <a class="nav-link level-1-link" [routerLink]="['/categoria', level1.slug]" (click)="close()">
+            {{ level1.name }}
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,183 @@
+@import 'variables';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+}
+
+.cart-contents {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.items {
+  height: 100%;
+  overflow: auto;
+}
+
+.item {
+  display: flex;
+  margin-bottom: 0.5rem;
+  align-items: flex-start;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  padding: 0.5rem;
+  .thumb img {
+    width: 50px;
+    border-radius: 0.5rem;
+
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    padding-left: $spacer;
+    flex: 1;
+  }
+
+  .name {
+    font-size: $font-size-sm;
+    font-weight: 400;
+    margin: 0;
+  }
+  .unit-price {
+    margin-bottom: 0.5rem;
+    color: #999;
+    font-size: 0.8rem;
+  }
+
+  .figures {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .btn:focus {
+      box-shadow: none;
+    }
+    .list-price {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 0;
+      width: 40%;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      border-radius: 0.5rem;
+      border: 1px solid #aaa;
+      color: #aaa;
+  
+      fa-icon {
+        color: #aaa;
+      }
+    }
+    .remove {
+      fa-icon {
+        transition: color 200ms;
+      }
+  
+      fa-icon:hover {
+        color: $danger;
+      }
+    }
+  }
+  .figures.fixedQuantity {
+    justify-content: right;
+    
+    .list-price {
+      width: auto;
+      order: 2;
+    }
+    .qty-controls {
+      margin-right: 1rem;
+      width: 3rem;
+      justify-content: center;
+    }
+  }
+
+  &.has-discount {
+    .list-price {
+      text-decoration: line-through;
+      color: $gray-600;
+    }
+
+    .discounted {
+      display: block;
+    }
+  }
+}
+
+.adjustment {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: $gray-700;
+}
+
+.totals-amount {
+  font-weight: bold;
+}
+
+.order-tax,
+.totals,
+.order-adjustments,
+.shipping,
+.customSurcharge {
+  margin-top: $spacer;
+  border-top: 1px dashed #ddd;
+  padding-top: $spacer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.shipping {
+  display: block;
+}
+
+.shipping-price {
+  display: flex;
+  justify-content: space-between;
+}
+
+.shipping-method {
+  font-size: 12px;
+  color: $gray-600;
+}
+
+.order-adjustments {
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.order-tax {
+  font-size: 14px;
+}
+
+.customSurcharge {
+  display: block;
+}
+
+.customSurcharge-price {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+@include media-breakpoint-down(xs) {
+
+  .order-tax,
+  .totals,
+  .order-adjustments,
+  .shipping,
+  .customSurcharge {
+    padding-top: $spacer*0.5;
+    margin-top: $spacer*0.5;
+    font-size: 0.9rem;
+  }
+
+  .totals {
+    font-size: 1rem;
+  }
+}

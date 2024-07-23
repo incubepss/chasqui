@@ -1,0 +1,39 @@
+{{> header title="Recibimos tu pago de Mercado Pago" }}
+
+<mj-section>
+    <mj-column>
+        <mj-text>
+            <h3>Muchas gracias por tu pago</h3>
+        </mj-text>
+        <mj-table cellpadding="6px">
+            <tr>
+              <td>Para el pedido con código</td>
+              <td>{{ orderCode }}</td>
+            </tr>
+            <tr>
+              <td>Código de transacción </td>
+              <td>{{ paymentTransactionId }}</td>
+            </tr>
+             {{#each metadata.public.pagos }}
+                <tr>
+                  <td>Fecha</td>
+                  <td>{{ fecha }}</td>
+                </tr>
+                <tr>
+                  <td>Método</td>
+                  <td>{{ metodo }}</td>
+                </tr>
+                <tr>
+                  <td>Monto</td>
+                  <td>${{ monto }}</td>
+                </tr>
+                <tr>
+                  <td>Estado</td>
+                  <td>{{ estado }} {{estado_detallado}} </td>
+                </tr>
+              {{/each}}  
+        </mj-table>
+    </mj-column>
+</mj-section>
+
+{{> footer }}

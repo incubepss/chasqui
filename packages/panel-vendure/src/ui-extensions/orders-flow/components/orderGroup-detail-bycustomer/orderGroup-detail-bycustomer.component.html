@@ -1,0 +1,120 @@
+<div>
+  <ng-container *ngIf="orderGroup$ | async as detail; else NotFound">
+    <div class="summaryHeader">
+      <div>
+        {{detail?.ordersConfirmed?.totalItems}} pedidos
+      </div>
+      <div class="right">
+        <button *ngIf="!expandedLines" class="btn btn-sm btn-secondary no-print" (click)="doExpandLines()">
+          <clr-icon shape="plus"></clr-icon>
+          Mostrar artículos
+        </button>
+        </div>
+    </div>
+
+    <table 
+      class="tableOrders table table-noborder table-compact" 
+      [class.expandedLines]="expandedLines"
+      *ngFor="let order of detail?.ordersConfirmed?.items">
+      <thead>
+        <ng-container *ngIf="expandedLines; else notExpendedTh">
+          <tr>
+            <th class="left customerCell" colspan="2"> 
+              <strong>{{order.customer?.firstName}} {{order.customer?.lastName}} </strong>
+              <div><small>{{order.customer?.emailAddress}}</small></div>
+            </th>
+            <th class="right customerCell" colspan="3"> 
+              <div>
+                <a [routerLink]="['./',order.id]">
+                  {{order.code}}
+                </a>
+              </div>
+              <small>{{order.orderPlacedAt | localeDate: 'longDate'}}</small>
+            </th>
+          </tr>
+          <tr>
+            <th class="left" colspan="2"> 
+              {{getQuantityDescription(order)}}
+            </th>
+            <th class="right" width="80">P. Unidad</th>
+            <th class="right" width="60">Cantidad</th>
+            <th class="right" width="80">P. Final</th>
+          </tr>
+        </ng-container>
+        <ng-template #notExpendedTh>
+          <tr>
+            <th class="left customerCell" colspan="3"> 
+              <strong>{{order.customer?.firstName}} {{order.customer?.lastName}} </strong>  <br/>
+              {{order.customer?.emailAddress}}
+            </th>
+            <th class="right totalAmountCell" colspan="2">
+              <strong>{{order.totalWithTax | localeCurrency: detail.currencyCode}}</strong> <br/>
+              {{getQuantityDescription(order)}}
+            </th>
+          </tr>
+        </ng-template>
+      </thead>
+      <tbody>
+        <tr class="lineRow" *ngFor="let v of order?.lines">
+          <td class="left" width="80">
+            {{v.productVariant.sku}}
+          </td>
+          <td class="left">
+            {{v.productVariant.name}}
+          </td>
+          <td class="right">{{v.unitPriceWithTax | localeCurrency: detail.currencyCode}}</td>
+          <td class="right">{{v.quantity}}</td>
+          <td class="right strong">{{v.linePriceWithTax | localeCurrency: detail.currencyCode}}</td>
+        </tr>
+        <ng-container *ngFor="let discount of order?.discounts">
+          <tr class="lineRow" *ngIf="discount.type !== 'OTHER'">
+            <td > </td>
+            <td class="left" colspan="3">
+              Descuento: {{discount.description}}
+            </td>
+            <td class="right">{{discount.amountWithTax | localeCurrency: detail.currencyCode}}</td>
+          </tr>
+        </ng-container>
+        <tr class="lineRow" *ngIf="order.shippingWithTax > 0">
+          <td></td>
+          <td class="left" colspan="3">
+            Envio: {{order.shippingLines[0].shippingMethod?.name}}
+          </td>
+          <td class="right">
+            {{order.shippingWithTax | localeCurrency: detail.currencyCode}}
+          </td>
+        </tr>
+        <tr class="lineRow" *ngFor="let surcharge of order?.surcharges">
+          <td> </td>
+          <td class="left" colspan="3">
+            Adicional: {{surcharge.description}}
+          </td>
+          <td class="right">
+            {{surcharge.priceWithTax | localeCurrency: detail.currencyCode}}
+          </td>
+        </tr>
+        <tr class="lineRow" *ngIf="expandedLines">
+          <td class="right totalAmountCell" colspan="5">
+            Subtotal pedido
+            <strong>{{order.totalWithTax | localeCurrency: detail.currencyCode}}</strong>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <div class="loadingContainer" *ngIf="loading$ | async">
+    <span class="spinner spinner-md">Loading...</span>
+  </div>
+
+  <ng-template #NotFound>
+    <div class="emptyContainer" *ngIf="(loading$ | async )!== true">
+      <div class="emptyContainer-iconContainer">
+        <clr-icon shape="sun"></clr-icon>
+      </div>
+      <div class="emptyContainer-primaryMsg">
+        No se encontró al pedido 
+      </div>
+    </div>
+  </ng-template>
+</div>

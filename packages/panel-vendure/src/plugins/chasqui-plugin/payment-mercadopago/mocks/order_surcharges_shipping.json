@@ -1,0 +1,112 @@
+{
+  "id": "10",
+  "code": "EATE3SR4WG1ZBQW7",
+  "state": "PaymentAuthorized",
+  "active": false,
+  "lines": [
+    {
+      "id": "24",
+      "featuredAsset": {
+        "id": "137",
+        "width": 1080,
+        "height": 690,
+        "name": "du0302.jpg",
+        "preview": "http://localhost:3000/panel-assets/channel-2/preview/bc/du0302__preview.jpg",
+        "focalPoint": null,
+        "__typename": "Asset"
+      },
+      "unitPrice": 41322,
+      "unitPriceWithTax": 50000,
+      "quantity": 1,
+      "linePriceWithTax": 50000,
+      "discountedLinePriceWithTax": 50000,
+      "productVariant": {
+        "id": "140",
+        "name": "Dulce de Leche Familiar  x 1 kg",
+        "__typename": "ProductVariant"
+      },
+      "discounts": [],
+      "__typename": "OrderLine"
+    },
+    {
+      "id": "25",
+      "featuredAsset": {
+        "id": "373",
+        "width": 1080,
+        "height": 690,
+        "name": "dulce_leche.jpeg",
+        "preview": "http://localhost:3000/panel-assets/channel-2/preview/87/dulce_leche__preview.jpeg",
+        "focalPoint": null,
+        "__typename": "Asset"
+      },
+      "unitPrice": 33058,
+      "unitPriceWithTax": 40000,
+      "quantity": 1,
+      "linePriceWithTax": 40000,
+      "discountedLinePriceWithTax": 40000,
+      "productVariant": {
+        "id": "370",
+        "name": "Helados Dulce de leche pack x 5 paletas - SE RETIRA EN NODO",
+        "__typename": "ProductVariant"
+      },
+      "discounts": [],
+      "__typename": "OrderLine"
+    }
+  ],
+  "totalQuantity": 2,
+  "subTotal": 84380,
+  "subTotalWithTax": 100000,
+  "total": 104380,
+  "totalWithTax": 120000,
+  "shipping": 20000,
+  "shippingWithTax": 20000,
+  "shippingLines": [
+    {
+      "priceWithTax": 20000,
+      "shippingMethod": {
+        "id": "3",
+        "code": "zona-norte",
+        "name": "Zona Norte",
+        "description": "<pre><code>Envío miércoles de 11 a 16 hs. Costo de envío $200</code></pre>",
+        "__typename": "ShippingMethod"
+      },
+      "__typename": "ShippingLine"
+    }
+  ],
+  "discounts": [],
+  "surcharges": [
+    {
+      "description": "Bono colaboración",
+      "sku": "1-1",
+      "price": 10000,
+      "priceWithTax": 10000,
+      "__typename": "Surcharge"
+    }
+  ],
+  "__typename": "Order",
+  "shippingAddress": {
+    "fullName": "leo invitado",
+    "company": "",
+    "streetLine1": "artigas",
+    "streetLine2": "",
+    "city": "fiske",
+    "province": "Río Negro",
+    "postalCode": "8332",
+    "country": "Argentina",
+    "phoneNumber": "",
+    "__typename": "OrderAddress"
+  },
+  "billingAddress": {
+    "fullName": null,
+    "company": null,
+    "streetLine1": null,
+    "streetLine2": null,
+    "city": null,
+    "province": null,
+    "postalCode": null,
+    "country": null,
+    "phoneNumber": null,
+    "__typename": "OrderAddress"
+  },
+  "payments": []
+}

@@ -1,0 +1,76 @@
+@import 'variables';
+
+.stateTag {
+  color: white; 
+  background-color: $gray-700;
+  border: 1px solid $gray-700;
+  padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  border-radius: 1rem;
+  display: inline-block;
+  text-transform: lowercase;
+}
+
+.--AddingItems,
+.--AddingOrders {
+  color: white;
+  background-color: $info;
+  border: 1px solid $info;
+}
+
+
+.--ArrangingPayment
+ {
+  color: white;
+  background-color: #b98410;
+  border: 1px solid #b98410;
+}
+
+.--ConfirmedByOwner, 
+.--PaymentAuthorized,
+.--PaymentSettled{
+  color: black;
+  background-color: #c0e0ad;
+  border: 1px solid #c0e0ad;
+}
+
+.--Cancelled, .--Expired {
+  color: white;
+  background-color: $danger;
+  border: 1px solid $danger;
+}
+
+.--WithFulfill, .--AcceptedByChannel {
+  background-color: #16a4c0;
+ border: 1px solid #16a4c0;
+}
+
+.--Delivered, .--PartiallyDelivered {
+  color: white;
+  background-color: $success;
+  border: 1px solid $success;
+}
+
+.--mode-orderGroup {
+  &.--PaymentAuthorized,
+  &.--PaymentSettled {
+    color: black;
+    background-color: #c0e0ad;
+    border: 1px solid #c0e0ad;
+  }
+
+  &.--ArrangingPayment
+   {
+    background-color: #b98410;
+    border: 1px solid #b98410;
+  }
+}
+
+
+@include media-breakpoint-down(sm) {
+  .stateTag {
+    padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}

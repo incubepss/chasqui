@@ -1,0 +1,114 @@
+@import 'bootstrap';
+
+:host {
+  .container {
+    margin-top: 1rem;
+  }
+}
+
+.sub-header-home {
+  background: #d8d8d8;
+  border-bottom: 1px solid #ccc;
+  padding: 2rem 0;
+  text-align: center;
+
+  .img-fluid {
+    max-width: 50%;
+    @include media-breakpoint-up(lg) {
+      max-width: 100%;
+    }
+  }
+
+  .body-text {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #803b7a;
+    @include media-breakpoint-up(xl) {
+      font-size: 1.8rem;
+      text-align: left;
+    }
+  }
+  p {
+    font-size: 1.4rem;
+    color: #666;
+  }
+}
+
+.sub-header-search {
+  background: #f1f1f1;
+  margin-bottom: 2rem;
+  padding: 20px;
+  h5 {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #803b7a;
+    @include media-breakpoint-up(xl) {
+      font-size: 1.8rem;
+    }
+  }
+  .input-icons {
+    position: relative;
+  }
+  label {
+    position: absolute;
+    min-width: 40px;
+    padding: 16px;
+    cursor: pointer;
+  }
+  input {
+    background: #fff;
+    height: 60px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    font-size: 1.5rem;
+    padding-left: 60px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+}
+.multi-list-title {
+  color: #803b7a;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  @include media-breakpoint-up(xl) {
+    font-size: 2rem;
+  }
+}
+swiper {
+  padding-bottom: 10px;
+  margin-bottom: 0;
+  ::ng-deep .swiper-pagination {
+    bottom: 0;
+  }
+}
+.multi-list {
+  padding-bottom: 20px;
+}
+
+.multi-close,
+.multi-under-construction {
+  padding-bottom: 20px;
+  .multi-list {
+    margin-top: 1rem;
+  }
+}
+.multi-list-group {
+  @include media-breakpoint-up(lg) {
+    column-count: 2;
+    column-gap: 20px;
+  }
+}
+
+.multi-under-construction {
+  background: #f1f1f1;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+swiper ::ng-deep vsf-multicatalog-card {
+  height: 170px;
+  overflow: hidden;
+  .alert {
+    display: none;
+  }
+}

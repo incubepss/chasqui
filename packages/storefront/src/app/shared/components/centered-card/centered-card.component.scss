@@ -1,0 +1,71 @@
+@import 'variables';
+
+.card {
+  display: block;
+  margin: auto;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  padding-bottom: 1.5rem;
+  border: 0;
+}
+
+.card-header {
+  background-color: initial;
+  border-bottom: 0;
+  text-align: center;
+}
+
+.card-body {
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.content-container {
+  flex: 1 1 auto;
+  max-width: 400px;
+}
+
+.illustration-container {
+  text-align: center;
+  flex: 0 0 350px;
+  padding-right: 5rem;
+
+  img {
+    width: 300px;
+    height: 300px;
+    transform: scaleX(-1);    
+  }
+}
+
+
+@include media-breakpoint-down(md) {
+  .card-body {
+    padding: 0;
+  }
+
+  .illustration-container {
+    padding-right: 0;
+    img {
+      width: 250px;
+      height: 250px;
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+
+  .content-container {
+    max-width: initial;
+  }
+
+  .illustration-container {
+    flex: 0 0 300px;
+    img {
+      width: 200px;
+      height: 200px;
+    }
+  }
+}

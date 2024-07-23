@@ -1,0 +1,20 @@
+<div class="orderGroupJoinToMy" >
+  
+  <div class="listContainer" >
+    <div 
+      class="orderGroupBox" 
+      *ngFor="let orderGroup of (activeOrderGroups$ | async)" 
+      (click)="confirmJoin(orderGroup)"
+    >
+      <div class="orderGroupBox-main">
+        <fa-icon icon="user-friends"></fa-icon>
+        <div>
+          <span class="orderGroupBox-labelState">Pedido grupal abierto</span>
+          <div class="orderGroupBox-date">{{orderGroup.createdAt | date: 'd MMMM y'}} </div>
+        </div>
+      </div>
+      <span class="orderGroupBox-labelAdd">Agregar a mi pedido grupal</span>
+      <div class="orderGroupBox-code">#{{orderGroup.code}}</div>
+    </div>
+  </div>
+</div>

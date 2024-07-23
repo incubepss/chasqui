@@ -1,0 +1,113 @@
+:host ::ng-deep {
+  .datagrid-table .datagrid-column {
+    justify-content: center;
+  }
+
+  .datagrid-detail-header {
+    padding-left: 0;
+  }
+
+  .datagrid-scrolling-cells, .datagrid-scrolling-details {
+    align-items: center;
+  }
+
+  .table {
+    margin-top: 0;
+  }
+
+  .table th.right, .table td.right, .datagrid-cell.right {
+    text-align: right;
+  }
+
+  .datagrid-table .datagrid-column.right .datagrid-column-title {
+    justify-content: flex-end;
+  }
+}
+
+small {
+  color:var(--clr-color-neutral-500);
+}
+
+.dataGridContainer clr-datagrid {
+  height: 400px;
+}
+
+.detailContainer {
+  padding: 1rem;
+}
+
+.toolbarOptions {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  & > * {
+    flex: 1 1 auto;
+  }
+
+  &-right {
+    text-align: right;
+
+    .btn {
+      margin-right: 0;
+    }
+  }
+}
+
+.productorRow {
+  cursor: pointer;
+
+  .productorCell {
+    
+    &-name {
+      font-size: 0.8rem;
+    }
+  
+    &-counter {
+      label {
+        color: var(--clr-color-neutral-500);
+      }
+    }
+  
+    &-stockStatus {
+      margin-top: 0.1rem;
+    }
+  }
+  
+  .subTotalCell {
+    width: 100px;
+    text-align: right;
+    font-weight: bold;
+  }
+}
+
+
+.stockStatus {
+  padding: 0.25rem 0.4rem 0.25rem 0.4rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  margin-left: 0.1rem;
+  margin-right: 0.1rem;
+  font-weight: bold;
+  font-size: 0.6rem;
+
+  &.--limitado {
+    background-color: #F6C439;
+    color: #2E3C44;
+  }
+
+  &.--faltante {
+    background-color: #D3405C;
+    color:white;
+  }
+}
+
+.toolbarFilters {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  align-items: center;
+  background-color: var(--clr-color-neutral-100);
+  padding: 0.5rem;
+}

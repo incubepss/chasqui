@@ -1,0 +1,19 @@
+.optionsSection-optionGroupHeader {
+  font-weight: bold;
+}
+
+.option-row {
+  & > * {
+    margin-bottom: 1rem;
+  }
+}
+
+.input-description {
+  width: 100%;
+  padding-bottom: 0.25rem;
+}
+
+input.ng-invalid.ng-dirty,
+input.ng-invalid.ng-touched {
+  border: 1px solid var(--clr-global-error-color) !important;
+}

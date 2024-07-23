@@ -1,0 +1,11 @@
+@import 'variables';
+
+.addressFormComponent {
+  min-width: 500px;
+}
+
+@media (max-width: 550px) {
+  .addressFormComponent {
+    min-width: inherit;
+  }
+}

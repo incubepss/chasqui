@@ -1,0 +1,33 @@
+::ng-deep {
+  .paymentState .signpost-action.btn {
+      height: 1.2rem;
+      line-height: 1.1rem;
+      border: 0;
+      outline: 0;
+  }
+}
+
+.paymentState {
+  display: flex;
+  align-items: center;
+  > * {
+    margin-right: 0.2rem;
+  }
+}
+
+.detailTitle {
+  margin-top: 0;
+}
+
+.detailData {
+  font-size: 0.7rem;
+
+  label {
+    font-size: 0.65rem;
+    margin-right: 0.5rem;
+  }
+
+  span {
+    font-weight: bold;
+  }
+}

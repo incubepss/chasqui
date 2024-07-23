@@ -1,0 +1,116 @@
+<div class="sub-header-home" *ngIf="activeChannel$ | async as channel">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <img src="/assets/chasqui_logo.svg" width="200" alt="logo chasqui" class="chasqui-logo" />
+        <h3 class="chasqui-slogan">Comunidad de consumo solidario</h3>
+      </div>
+    </div>
+    <div class="spinner-border text-primary" role="status" *ngIf="loading">
+      <span class="sr-only">Cargando...</span>
+    </div>
+
+    <div class="row mt-5" *ngIf="(searchTerm$ | async).length === 0 && !loading">
+      <div class="col-12">
+        <vsf-landing-banner [images]="bannerImages$"></vsf-landing-banner>
+      </div>
+    </div>
+    <div class="row" *ngIf="(searchTerm$ | async).length === 0 && !loading">
+      <div class="col-12 col-lg-3">
+        <img
+          [src]="channel.customFields?.imgSecondaryAboutUs | assetPreview: full"
+          class="img-fluid"
+          [alt]="channel.customFields?.nombre"
+        />
+      </div>
+      <div class="col-12 col-lg-9 d-flex align-items-center">
+        <div class="body-text" [innerHTML]="channel.customFields?.bodyAboutUs"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="search" class="sub-header-search">
+  <div class="container">
+    <form>
+      <div class="input-icons">
+        <h5>¿Qué estás buscando?</h5>
+        <label for="search" class="icon"
+          ><img src="/assets/icons/search.svg" alt="buscar" class="icon"
+        /></label>
+        <input
+          id="search"
+          type="text"
+          [formControl]="searchTerm"
+          (keydown.enter)="doSearch(searchTerm.value)"
+          class="form-control input-field"
+          placeholder="Buscar productos"
+          aria-label="Search input"
+        />
+      </div>
+    </form>
+
+    <div class="row" *ngIf="searchTerm$ | async as term">
+      <div class="col-12">
+        <vsf-multicatalog-product-list [channels]="channels$" [term]="term"></vsf-multicatalog-product-list>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="loading">
+  <div class="row">
+    <div class="col-12 text-center mb-5">
+      <div class="spinner-border text-secondary" role="status">
+        <span class="sr-only">Cargando...</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!loading">
+  <h5 class="multi-list-title">Ingresá a la tienda donde querés comprar y realizá tu pedido.</h5>
+
+  <div *ngFor="let groupProvince of groupedByProvince$ | async">
+    <div *ngIf="groupProvince[1] && groupProvince[1].length > 0" class="multi-list">
+      <h3>
+        {{ groupProvince[0] || 'Más Tiendas' }}
+      </h3>
+
+      <swiper [config]="swiperConfig" *ngIf="groupProvince[1].length > 1; else one_car">
+        <ng-template swiperSlide *ngFor="let tienda of groupProvince[1]">
+          <vsf-multicatalog-card [tienda]="tienda"></vsf-multicatalog-card>
+        </ng-template>
+      </swiper>
+      <ng-template #one_car>
+        <div class="multi-list-group">
+          <vsf-multicatalog-card [tienda]="groupProvince[1][0]"></vsf-multicatalog-card>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!loading">
+  <div class="multi-close">
+    <h5 class="multi-list-title">Tiendas temporalmente cerradas</h5>
+    <div class="multi-list-group">
+      <vsf-multicatalog-card
+        *ngFor="let tienda of groupedByStoreClose$ | async"
+        [tienda]="tienda"
+      ></vsf-multicatalog-card>
+    </div>
+  </div>
+</div>
+
+<div class="multi-under-construction" *ngIf="!loading">
+  <div class="container">
+    <h5 class="multi-list-title">Tiendas en construcción</h5>
+    <div class="multi-list-group">
+      <vsf-multicatalog-card
+        *ngFor="let tienda of groupedByStoreUnderConstruction$ | async"
+        [tienda]="tienda"
+      ></vsf-multicatalog-card>
+    </div>
+  </div>
+</div>

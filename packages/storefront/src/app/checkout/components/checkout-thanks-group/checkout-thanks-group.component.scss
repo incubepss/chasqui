@@ -1,0 +1,128 @@
+@import 'variables';
+
+.stepper {
+  background-color: $gray-100;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.stepper-step {
+  display: flex;
+  margin-bottom: 2rem;
+  text-align: center;
+  align-content: center;
+
+  .step {
+    &-number {
+      width: 1.8rem;
+      height: 1.8rem;
+      padding: 1.2rem;
+      background-color: $success;
+      margin-right: 1rem;
+      border-radius: 50%;
+      color:white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-body {
+      flex: 1 1 auto;
+      text-align: left;
+    }
+
+    &-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    &-details {
+      color: $gray-700;
+    }
+  }
+}
+
+.thanks {
+  background-color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 2.5rem;
+  min-width: 300px;
+  max-width: 800px;
+  margin: auto;
+
+  &-icon {
+    font-size: 4rem;
+    color: $success;
+  }
+
+  &-message {
+    font-size: 2rem;
+  }
+}
+
+.order-details {
+  font-size: 1rem;
+}
+
+.account-signup {
+  max-width: 400px;
+  margin: $spacer auto $spacer * 2;
+  border-top: 1px solid $gray-100;
+  padding-top: 1rem;
+}
+
+.summary-card {
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.payment {
+  display: flex;
+  flex-direction: column;
+ 
+  &-detail  {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .paymentDetail {
+      &-status {
+        font-size: 1.2rem;
+        color: #f57c00;
+      }
+    
+      &-amount {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  &-instruction {
+    flex: 1 1 auto;
+    background-color: $gray-200;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-size: 0.9rem;
+    width: fit-content;
+    margin: auto;
+    margin-top: 0.5rem;
+  }
+}
+
+
+.footer-actions {
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+@include media-breakpoint-down(md) {
+  .thanks {
+    padding-top: 0;
+  }
+}

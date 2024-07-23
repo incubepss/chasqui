@@ -1,0 +1,193 @@
+<div class="orderGroupDetail" [class.--print-mode]="printMode$ | async">
+  <div class="detailContainer">
+    <ng-container *ngIf="orderGroup$ | async as detail; else NotFound">
+      <div class="detailContainer-toolbar">
+        <button 
+          type="button" 
+          class="btn btn-secondary btn-sm no-print" 
+          (click)="toClipboard()"
+          title="Copiar al portapapeles"
+        >
+        <clr-icon shape="clipboard"></clr-icon>
+          Copiar
+        </button>
+        <button 
+          *ngIf="detail.state !== 'ConfirmedByOwner'"
+          type="button" 
+          class="btn btn-secondary btn-sm"  
+          (click)="previewMode(true)"
+        >
+          <clr-icon shape="printer"></clr-icon>
+          Remito
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-primary btn-sm"
+          *ngIf="canToEnPreparacion(detail)"
+          (click)="doAsEnPreparacion(detail)"
+          [disabled]="isLoadingLines"
+        >
+          <ng-container *ngIf="isLoadingLines; else noBusyBtn">
+            <span class="spinner spinner-sm"></span>  
+          </ng-container>
+          <ng-template #noBusyBtn>
+            <clr-icon shape="employee"></clr-icon>
+          </ng-template> 
+          Aceptar pedido
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-primary btn-sm"
+          *ngIf="canToEnviado(detail)"
+          (click)="doAsEnviado(detail)"
+        >
+          <clr-icon shape="truck"></clr-icon>
+          Marcar <i>En entrega</i>
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-primary btn-sm"
+          *ngIf="canToEntregado(detail)"
+          (click)="doAsEntregado(detail)"
+        >
+          <clr-icon shape="check-circle"></clr-icon>
+          Marcar como <i>entregado</i>
+        </button>
+        <vdr-dropdown> 
+          <button class="btn btn-secondary btn-sm" vdrDropdownTrigger >
+              <clr-icon shape="ellipsis-vertical"></clr-icon>
+          </button>
+          <vdr-dropdown-menu vdrPosition="bottom-left" >
+            <div vdrDropdownItem (click)="doAsCancell(detail)" [class.disabled]="detail.state === 'Cancelled'">
+              <clr-icon shape="trash"></clr-icon> Cancelar pedido en grupo
+            </div>
+          </vdr-dropdown-menu>
+        </vdr-dropdown>
+      </div>
+
+      <div class="detailContainer-body">
+        
+        <div class="channelDetailHeader" *ngIf="(activeChannel$ | async) as activeChannel">  
+          {{activeChannel.code}}
+        </div>
+        
+        <div class="detailHeader">
+          <div class="headerData left">
+            <div class="headerData-label">{{getTypeDelivery(detail)}}</div>
+            <div class="headerData-value">{{getShippingMethod(detail)}}</div>
+            <div  class="headerData-detail">
+              <clr-icon shape="map-marker"></clr-icon>
+              {{getAddressDelivery(detail)}}
+            </div>
+            <div class="headerData-detail" *ngIf="detail?.shippingAddress?.phoneNumber">
+              <clr-icon shape="phone-handset"></clr-icon>
+              {{detail?.shippingAddress?.phoneNumber}}
+            </div>
+          </div>
+          <div class="headerData">
+            <div class="headerData-label">Pedido grupal coordinado por</div>
+            <div class="headerData-value"> {{detail.customer?.firstName}} {{detail.customer?.lastName}}</div>
+            <div class="headerData-detail"> 
+              {{detail.customer?.emailAddress}}
+            </div>
+            <div class="headerData-detail" *ngIf="detail.customer?.phoneNumber">
+              <clr-icon shape="phone-handset"></clr-icon>
+              {{detail.customer?.phoneNumber}}
+            </div>
+            <div class="headerData-detail" *ngIf="detail.customer?.customFields?.codeCustomer">
+              {{detail.customer?.customFields.codeCustomer}}
+            </div>
+          </div>
+          <div class="headerData right">
+            <div>
+              <div class="headerData-label"> Fecha y Nº Pedido</div>
+              <div class="headerData-value"> {{detail.orderPlacedAt | localeDate: 'longDate'}}</div>
+            </div>
+            <div>
+              <div class="headerData-detail"> {{detail.code}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="detailHeader detailHeader--box">
+          <div class="headerData left">
+          </div>
+          <div class="headerData right">
+            <div class="stateContainer">
+              <div class="stateContainer-item">
+                <label>Estado del pedido:</label>
+                <span class="stateContainer-item-value" *ngIf="(printMode$ | async) === false">
+                  <chq-ordergroup-state-label [state]="detail.state"></chq-ordergroup-state-label>
+                </span>
+                <div *ngIf="printMode$ | async" class="manualStateToolbar">
+                  <div> Baja <span class="check"></span> </div>
+                  <div> Armado <span class="check"></span> </div>
+                  <div> Revisado <span class="check"></span> </div> 
+                  <div> Cargado <span class="check"></span> </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <clr-tabs>
+          <clr-tab>
+            <button clrTabLink>Artículos confirmados</button>
+            <clr-tab-content *clrIfActive>
+              <vsf-orderGroup-detail-byproduct #byProduct  [orderGroup]="detail"></vsf-orderGroup-detail-byproduct>
+            </clr-tab-content>
+          </clr-tab>
+      
+          <clr-tab>
+            <button clrTabLink>Pedidos confirmados</button>
+            <clr-tab-content *clrIfActive>
+              <vsf-orderGroup-detail-bycustomer #byCustomer [orderGroup]="detail"></vsf-orderGroup-detail-bycustomer>
+            </clr-tab-content>
+          </clr-tab>
+          <clr-tab>
+            <button clrTabLink>Todos los pedidos</button>
+            <clr-tab-content *clrIfActive>
+              <vsf-orderGroup-detail-all #allOrders [orderGroup]="detail"></vsf-orderGroup-detail-all>
+            </clr-tab-content>
+          </clr-tab>
+        </clr-tabs>
+
+        <div class="detailFooter">
+          <div class="stateContainer-item">
+            <!--label>Estado del pago:</label-->
+            <!--div class="stateContainer-item-value">
+              <chq-payment-state 
+                *ngFor="let payment of detail?.payments" 
+                [payment]="payment"
+                [printMode]="printMode"
+                (onToSettled)="transitionPaymentToSettled($event)"
+              ></chq-payment-state>
+            </div-->
+            <!--div *ngIf="printMode && !hasAllPayment(detail)" class="manualStateToolbar"> 
+              <div> Realizado <span class="check"></span> </div>
+              <div class="manualComplete"> 
+                <label>Fecha</label> 
+              </div>
+            </div-->
+          </div>
+        </div>
+
+        <chq-remito-talon *ngIf="printMode$ | async" [order]="detail"></chq-remito-talon>
+      </div>
+    </ng-container>
+  </div>
+  <div class="loadingContainer" *ngIf="loading$ | async">
+    <span class="spinner spinner-md">Loading...</span>
+  </div>
+
+  <ng-template #NotFound>
+    <div class="emptyContainer">
+      <div class="emptyContainer-iconContainer">
+        <clr-icon shape="sun"></clr-icon>
+      </div>
+      <div class="emptyContainer-primaryMsg">
+        No se encontró al pedido 
+      </div>
+    </div>
+  </ng-template>
+</div>

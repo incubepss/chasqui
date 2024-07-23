@@ -1,0 +1,36 @@
+<vdr-dropdown > 
+  <button class="btn" [class.btn-primary]="selected === null" vdrDropdownTrigger>
+      {{selected?.name || 'Zona o punto de retiro'}}
+      <clr-icon shape="caret down"></clr-icon>
+  </button>
+  <vdr-dropdown-menu vdrPosition="bottom-left" >
+      <div class="methodItem" vdrDropdownItem (click)="onSelect(null)">
+        <div class="methodItem-typeAsset">
+          <clr-icon shape="undo" ></clr-icon>
+        </div>
+        <div class="methodItem-detail">
+          <strong>Todos</strong>
+        </div>
+      </div>
+      <div class="methodItem" vdrDropdownItem *ngFor="let sm of shippingMethods$ | async" (click)="onSelect(sm)">
+        <ng-container *ngIf="sm.customFields.typeDelivery === 'showroom'; else shippingTypeRender">
+          <div class="methodItem-typeAsset">
+            <clr-icon shape="store" ></clr-icon>
+          </div>
+          <div class="methodItem-detail">
+            <strong>{{sm.name}}</strong>
+            <div>{{sm.customFields.address_or_places}}</div>
+          </div>
+        </ng-container> 
+        <ng-template #shippingTypeRender>
+          <div class="methodItem-typeAsset">
+            <clr-icon shape="truck"></clr-icon>
+          </div>
+          <div class="methodItem-detail">
+            <strong>{{sm.name}}</strong>
+            <div>{{sm.customFields.schedule}}</div>
+          </div>
+        </ng-template>
+      </div>
+  </vdr-dropdown-menu>
+</vdr-dropdown>

@@ -1,0 +1,11 @@
+.dockerignore
+.gitignore
+.github
+.editorconfig
+npm-debug.log
+Dockerfile
+node_modules
+dist
+admin-ui
+static/assets
+static/email/test-emails

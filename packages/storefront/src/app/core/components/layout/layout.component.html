@@ -1,0 +1,49 @@
+<div class="header">
+  <ng-content select="vsf-layout-header"></ng-content>
+</div>
+<div class="content">
+  <vsf-store-status-banner></vsf-store-status-banner>
+  <ng-content></ng-content>
+</div>
+<div class="footer">
+  <ng-content select="vsf-layout-footer"></ng-content>
+  <div class="footer-chasqui">
+    <div class="container">
+      <footer class="footer-chasqui-content">
+        <div class="footer-chasqui-item">
+          <span>Co-desarrollado con tecnología </span>
+          <a
+            href="https://proyectochasqui.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="logo-chasqui"
+            ><img src="../assets/chasqui_logo.svg" alt="Proyecto Chasqui"
+          /></a>
+        </div>
+
+        <div class="footer-chasqui-item">
+          <a routerLink="/" href="">Ver más tiendas</a> |
+          <a href="https://ayuda.proyectochasqui.com" target="_blank">Ayuda</a> |
+          <a href="https://www.instagram.com/proyectochasquiok" target="_blank">Seguinos en instagram</a
+          ><br />
+          <a
+            href="https://www.argentina.gob.ar/produccion/defensadelconsumidor"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Defensa de las y los Consumidores.</a
+          >
+          <!-- a routerLink="/tiendas">Multi tienda</a-->
+        </div>
+
+        <div class="footer-chasqui-item">
+          <a href="https://observatorioess.org.ar/chasqui/" target="_blank" rel="noopener noreferrer"
+            ><img
+              class="logo-footer invert"
+              src="../assets/icons/logo-unq.svg"
+              alt="Logo Universidad Nacional de Quilmes"
+          /></a>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>

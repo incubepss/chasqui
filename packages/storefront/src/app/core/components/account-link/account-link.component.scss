@@ -1,0 +1,21 @@
+@import 'variables';
+@import 'bootstrap';
+
+a.btn {
+  background-color: transparent;
+  box-sizing: border-box;
+  color: #0c96a0;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: $light;
+  }
+}
+
+.username {
+  font-family: $headings-font-family;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 700;
+  text-align: left;
+}

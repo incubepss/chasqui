@@ -1,0 +1,21 @@
+
+<div class="form-group">
+  <div class="input-group input-sm" *ngIf="visible">
+    <input type="text" 
+      class="form-control form-control-sm" 
+      [(ngModel)]="code"
+      [disabled]="(isSignedIn$ | async) !== true"
+      (keydown.enter)="apply()" 
+      placeholder="¿Tenés cupón de descuento?..."
+      aria-label="Ingrese código de promoción..."  
+    />
+    <div class="input-group-append">
+      <button type="button" class="btn btn-secondary btn-sm"  (click)="apply()" [disabled]="(isSignedIn$ | async) !== true">Aplicar</button>
+    </div>
+  </div>
+  <small *ngIf="errorMsg" class="form-text text-danger">{{errorMsg}}</small>
+  <small *ngIf="successMsg" class="form-text text-success">{{successMsg}}</small>
+  <span *ngIf="(isSignedIn$ | async) !== true" class="form-text">
+    * Debés <a [routerLink]="['/micuenta','ingresar']">ingresar</a> con tu cuenta para usar descuentos
+  </span>
+</div>

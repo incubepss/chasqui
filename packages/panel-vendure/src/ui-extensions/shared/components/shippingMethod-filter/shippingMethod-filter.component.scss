@@ -1,0 +1,21 @@
+
+.methodItem {
+  display: flex;
+  width: 300px;
+  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+
+  &-typeAsset {
+    width: 2.5rem;
+
+    clr-icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  &-detail {
+    flex: 1 1 auto;
+  }
+}

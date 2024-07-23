@@ -1,0 +1,23 @@
+@import 'variables';
+
+.actionItem {
+  display: flex;
+  margin-bottom: 1rem;
+
+  &-iconContainer {
+    width: 1.8rem;
+    font-size: 1.2rem;
+    color: $gray-800;
+    flex: 0 0 1.8rem;
+  }
+
+  &-name {
+    color: $gray-800;
+    font-size: 0.9rem;
+  }
+
+  &-description {
+    color: $gray-600;
+    font-size: 0.8rem;
+  }
+}

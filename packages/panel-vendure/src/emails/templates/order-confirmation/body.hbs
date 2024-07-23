@@ -1,0 +1,256 @@
+{{> header this}}
+
+<mj-section css-class="section--strong">
+    <mj-column>
+        <mj-text mj-class="text-subject-main">
+            Hola {{ order.customer.firstName }} {{ order.customer.lastName }}!
+        </mj-text>
+        <mj-text mj-class="text-subject-secondary">
+        {{#if orderGroup}}
+            {{#if isOrderHeadOfGroup}}
+                gracias por coordinar un compra grupal!
+            {{else}}
+                Enviamos un email a la persona que coordina el grupo
+            {{/if}}
+        {{else}}
+            muchas gracias, hemos recibido tu pedido!
+        {{/if}}
+        </mj-text>
+    </mj-column>
+</mj-section>
+
+{{#unless isOrderHeadOfGroup}}
+<mj-section css-class="section--strong no-padding-top">
+    <mj-column vertical-align="bottom">
+        <mj-text align="center">
+            {{#if isOrderHeadOfGroup}}
+                {{ orderGroup.code }}
+            {{else}}
+                {{ order.code }}
+            {{/if}}
+        </mj-text>
+        <mj-text mj-class="field-label" align="center">código de tu pedido</mj-text>
+    </mj-column>
+    <mj-column>
+        <mj-text mj-class="field-value field--big" align="center">{{ order.lines.length }}</mj-text>
+        <mj-text mj-class="field-label" align="center">artículos</mj-text>
+    </mj-column>
+    <mj-column>
+        <mj-text mj-class="field-value field--big" align="center">{{ order.totalQuantity }}</mj-text>
+        <mj-text mj-class="field-label" align="center">unidades</mj-text>
+    </mj-column>
+    <mj-column>
+        <mj-text mj-class="field-value field--big" align="center">${{ formatMoney order.totalWithTax }}</mj-text>
+        <mj-text mj-class="field-label" align="center">{{ orderDateStr }}</mj-text>
+    </mj-column>
+</mj-section>
+{{/unless}}
+
+{{#if isOrderHeadOfGroup}}
+<mj-section css-class="section">
+    <mj-column width="30px">
+        <mj-text mj-class="step-number">1</mj-text>
+    </mj-column>
+    <mj-column width="80%">
+        <mj-text mj-class="step-title">
+            Compartí el siguiente enlace para invitar a tu compra colectiva
+        </mj-text>
+        <mj-text>
+            <a href="{{shareGroupUrl}}" target="_blank">
+                {{shareGroupUrl}}
+            </a>
+        </mj-text>
+    </mj-column>
+</mj-section>
+<mj-section css-class="section no-padding-top">
+    <mj-column width="30px">
+        <mj-text mj-class="step-number">2</mj-text>
+    </mj-column>
+    <mj-column width="80%">
+        <mj-text mj-class="step-title">
+            Esperá a recibir pedidos  <br/>
+        </mj-text>
+        <mj-text>
+            · Te llegará un email cada vez que alguien sume un pedido a tu grupo.<br/>
+            · Además podes ir viendo el detalle en <i>Mis grupos</i><br/>
+        </mj-text>
+    </mj-column>
+<mj-section css-class="section no-padding-top">
+    <mj-column width="30px">
+        <mj-text mj-class="step-number">3</mj-text>
+    </mj-column>
+    <mj-column width="80%">
+        <mj-text mj-class="step-title">
+            Envía a la tienda tu pedido grupal  <br/>
+        </mj-text>
+        <mj-text>
+            · Para eso, entrá al detalle del grupo en <i>Mis grupos</i>
+        </mj-text>
+    </mj-column>
+</mj-section>
+{{/if}}
+
+{{#if orderGroup}}
+   <mj-section css-class="section-order">
+        <mj-column>
+            <mj-text>
+                <h3 class="section-title">Compra grupal:</h3>
+                <div>
+                    <span class="text-field-label">Coordina:</span>
+                    {{orderGroup.customer.firstName}} {{orderGroup.customer.lastName}}
+                </div>
+                <div>
+                    <span class="text-field-label">E-Mail: </span>
+                    {{orderGroup.customer.emailAddress}}
+                </div>
+                <div>
+                    <span class="text-field-label">Teléfono: </span>
+                    {{orderGroup.customer.phoneNumber}}
+                </div>
+                <div>
+                    <span class="text-field-label">Código del pedido grupal:</span>
+                    {{orderGroup.code}}
+                </div>
+            </mj-text>
+        </mj-column>
+   </mj-section>
+{{/if}}
+
+{{#if shippingMethod}}
+   <mj-section css-class="section-order">
+        <mj-column>
+                <mj-text>
+                    {{#with shippingMethod }}
+                        <h3>Método de entrega</h3>
+                        <div> 
+                            <span class="text-field-label">
+                                {{#if isShowroom}} Retira en: {{else}} Envío a: {{/if}}
+                            </span>
+                            {{ name }} 
+                        </div>
+                        {{#if customFields.address_or_places}}
+                            <div>
+                                <span class="text-field-label">
+                                    {{#if isShowroom}} Dirección: {{else}} Zona: {{/if}}
+                                </span>
+                                {{ customFields.address_or_places}}
+                            </div>
+                        {{/if}}
+                        {{#if customFields.schedule}}
+                            <div> 
+                                <span class="text-field-label">Horarios: </span>
+                                {{ customFields.schedule}}
+                            </div>
+                        {{/if}}
+                        <div> {{description}} </div>
+                    {{/with}}
+                </mj-text>
+        </mj-column>
+    </mj-section>
+{{/if}}
+
+{{#if isShipping}}
+    {{#if order.shippingAddress}}
+        {{#if order.shippingAddress.streetLine1}}
+            <mj-section css-class="section-order">
+                <mj-column>
+                        <mj-text>
+                            {{#with order.shippingAddress }}
+                                <h3>Dirección de envío</h3>
+                                <div> {{ fullName }} </div>
+                                <div>
+                                    {{#if company}}<div>{{ company }}</div>{{/if}}
+                                    <div>
+                                        {{ streetLine1 }} | {{ city }}, {{province}}
+                                    </div>
+                                    {{#if postalCode}}<div><span class="text-field-label">CP: </span> {{ postalCode }}</d>{{/if}}
+                                    {{#if phoneNumber}}<div><span class="text-field-label">Teléfono: </span> {{ phoneNumber }}</d>{{/if}}
+                                </div>
+                            {{/with}}
+                        </mj-text>
+                    
+                </mj-column>
+            </mj-section>
+        {{/if}}
+    {{/if}}
+{{/if}}
+
+{{#each payments }}
+    <mj-section css-class="section-order">
+        <mj-column>
+            <mj-text>
+                <h3>Pago</h3>
+                <div>
+                    <div><span class="text-field-label">Método: </span> {{paymentMethod.name}}</div>
+                    <div><span class="text-field-label">Monto: </span> ${{formatMoney amount }}</div>
+                    <div><span class="text-field-label">Estado: </span> {{state}}</div>
+                </div>
+               {{#if paymentMethod.customFields.paymentInstruction}}
+                 <div>
+                     <strong>Instrucciones para el pago:</strong>
+                     <div>
+                         {{paymentMethod.customFields.paymentInstruction}}
+                     </div>
+                 </div>   
+               {{/if}}
+            </mj-text>
+        </mj-column>
+    </mj-section>
+{{/each}}
+
+<mj-section css-class="section-order no-padding-v">
+    <mj-column>
+        <mj-text>
+            <h3>Resumen del pedido</h3>
+        </mj-text>
+        <mj-table css-class="order-table-lines no-padding-h">
+            <tr>
+                <th align="left">artículo</th>
+                <th align="right" width="50px">cant.</th>
+                <th align="right" width="80px">monto</th>
+            </tr>
+            {{#each order.lines }}
+                <tr class="order-row">
+                    <td>{{ productVariant.name }}</td>
+                    <td align="right">{{ quantity }}</td>
+                    <td align="right">${{ formatMoney discountedLinePriceWithTax }}</td>
+                </tr>
+            {{/each}}
+            {{#each order.discounts }}
+                <tr class="order-row">
+                    <td colspan="2">
+                        Descuento: {{ description }}
+                    </td>
+                    <td align="right">${{ formatMoney amountWithTax }}</td>
+                </tr>
+            {{/each}}
+            {{#each order.surcharges }}
+            <tr class="order-row aditional-row">
+                <td colspan="2">{{ description }}:</td>
+                <td align="right">${{ formatMoney priceWithTax }}</td>
+            </tr>
+            {{/each}}
+            <tr class="order-row subtotal-row">
+                <td colspan="2" align="right">Sub-total:</td>
+                <td align="right">${{ formatMoney order.subTotalWithTax }}</td>
+            </tr>
+            {{#if order.shippingWithTax}}
+                {{#each shippingLines }}
+                    <tr class="order-row aditional-row">
+                        <td colspan="2" align="right">
+                            Entrega: {{#if shippingMethod.isShowroom}} retira en {{else}} envío a {{/if}}
+                            {{ shippingMethod.name }}
+                        </td>
+                        <td align="right">${{ formatMoney priceWithTax }}</td>
+                    </tr>
+                {{/each}}
+            {{/if}}
+            <tr class="order-row total-row">
+                <td colspan="2" align="right">Total:</td>
+                <td align="right">${{ formatMoney order.totalWithTax }}</td>
+            </tr>
+        </mj-table>
+    </mj-column>
+</mj-section>
+
+{{> footer }}

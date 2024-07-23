@@ -1,0 +1,56 @@
+.sello {
+  background-size: 50px;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding-left: 50px;
+  line-height: 2em;
+  display: block;
+  width: 50px;
+  height: 50px;
+
+  &-agricultura_familiar {
+    background-image: url('assets/agricultura_familiar.png');
+  }
+  &-cooperativas {
+    background-image: url('assets/cooperativas.png');
+  }
+  &-empresa_social {
+    background-image: url('assets/empresasocial.png');
+  }
+  &-recuperadas {
+    background-image: url('assets/recuperadas.png');
+  }
+}
+
+.selloBox {
+  display: flex;
+  flex-direction: column;
+  padding: 0.2rem;
+  background-color: white;
+  align-items: center;
+  position: relative;
+
+  &-clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.2rem;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    font-size: 1.2rem;
+
+    &:hover {
+      color: var(--clr-link-hover-color);
+    }
+  }
+
+  &--horizontal {
+    flex-direction: row;
+
+    .sello {
+      margin-right: 0.3rem;
+    }
+  }
+}

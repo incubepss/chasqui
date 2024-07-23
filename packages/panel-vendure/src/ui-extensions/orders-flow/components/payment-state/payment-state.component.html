@@ -1,0 +1,48 @@
+<div class="paymentState" *ngIf="payment">
+  <vdr-chip [colorType]="chipColorType">
+    <clr-icon shape="check-circle" *ngIf="payment?.state === 'Settled'"></clr-icon>
+    {{payment.state | stateI18nToken | translate}}
+  </vdr-chip>
+  <div>
+    {{payment.method}}
+  </div>
+  <clr-signpost *ngIf="printMode !== true; else moreDetail">
+    <clr-signpost-content *clrIfOpen [clrPosition]="'top-middle'">
+      <h4 class="detailTitle">Detalle del pago</h4>
+      <div class="toolbar" *ngIf="payment.state !== 'Settled' && !payment.transactionId">
+        <!-- se asume que si tiene un transactionId es de mercado-pago por lo que el pago se cambia automaticamente -->
+        <button class="btn btn-primary btn-sm" (click)="transitionToSettled()">Marcar como <i>pagado</i></button>
+      </div>
+      <div class="detailData">
+        <label>Fecha actualizado:</label>
+        <span>{{payment.updatedAt | localeDate: 'longDate'}} </span>
+      </div>
+      <div class="detailData">
+        <label>Estado:</label>
+        <span> {{payment.state | stateI18nToken | translate}} </span>
+      </div>
+      <div class="detailData">
+        <label>Método:</label>
+        <span> {{payment.method}} </span>
+      </div>
+      <div class="detailData">
+        <label>Importe:</label>
+        <span> {{payment.amount | localeCurrency: "ARS"}}</span>
+      </div>
+      <div class="detailData" *ngIf="payment.transactionId">
+        <label>Código de transacción:</label>
+        <span> {{payment.transactionId}}</span>
+      </div>
+      <div class="detailData" *ngIf="payment.errorMessage">
+        <label>Mensaje:</label>
+        <span>{{payment.errorMessage}}</span>
+      </div>
+    </clr-signpost-content>
+  </clr-signpost>
+  <ng-template #moreDetail>
+    <div *ngIf="payment.state==='Settled'">
+      <span> {{payment.amount | localeCurrency: "ARS"}}</span>
+      <span> {{payment.updatedAt | localeDate: 'shortDate'}}</span>
+    </div>
+  </ng-template>
+</div>

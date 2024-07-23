@@ -1,0 +1,178 @@
+<div class="toolbarFilters">
+  <chq-shipping-method-filter [selected]="filterShippingMethod" (change)="onFilterShippingMethod($event)"></chq-shipping-method-filter>
+  <button type="button" class="btn btn-icon btn-link" (click)='onRefresh()'>
+    <clr-icon shape="refresh"></clr-icon>
+  </button>
+</div>
+
+<clr-tabs>
+  <clr-tab>
+      <button clrTabLink (click)='onFilterState("NUEVOS")'>Nuevos pedidos</button>
+  </clr-tab>
+  <clr-tab>
+      <button clrTabLink (click)='onFilterState("EN_PREPARACION")'>En preparación</button>
+  </clr-tab>
+  <clr-tab>
+      <button clrTabLink (click)='onFilterState("EN_ENTREGA")'>En entrega</button>
+  </clr-tab>
+</clr-tabs>
+
+<div class="toolbarOptions">
+  <div>
+    <clr-toggle-container>
+      <clr-toggle-wrapper>
+        <input type="checkbox" clrToggle name="showByProductores" required value="true" [(ngModel)]="showByProductores" />
+        <label>Agrupar por productores</label>
+      </clr-toggle-wrapper>
+    </clr-toggle-container>
+  </div>
+  <div class="toolbarOptions-right">
+    <button type="button" class="btn btn-primary" (click)="toClipboard()">
+      <clr-icon shape="clipboard"></clr-icon>
+      Copiar al portapapeles
+    </button>
+  </div>
+</div>
+
+<div class="dataGridContainer" *ngIf="showByProductores; else showPlain">
+<clr-datagrid [clrDgLoading]="loading$ | async">
+    <clr-dg-row class="productorRow" *clrDgItems="let item of byProductor$ | async" [clrDgItem]="item" (click)="openDetail(item)">
+      <clr-dg-cell class="productorCell">
+        <div class="productorCell-name">{{item.name}}</div>
+        <div class="productorCell-counter">
+          {{item.countUnidades}} 
+          <label>unidades</label>
+        </div>
+        <div class="productorCell-counter">{{item.countProductos}} <label>productos</label></div>
+        <div class="productorCell-stockStatus stockStatus --{{item.stockStatus}}" 
+          *ngIf="item.stockStatus !== 'suficiente' && filterOrderState === 'NUEVOS'">
+          stock {{item.stockStatus}}
+        </div>
+      </clr-dg-cell>
+      <clr-dg-cell class="subTotalCell">
+        <div>{{item.subTotal | localeCurrency: 'ARS'}}</div>
+      </clr-dg-cell>
+    </clr-dg-row>
+
+    <ng-template [(clrIfDetail)]="detailState" let-detail>
+        <clr-dg-detail  class="detailContainer">
+          <clr-dg-detail-header>{{detail.name}}</clr-dg-detail-header>
+          <table class="table table-noborder table-compact">
+            <thead>
+              <tr>
+                <th class="left">SKU</th>
+                <th class="left">Producto</th>
+                <th class="right">P.Unitario</th>
+                <th class="right">Pedidos total</th>
+                <th class="right" *ngIf="filterOrderState === 'NUEVOS'">Stock</th>
+                <th class="right">Sub total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of detail.productos">
+                <td class="left">
+                  <span>{{v.productoSku}}</span>
+                  <span class="stockStatus --{{v.stockStatus}}" 
+                  *ngIf="v.stockStatus !== 'suficiente' && filterOrderState === 'NUEVOS'">
+                  stock {{v.stockStatus}}
+                  </span>
+                </td>
+                <td class="left">{{v.productoNombre}}</td>
+                <td class="right">{{v.listPrice | localeCurrency: 'ARS'}}</td>
+                <td class="right">{{v.cantidad}}</td>
+                <td class="right" *ngIf="filterOrderState === 'NUEVOS'">{{v.stockOnHand}}</td>
+                <td class="right clr-justify-content-right">{{v.subTotallistPrice | localeCurrency: 'ARS'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        
+      </clr-dg-detail>
+    </ng-template>
+</clr-datagrid>
+
+    <!-- FUTURA VISTA DE PREVISUSALIZACIÓN PARA IMPRESIÓN / COMENTADA PARA NO PERDERLA -->
+    <!--div class="clr-row" *ngFor="let item of byProductor$ | async">
+      <div class="clr-col-lg-6 clr-col-md-12 clr-col-6">
+        <div class="card">
+          <div class="card-header">
+            {{item.name}}
+          </div>
+          <div class="card-block">
+            <div class="card-title">
+              <table class="table table-noborder table-compact">
+                <thead>
+                  <tr>
+                    <th class="left">SKU</th>
+                    <th class="left">Producto</th>
+                    <th>P.Unitario</th>
+                    <th *ngIf="filterOrderState === 'NUEVOS'">Stock</th>
+                    <th>Pedidos total</th>
+                    <th>Sub total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let v of item.productos">
+                    <td class="left">
+                      <span>{{v.productoSku}}</span>
+                      <span class="stockStatus --{{v.stockStatus}}" 
+                      *ngIf="v.stockStatus !== 'suficiente' && filterOrderState === 'NUEVOS'">
+                      stock {{v.stockStatus}}
+                      </span>
+                    </td>
+                    <td  class="left">{{v.productoNombre}}</td>
+                    <td>{{v.listPrice | localeCurrency: 'ARS'}}</td>
+                    <td *ngIf="filterOrderState === 'NUEVOS'">{{v.stockOnHand}}</td>
+                    <td>{{v.cantidad}}</td>
+                    <td class="clr-justify-content-right">{{v.subTotallistPrice | localeCurrency: 'ARS'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer" *ngIf="false">
+            <button class="btn btn-sm btn-link">Copiar</button>
+          </div>
+        </div>
+      </div>
+    </div-->
+</div>
+
+<ng-template #showPlain>
+  <div>
+    <clr-datagrid class="datagrid-compact" [clrDgLoading]="loading$ | async">
+      <clr-dg-column>Productor</clr-dg-column>
+      <clr-dg-column>Producto</clr-dg-column>
+      <clr-dg-column class="right">P.Unitario</clr-dg-column>
+      <clr-dg-column class="right">Pedidos total</clr-dg-column>
+      <clr-dg-column class="right" *ngIf="filterOrderState === 'NUEVOS'">Stock</clr-dg-column>
+      <clr-dg-column class="right">Sub total</clr-dg-column>
+  
+      <clr-dg-row *clrDgItems="let item of byProducts$ | async" [clrDgItem]="item">
+        <clr-dg-cell>
+          <div>{{item.productorNombre}}</div>
+          <small>{{item.productorId}}</small>
+        </clr-dg-cell>
+        <clr-dg-cell>
+          <div>{{item.productoNombre}}</div>
+          <small>{{item.productoSku}}</small>
+          
+        </clr-dg-cell>
+        <clr-dg-cell class="right">{{item.listPrice | localeCurrency: 'ARS'}}</clr-dg-cell>
+        <clr-dg-cell class="right">{{item.cantidad}}</clr-dg-cell>
+        <clr-dg-cell class="right" *ngIf="filterOrderState === 'NUEVOS'">
+          <span 
+          class="stockStatus --{{item.stockStatus}}" 
+          *ngIf="item.stockStatus !== 'suficiente' && filterOrderState === 'NUEVOS'"
+          >
+            stock {{item.stockStatus}}
+          </span>
+          {{item.stockOnHand}}
+          
+        </clr-dg-cell>
+        <clr-dg-cell class="right">{{item.subTotallistPrice | localeCurrency: 'ARS'}}</clr-dg-cell>
+      </clr-dg-row>
+  </clr-datagrid>
+
+  </div>
+</ng-template>
+

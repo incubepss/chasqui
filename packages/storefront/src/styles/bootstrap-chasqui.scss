@@ -1,0 +1,122 @@
+.btn {
+  border-radius: 4px;
+  
+}
+
+.btn-primary {
+  background: $primary;
+  border: 0;
+
+  cursor: pointer;
+  &:hover {
+    background: $link-hover-color;
+  }
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background: #7f9c81;
+  cursor: initial;
+
+  &:hover {
+    background: inital;
+  }
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+.btn-link:focus {
+  box-shadow: none;
+  text-decoration: none;
+}
+
+a {
+  cursor: pointer;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+}
+
+.table thead th {
+  border-bottom: 0;
+  border-top: 0;
+}
+
+th {
+  font-weight: normal;
+  color: $gray-500;
+  min-height: 60px;
+}
+
+.table th, .table td {
+  padding: 1rem;
+}
+
+.form-group {
+  label {
+    margin-bottom: 0.25rem !important;
+  }
+}
+
+
+.dropdown-menu {
+  box-shadow: -2px 0 10px 0 rgb(0 0 0 / 15%);
+}
+
+.modal {
+  z-index: 1600;
+}
+
+.modal-title {
+  font-size: 1.4rem;
+  color: $gray-800;
+}
+
+.modal-header {
+  border-bottom: 0;
+}
+
+.modal-footer {
+  border-top: 0;
+}
+
+.modal-backdrop {
+  z-index: 1600 !important;
+}
+
+.breadcrumb {
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+}
+
+.breadcrumb-item {
+  flex: 0 0 auto;
+  color: $gray-700;
+  a {
+    color: $secondary;
+  }
+}
+
+.card.card--borderless {
+  border: 0;
+  margin-bottom: 1rem;
+  
+  .card-header {
+    background-color: white;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    padding: 0;
+    border: 0;
+  }
+
+  .card-body {
+    padding: 0;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .modal-title {
+    font-size: 1.3rem;
+  }
+}

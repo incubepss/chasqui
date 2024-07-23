@@ -1,0 +1,18 @@
+@import 'variables';
+
+:host {
+  display: block;
+}
+
+.detail {
+  margin-top: 1.5rem;
+
+  &-action {
+    margin-top: 2rem;
+  }
+}
+
+.not-found, .not-activo {
+  margin-top: 1rem;
+  color: $danger;
+}

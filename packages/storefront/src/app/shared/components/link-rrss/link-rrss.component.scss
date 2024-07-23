@@ -1,0 +1,51 @@
+@import 'variables';
+
+$size: 26px;
+
+.linkRRSS {
+  font-size: 0.9rem;
+  line-height: 1rem;
+  text-align: center;
+  width: 2rem;
+  height: 2rem;
+  color: #fff;
+  background: #5a5758;
+  display: inline-block;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border-radius: 100%;
+  transition: all 200ms ease;
+  &:hover {
+    background: #999;
+  }
+
+  &--telegram {
+    background: initial;
+    padding: 0;
+    fa-icon {
+      font-size: 2rem;
+      color: #29B6F6;
+    }
+
+    &:hover{
+      fa-icon {
+        color: #1e7fac;
+      }
+    }
+  }
+
+  &--whatsapp {
+    background: initial;
+    padding: 0;
+    fa-icon {
+      font-size: 2rem;
+      color: #29A71A;
+    }
+
+    &:hover{
+      fa-icon {
+        color: #1a7010;
+      }
+    }
+  }
+}

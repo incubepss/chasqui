@@ -1,0 +1,21 @@
+<div class="contentNotFound">
+
+  <span class="contentNotFound-label">{{message}}</span>
+  
+  
+  <div class="contentNotFound-imgContainer">
+    <div #imgContent><ng-content select="[image]"></ng-content></div>
+    <ng-container *ngIf="!imgContent.hasChildNodes()">
+      <img src="../../../../assets/illustrations/error-404-colour.svg" width="250" height="250" alt="404 ilustración" />
+    </ng-container>
+  </div>    
+  
+  <div class="contentNotFound-actions">
+    <div #actionsContent><ng-content select="[actions]"></ng-content></div>
+    <ng-container *ngIf="!actionsContent.hasChildNodes()">
+      <a type="button" class="btn btn-primary" href="">
+        Ir al catálogo de tiendas
+      </a>
+    </ng-container>
+  </div>
+</div>

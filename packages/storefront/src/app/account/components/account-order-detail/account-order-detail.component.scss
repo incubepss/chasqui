@@ -1,0 +1,66 @@
+@import 'variables';
+
+.cardHeader {
+  display: flex;
+  position: relative;
+
+  &-mainContainer {
+    flex: 1 1 auto;
+  }
+
+  &-date {
+    font-size: 1.1rem;
+  }
+
+  &-code {
+    font-size: 0.9rem;
+  }
+
+  &-state {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.customer {
+  font-size: 0.9rem;
+  &-name {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  &-emailAddress {
+    font-size: 0.9rem;
+  }
+
+  &-phoneNumber {
+    font-size: 0.9rem;
+  }
+}
+
+.moreActions {
+  margin-top: 1rem;
+  text-align: right;
+  .btn-primary {
+    margin-left: 1em;
+  }
+}
+
+.footerActions {
+  margin-top: 2rem;
+}
+
+.modal-footer {
+  justify-content: space-between;
+}
+
+@include media-breakpoint-up(md) {
+  .order-title {
+    margin-top: 0.5rem;
+  }
+
+  .footerActions {
+    margin-bottom: 2rem;
+  }
+}

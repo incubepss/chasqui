@@ -1,0 +1,67 @@
+<div class="filterContainer" >
+  
+  <div class="left">
+    <div class="filterTagsContainer" *ngIf="facets.length">
+      <div
+        *ngFor="let facet of facets; trackBy: trackById"
+        class="filterTagsContainer-facetGroup {{facet.code}}"
+        >
+          <ng-container *ngFor="let value of facet.values; trackBy: trackById" >
+              <label 
+                *ngIf="isActive(facet, value)" class="link-facet mr-4 mr-md-2"
+                class="tag"
+              >
+                  <!--vsf-sello class="tag-icon" mode="icon"  [code]="value.code" [facet]="facet.code"></!--vsf-sello-->
+                  <span class="tag-label">{{ value.name }}</span>
+                  <fa-icon class="tag-action" icon="times"
+                    (click)="toggleFacetValueInRoute(facet, value)"
+                  ></fa-icon>
+              </label>
+          </ng-container>
+        </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div ngbDropdown placement="bottom-right" class="d-inline-block" *ngIf="sortOptions.length">
+      <button class="btn btn-link hide-caret" id="dropdownSort" ngbDropdownToggle>
+        <span><fa-icon icon="sort"></fa-icon></span>
+        Orden
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownSort">
+        <button ngbDropdownItem *ngFor="let sortItem of sortOptions" (click)="sortBy(sortItem.value)">{{sortItem.label}}</button>
+      </div>
+    </div>
+  
+      <div ngbDropdown placement="bottom-right" class="d-inline-block dropDownFilter" *ngIf="facets.length">
+        <button class="btn btn-link hide-caret" id="dropDownFilter" ngbDropdownToggle>
+          <span><fa-icon icon="filter"></fa-icon></span>
+          Filtros
+        </button>
+        <div ngbDropdownMenu  class="dropDownFilter-menu" aria-labelledby="dropdownFilter">
+          <form 
+            class="facet-group" 
+            *ngFor="let facet of facets; trackBy: trackById"
+          >
+            <h6 class="dropdown-header">{{ facet.name | titlecase }}</h6>
+            <div 
+              class="form-check"
+              *ngFor="let value of facet.values; trackBy: trackById" 
+            >
+              <label class="link-facet mr-4 mr-md-2">
+                <input
+                    type="checkbox"
+                    [checked]="isActive(facet, value)"
+                    (change)="toggleFacetValueInRoute(facet, value)"
+                    class="mr-1"
+                  />
+                  <vsf-sello mode="icon" size="sm" [code]="value.code" [facet]="facet.code"></vsf-sello>  
+                  {{ value.name }}
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+  </div>
+
+</div>

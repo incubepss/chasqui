@@ -1,0 +1,70 @@
+<vdr-action-bar>
+  <vdr-ab-left>
+    <input
+      type="text"
+      name="searchTerm"
+      [formControl]="searchTerm"
+      placeholder="Buscar por apellido"
+      class="clr-input search-input"
+    />
+  </vdr-ab-left>
+  <vdr-ab-right>
+    <vdr-action-bar-items locationId="odoo-list"></vdr-action-bar-items>
+  </vdr-ab-right>
+</vdr-action-bar>
+
+<vdr-data-table
+  id="datatable"
+  [items]="items$ | async"
+  [itemsPerPage]="itemsPerPage$ | async"
+  [totalItems]="totalItems$ | async"
+  [currentPage]="currentPage$ | async"
+  (pageChange)="setPageNumber($event)"
+  (itemsPerPageChange)="setItemsPerPage($event)"
+>
+  <vdr-dt-column>Código</vdr-dt-column>
+  <vdr-dt-column>Estado</vdr-dt-column>
+  <vdr-dt-column>Cliente</vdr-dt-column>
+  <vdr-dt-column>Total</vdr-dt-column>
+  <vdr-dt-column>Exportado</vdr-dt-column>
+  <vdr-dt-column></vdr-dt-column>
+
+  <ng-template let-order="item">
+    <td class="left align-middle">{{ order.code }}</td>
+    <td class="left align-middle">{{ order.state }}</td>
+    <td class="left align-middle">
+      {{ order.customer.fistName }} {{ order.customer.lastName }} &lt;{{ order.customer.emailAddress }}&gt;
+    </td>
+    <td class="left align-middle">{{ order.totalWithTax | localeCurrency: (currencyCode$ | async) }}</td>
+    <td class="left align-middle" style="width: 60px">
+      <vdr-chip [colorType]="hasOdooIdInHistory(order) && 'success'"
+        >{{ hasOdooIdInHistory(order) ? 'Exportado' : 'Pendiente' }}</vdr-chip
+      >
+    </td>
+    <td class="right align-middle" style="width: 60px" *vdrIfPermissions="'DeleteOrder'">
+      <vdr-dropdown>
+        <button type="button" class="btn btn-link btn-sm" vdrDropdownTrigger>
+          {{ 'common.actions' | translate }}
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <vdr-dropdown-menu vdrPosition="bottom-right">
+          <a class="edit-button" [routerLink]="['/extensions', 'ordersFlow', order.id]" vdrDropdownItem>
+            <clr-icon shape="edit" class=""></clr-icon>
+            {{ 'common.edit' | translate }}
+          </a>
+
+          <button
+            type="button"
+            class="delete-button"
+            *ngIf="!hasOdooIdInHistory(order)"
+            (click)="export(order.id)"
+            vdrDropdownItem
+          >
+            <clr-icon shape="export" class="is-danger"></clr-icon>
+            Exportar
+          </button>
+        </vdr-dropdown-menu>
+      </vdr-dropdown>
+    </td>
+  </ng-template>
+</vdr-data-table>

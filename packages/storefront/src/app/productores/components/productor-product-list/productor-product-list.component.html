@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-12">
+    <h4 class="subtitle-page">Productos</h4>
+    <div
+      class="product-list"
+      *ngIf="(loading$ | async) === true || products?.length > 0; else notProducts"
+    >
+      <vsf-product-card
+        *ngFor="let product of products"
+        [product]="product"
+        [facetValues]="facetValues$ | async"
+        [cartOrderLines]="cart$ | async"
+        [addEnabled]="addToCartAllowed$ | async"
+      ></vsf-product-card>
+      <ng-container *ngIf="loading$ | async">
+        <vsf-product-card [product]="null"></vsf-product-card>
+        <vsf-product-card [product]="null"></vsf-product-card>
+        <vsf-product-card [product]="null"></vsf-product-card>
+        <vsf-product-card [product]="null"></vsf-product-card>
+      </ng-container>
+    </div>
+    <ng-template #notProducts>
+      <div *ngIf="(loading$ | async) === false">
+        No hay productos disponibles del productor por el momento
+      </div>
+    </ng-template>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-md-3"></div>
+  <div class="col-12 col-md-9 text-center">
+    <button
+      class="btn btn-secondary"
+      (click)="loadMore()"
+      *ngIf="displayLoadMore"
+      [disabled]="loading$ | async"
+    >
+      <span *ngIf="loading$ | async" class="loading-indicator spinner-grow spinner-grow-sm"></span>
+      Cargar más
+    </button>
+  </div>
+</div>

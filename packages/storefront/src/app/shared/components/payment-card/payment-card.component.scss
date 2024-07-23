@@ -1,0 +1,60 @@
+@import 'variables';
+
+.card.--noCard {
+  border: 0;
+  padding: 0;
+  .card-body, .card-footer {
+    padding: 0;
+  }
+}
+
+.payment {
+
+  &-method {
+    border: 0;
+    &-name {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    &-amount {
+      color: #0c96a0;
+      font-size: 1.5rem;
+    }
+    &-initLink {
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1rem;
+      text-align: center;
+    }
+    &-state {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      &.Authorized {
+        color: #f57c00;
+      }
+      &.Settled {
+        color: $green;
+      }
+      &.Cancelled {
+        color: $red;
+      }
+    }
+  }
+
+  &-transactionId {
+    color: $gray-500;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+  }
+
+
+  &-methodDescription {
+    background-color: $gray-200;
+    padding: 1rem;
+    font-size: 0.9rem;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

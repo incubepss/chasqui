@@ -1,0 +1,87 @@
+<div *ngIf="order">
+  <div class="text-center mb-4">
+    <fa-icon class="thanks-icon" icon="check-circle"></fa-icon>
+    <h2 class="thanks-message">¡Gracias por coordinar una compra grupal!</h2>
+    <div>
+      te mandaremos a {{order.customer.emailAddress}} el detalle
+    </div>
+    <ul class="order-details list-unstyled">
+      <li><span class="text-muted">Código del pedido grupal:</span> {{ order.customFields.orderGroup.code }}</li>
+      <li><span class="text-muted">Fecha:</span> {{ order.updatedAt | date: 'medium' }}</li>
+    </ul>
+  </div>
+
+  <div class="text-center">
+    <div class="stepper">
+        <div class="stepper-step step">
+          <div class="step-number">
+              1
+          </div>
+          <div class="step-body">
+            <div class="step-title">Compartí el siguiente enlace para invitar a tu compra colectiva:</div>
+              <vsf-share-ordergroup [orderGroup]="order.customFields.orderGroup"></vsf-share-ordergroup>
+          </div>
+        </div>
+        <div class="stepper-step">
+          <div class="step-number">
+              2
+          </div>
+          <div class="step-body">
+              <div class="step-title">Esperá a recibir pedidos </div>
+              <div class="step-details">
+                · Te llegará un email cada vez que alguien sume un pedido a tu grupo.<br/>
+                · Además podés ir viendo el detalle en <i>Mis grupos</i><br/>
+              </div>
+          </div>
+        </div>
+        <div class="stepper-step">
+          <div class="step-number">
+              3
+          </div>
+          <div class="step-body">
+            <div class="step-title">Envía a la tienda tu pedido grupal</div>
+            <div class="step-details">
+              · Para eso, entrá al detalle del grupo en <i>Mis grupos</i>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="footer-actions" *ngIf="order.customer.user">
+    <button class="btn btn-secondary" [routerLink]="'/micuenta/grupos'">Ir a <i>Mis grupos</i></button>
+  </div>
+
+  <hr />
+
+  <div class="text-center">
+    <h5>Detalle de tu pedido en el grupo</h5>
+    <ul class="order-details list-unstyled">
+      <li>
+        <span class="text-muted">Código del pedido participante:</span> 
+        <br />
+        {{ order.code }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="text-center">
+    <ng-container *ngFor="let payment of order.payments">
+      <div 
+        class="payment" 
+        *ngIf="payment.state==='Authorized'"        
+      >
+        <div class="payment-detail">
+          <div class="paymentDetail-status">Pago pendiente</div>
+          <div class="paymentDetail-amount">Monto: {{payment.amount | formatPrice}}  </div>
+        </div>
+        <div 
+          class="payment-instruction" 
+          *ngIf="payment.paymentMethod.customFields?.paymentInstruction"
+          [innerHTML]="payment.paymentMethod.customFields?.paymentInstruction | paymentInstruction"
+        ></div>
+      </div>
+    </ng-container>
+  </div>
+  
+</div>

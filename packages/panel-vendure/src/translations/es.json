@@ -1,0 +1,126 @@
+{
+  "asset": {
+    "set-focal-point": "Marcar punto focal"
+  },
+  "breadcrumb": {
+    "customer-groups": "Grupos de consumidores",
+    "customers": "Consumidores",
+    "shipping-methods": "Métodos de entrega"
+  },
+  "catalog": {
+    "add-facet-value": "Añadir",
+    "add-facets": "Añadir etiqueta",
+    "asset-preview-links": "Asset links vista previa",
+    "facet-values": "Etiquetas del grupo",
+    "create-new-facet": "Añadir grupo de etiquetas",
+    "confirm-delete-customer": "¿Eliminar consumidor/a?",
+    "confirm-delete-shipping-method": "¿Eliminar método de entrega?",
+    "live-preview-contents": "Vista previa en vivo",
+    "pending-search-index-updates": "Indice de búsqueda tiene actualizaciones pendientes para correr"
+  },
+  "customer": {
+    "add-customer-to-group": "Añadir a algún grupo",
+    "add-customer-to-groups-with-count": "Añadir {count, plural, one {consumidor/a} other {{count} consumidores}} a {count, plural, one {1 grupo} other {{count} grupos}}",
+    "add-customers-to-group": "Añadir consumidores al grupo",
+    "add-customers-to-group-success": "{customerCount, plural, one {1 consumidor/a} other {{customerCount} consumidores}} {customerCount, plural, one {añadido} other {añadidos}} a \"{ groupName }\"",
+    "add-customers-to-group-with-count": "Añadir {count, plural, one {1 consumidor/a} other {{count} consumidores}}",
+    "add-customers-to-group-with-name": "Añadir consumidores a \"{ groupName }\"",
+    "confirm-delete-customer-group": "¿Eliminar grupo de consumidores?",
+    "confirm-remove-customer-from-group": "¿Eliminar consumidor/a del grupo?",
+    "create-customer-group": "Crear grupo de consumidores",
+    "create-new-address": "Crear nueva dirección",
+    "create-new-customer": "Crear nuevo consumidor/a",
+    "create-new-customer-group": "Crear nuevo grupo de consumidores",
+    "customer-groups": "Grupos de consumidores",
+    "customer-history": "Historial",
+    "customer-type": "Estado",
+    "history-customer-added-to-group": "Consumidor/a añadido al grupo \"{ groupName }\"",
+    "history-customer-detail-updated": "Detalles de consumidor/a actualizados",
+    "history-customer-registered": "Consumidor/a registrado",
+    "history-customer-removed-from-group": "Consumidor/a eliminado del grupo \"{ groupName }\"",
+    "history-customer-verified": "Consumidor/a verificado",
+    "not-a-member-of-any-groups": "No es miembro de ningún grupo",
+    "remove-customers-from-group-success": "{customerCount, plural, one {1 consumidor/a} other {{customerCount} consumidores}} {customerCount, plural, one {eliminado} other {eliminados}} de \"{ groupName }\"",
+    "select-customer": "Seleccionar consumidor/a",
+    "update-customer-group": "Actualizar grupo de consumidor/a"
+  },
+  "common": {
+    "add-item-to-list": "Añadir",
+    "custom-fields": " ",
+    "boolean-and": "AND",
+    "boolean-or": "OR",
+    "general": "General",
+    "items-selected-count": "{ count } {count, plural, one {elemento seleccionado} other {elementos seleccionados}}",
+    "not-applicable": "No aplicable",
+    "select-variants": "Selección de variante de producto",
+    "select-products": "Selección de producto",
+    "select-items-with-count": "Selección { count } {count, plural, one {elemento} other {elementos}}",
+    "clear-selection": "Borrar selección",
+    "browser-default": "Navegador por defecto"
+  },
+  "dashboard": {
+    "lastMonth": "Mes anterior"
+  },
+  "marketing": {
+    "per-customer-limit": "Límite por consumidor/a"
+  },
+  "nav": {
+    "channels": "Canales",
+    "customer-groups": "Grupos de consumidores",
+    "customers": "Consumidores",
+    "tax-categories": "Categoría de Impuestos",
+    "orders": "Pedidos (avanzado)",
+    "shipping-methods": "Entregas"
+  },
+  "order": {
+    "create-fulfillment": "Crear orden",
+    "unfulfilled": "Cant. artículos sin orden de entrega",
+    "fulfill": "Cant. para la entrega",
+    "fulfill-order": "Crear orden de entrega",
+    "cancel-entire-order": "Cancelar el pedido completo",
+    "cancel-reason-customer-request": "Solicitud del/la consumidor/a",
+    "cancel-specified-items": "Cancelar algunos artículos",
+    "create-fulfillment-success": "Orden de entrega creada con éxito",
+    "customer": "Consumidor/a",
+    "note-visible-to-customer": "Visible para administradores y consumidores",
+    "refund-reason-customer-request": "Solicitud de consumidor/a",
+    "search-by-order-filters": "Buscar por el código de pedido / apellido del/la consumidor/a / ID de transacción", 
+    "set-fulfillment-state": "Marcar como {state}",
+    "fulfillment": "Orden de entrega",
+    "shipping": "Entrega",
+    "shipping-method": "Método de entrega",
+    "shipping-cancelled": "Entrega cancelada",
+    "set-coupon-codes": "Cupones de descuento"
+  },
+  
+  "state": {
+    "with-fulfill": "En preparación",
+    "asignado": "En preparación",
+    "payment-authorized": "Nuevo",
+    "authorized": "Pago pendiente",
+    "payment-settled": "Nuevo",
+    "settled": "Pago realizado",
+    "partially-shipped": "En entrega (parcial)",
+    "shipped": "En entrega",
+    "expired": "Vencido",
+    "confirmed-by-owner": "Nuevo",
+    "accepted-by-channel": "En preparación",
+    "adding-orders": "Activo"
+  },
+  "settings": {
+    "create-new-shipping-method": "Crear nuevo método de entrega",
+    "shipping-method": "Método de entrega",
+    "shipping-calculator": "Calculador de entrega",
+    "shipping-eligibility-checker": "Comprueba disponibilidad de entrega",
+    "test-shipping-method": "Comprobar método de entrega",
+    "test-shipping-methods": "Comprobar métodos de entrega"
+  },
+  "virtual-states": {
+    "nuevos": "nuevos",
+    "en_preparacion": "en preparación",
+    "en_entrega": "en entrega",
+    "entregados": "entregados",
+    "activos": "activos",
+    "modificando": "en modificación"
+  }
+}

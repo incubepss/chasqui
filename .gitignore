@@ -1,0 +1,7 @@
+.env
+.vscode/*.log
+traefik/acme.json
+vendure.sqlite*
+backups
+backups-*
+imagenes/*.jpg

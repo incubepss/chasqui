@@ -1,0 +1,139 @@
+<vsf-mobile-section title="Detalle del pedido en grupo" [showHeaderDropdown]="(orderGroup$ | async)?.active">
+  <div headerDropdownMenu>
+    <button ngbDropdownItem class="btn-sm text-danger" (click)="cancel(cancelConfirmModalContent)">
+      <fa-icon icon="trash"></fa-icon>
+      Cancelar pedido en grupo
+    </button>
+  </div>
+
+  <div toolbar *ngIf="(orderGroup$ | async)?.active && (orderGroup$ | async)?.state !== 'Cancelled'">
+    <button class="btn btn-primary" (click)="confirm(confirmModalContent)">
+      Enviar pedido
+      <fa-icon icon="arrow-right"></fa-icon>
+    </button>
+  </div>
+
+  <ng-container *ngIf="orderGroup$ | async as orderGroup">
+    <vsf-mobile-card>
+      <div class="cardHeader">
+        <div class="cardHeader-mainContainer">
+          <div class="cardHeader-code">#{{ orderGroup.code }}</div>
+          <div class="cardHeader-date">{{ orderGroup.createdAt | date: 'fullDate':'-0300' }}</div>
+        </div>
+        <span class="cardHeader-state">
+          <vsf-state-tag [state]="orderGroup.state" mode="orderGroup"></vsf-state-tag>
+          <strong class="cardTotal">Total {{ orderGroup.totalWithTax | formatPrice }} </strong>
+        </span>
+      </div>
+    </vsf-mobile-card>
+
+    <vsf-mobile-card title="Acciones">
+      <vsf-mobile-list-action
+        [routerLink]="['./', 'remito']"
+        icon="receipt"
+        label="Remito"
+        secondaryText="Podés ver e imprimir el listado de artículos"
+      ></vsf-mobile-list-action>
+
+      <vsf-mobile-list-action
+        (click)="orderToClipboard(orderGroup)"
+        icon="file-export"
+        label="Exportar pedidos"
+        secondaryText="Se copiaran los pedidos en el portapapeles en formato csv"
+      ></vsf-mobile-list-action>
+
+      <ng-container *ngIf="orderGroup.active && orderGroup.state !== 'Cancelled'">
+        <vsf-share-ordergroup mode="list-action" [orderGroup]="orderGroup"></vsf-share-ordergroup>
+        <vsf-mobile-list-action
+          (click)="confirm(confirmModalContent)"
+          icon="arrow-right"
+          label="Enviar pedido"
+          secondaryText="Confirma este pedido en grupo"
+        ></vsf-mobile-list-action>
+      </ng-container>
+    </vsf-mobile-card>
+
+    <div class="cardHeader">
+      <h5>Pedidos ({{ orderGroup.ordersQuantity }})</h5>
+      <div class="cardHeader-state">
+        <button type="button" class="btn btn-sm btn-secondary" (click)="verTodos = true" *ngIf="!verTodos">
+          Ver todos los pedidos
+        </button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="verTodos = false" *ngIf="verTodos">
+          Ocultar pedidos cancelados
+        </button>
+      </div>
+    </div>
+
+    <div *ngFor="let order of orders$ | async">
+      <vsf-mobile-card [routerLink]="['./', order.code]" *ngIf="order.state !== 'Cancelled' || verTodos"
+        ><div class="cardOrders">
+          <div class="left">
+            <div class="cardOrders-customer">
+              <ng-container *ngIf="order.customer; else desconocido">
+                <div class="data-primary">
+                  {{ order.customer.firstName }} {{ order.customer.lastName }}
+                  <small>{{ order.customFields?.alias }}</small>
+                </div>
+                <div *ngFor="let lines of order.lines">
+                  <strong>({{ lines.quantity }})</strong> {{ lines.productVariant.name }}
+                </div>
+              </ng-container>
+              <ng-template #desconocido>
+                <span *ngIf="order.customFields?.alias">{{ order.customFields?.alias }}</span>
+                <span *ngIf="!order.customFields?.alias">Desconocido</span>
+              </ng-template>
+            </div>
+          </div>
+          <div class="right">
+            <div class="cardOrders-total">{{ order.totalWithTax | formatPrice }}</div>
+            <div class="cardOrders-state">
+              <vsf-state-tag
+                [state]="order.state"
+                [stateGroup]="orderGroup.state"
+                mode="orderGroup"
+              ></vsf-state-tag>
+            </div>
+            <div class="cardOrders-date" *ngIf="order.orderPlacedAt">{{ order.orderPlacedAt | timeAgo }}</div>
+          </div>
+          <div class="action">
+            <fa-icon icon="chevron-right"></fa-icon>
+          </div>
+        </div>
+      </vsf-mobile-card>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="notFound$ | async"> no se encontró el grupo </ng-container>
+
+  <ng-template #emptyResult>
+    <div class="emptyResult">
+      <fa-icon icon="inbox"></fa-icon>
+      <div>Todavía no hiciste pedidos</div>
+    </div>
+  </ng-template>
+
+  <ng-template #confirmModalContent let-modal>
+    <div class="modal-body">
+      <p>¿Querés confirmar el pedido grupal?</p>
+      <p class="text-danger" *ngIf="hasActiveOrder$ | async">
+        Algunos participantes todavía están eligiendo productos
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-link" (click)="modal.dismiss(false)">cancelar</button>
+      <button type="button" class="btn btn-success" (click)="modal.close(true)">Confirmar pedido</button>
+    </div>
+  </ng-template>
+
+  <ng-template #cancelConfirmModalContent let-modal>
+    <div class="modal-body">
+      <p>¿Querés cancelar el pedido grupal?</p>
+      <p>Se cancelaran todos los pedidos participantes</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-link" (click)="modal.dismiss(false)">volver</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close(true)">Cancelar grupo</button>
+    </div>
+  </ng-template>
+</vsf-mobile-section>

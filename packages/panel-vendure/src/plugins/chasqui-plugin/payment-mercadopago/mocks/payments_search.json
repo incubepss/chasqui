@@ -1,0 +1,597 @@
+{
+    "paging": {
+        "total": 5,
+        "limit": 30,
+        "offset": 0
+    },
+    "results": [
+        {
+            "metadata": {},
+            "corporation_id": null,
+            "operation_type": "regular_payment",
+            "point_of_interaction": {},
+            "fee_details": [
+                {
+                    "amount": 4.1,
+                    "fee_payer": "collector",
+                    "type": "mercadopago_fee"
+                }
+            ],
+            "notification_url": null,
+            "date_approved": "2021-10-07T12:58:32.639-04:00",
+            "money_release_schema": null,
+            "payer": {
+                "first_name": null,
+                "last_name": null,
+                "email": "test_user_80507629@testuser.com",
+                "identification": {
+                    "number": "32659430",
+                    "type": "DNI"
+                },
+                "phone": {
+                    "area_code": null,
+                    "number": null,
+                    "extension": null
+                },
+                "type": null,
+                "entity_type": null,
+                "id": "127729747"
+            },
+            "transaction_details": {
+                "total_paid_amount": 100,
+                "acquirer_reference": null,
+                "installment_amount": 100,
+                "financial_institution": null,
+                "net_received_amount": 95.9,
+                "overpaid_amount": 0,
+                "external_resource_url": null,
+                "payable_deferral_period": null,
+                "payment_method_reference_id": null
+            },
+            "statement_descriptor": "TETE6632272",
+            "call_for_authorize_id": null,
+            "installments": 1,
+            "pos_id": null,
+            "external_reference": "D357LW8WM554FRTW",
+            "date_of_expiration": null,
+            "charges_details": [],
+            "id": 1242139585,
+            "payment_type_id": "credit_card",
+            "order": {
+                "id": "3378456997",
+                "type": "mercadopago"
+            },
+            "counter_currency": null,
+            "brand_id": null,
+            "status_detail": "accredited",
+            "differential_pricing_id": null,
+            "additional_info": {
+                "authentication_code": null,
+                "ip_address": "181.230.146.221",
+                "nsu_processadora": null,
+                "available_balance": null,
+                "items": [
+                    {
+                        "quantity": "2",
+                        "category_id": null,
+                        "picture_url": null,
+                        "description": null,
+                        "id": null,
+                        "title": "Semillas de Coriandro.",
+                        "unit_price": "50.0"
+                    }
+                ]
+            },
+            "live_mode": false,
+            "marketplace_owner": null,
+            "card": {
+                "first_six_digits": "450995",
+                "expiration_year": 2025,
+                "date_created": "2021-10-07T12:58:32.000-04:00",
+                "expiration_month": 11,
+                "id": null,
+                "cardholder": {
+                    "identification": {
+                        "number": "11111111",
+                        "type": "DNI"
+                    },
+                    "name": "APRO"
+                },
+                "last_four_digits": "3704",
+                "date_last_updated": "2021-10-07T12:58:32.000-04:00"
+            },
+            "integrator_id": null,
+            "status": "approved",
+            "transaction_amount_refunded": 0,
+            "transaction_amount": 470,
+            "description": "Semillas de Coriandro.",
+            "money_release_date": "2021-10-25T12:58:32.639-04:00",
+            "merchant_number": null,
+            "refunds": [],
+            "authorization_code": null,
+            "captured": true,
+            "collector_id": 835446788,
+            "merchant_account_id": null,
+            "taxes_amount": 0,
+            "date_last_updated": "2021-10-07T12:58:32.639-04:00",
+            "coupon_amount": 0,
+            "store_id": null,
+            "date_created": "2021-10-07T12:58:32.549-04:00",
+            "acquirer_reconciliation": [],
+            "sponsor_id": null,
+            "shipping_amount": 0,
+            "issuer_id": "310",
+            "payment_method_id": "visa",
+            "binary_mode": false,
+            "platform_id": null,
+            "deduction_schema": null,
+            "processing_mode": "aggregator",
+            "currency_id": "ARS",
+            "shipping_cost": 0
+        },
+        {
+            "metadata": {},
+            "corporation_id": null,
+            "operation_type": "regular_payment",
+            "point_of_interaction": {},
+            "fee_details": [],
+            "notification_url": null,
+            "date_approved": null,
+            "money_release_schema": null,
+            "payer": {
+                "first_name": null,
+                "last_name": null,
+                "email": "test_user_80507629@testuser.com",
+                "identification": {
+                    "number": "32659430",
+                    "type": "DNI"
+                },
+                "phone": {
+                    "area_code": null,
+                    "number": null,
+                    "extension": null
+                },
+                "type": null,
+                "entity_type": null,
+                "id": "835446823"
+            },
+            "transaction_details": {
+                "total_paid_amount": 100,
+                "acquirer_reference": null,
+                "installment_amount": 100,
+                "financial_institution": null,
+                "net_received_amount": 0,
+                "overpaid_amount": 0,
+                "external_resource_url": null,
+                "payable_deferral_period": null,
+                "payment_method_reference_id": null
+            },
+            "statement_descriptor": "TETE6632272",
+            "call_for_authorize_id": null,
+            "installments": 1,
+            "pos_id": null,
+            "external_reference": "D357LW8WM554FRTW",
+            "date_of_expiration": null,
+            "charges_details": [],
+            "id": 1242140748,
+            "payment_type_id": "credit_card",
+            "order": {
+                "id": "3378606180",
+                "type": "mercadopago"
+            },
+            "counter_currency": null,
+            "brand_id": null,
+            "status_detail": "pending_contingency",
+            "differential_pricing_id": null,
+            "additional_info": {
+                "authentication_code": null,
+                "ip_address": "181.230.146.221",
+                "nsu_processadora": null,
+                "available_balance": null,
+                "items": [
+                    {
+                        "quantity": "2",
+                        "category_id": null,
+                        "picture_url": null,
+                        "description": null,
+                        "id": null,
+                        "title": "Semillas de Coriandro.",
+                        "unit_price": "50.0"
+                    }
+                ]
+            },
+            "live_mode": false,
+            "marketplace_owner": null,
+            "card": {
+                "first_six_digits": "450995",
+                "expiration_year": 2056,
+                "date_created": "2021-10-07T13:18:04.000-04:00",
+                "expiration_month": 11,
+                "id": null,
+                "cardholder": {
+                    "identification": {
+                        "number": "11111111",
+                        "type": "DNI"
+                    },
+                    "name": "CONT"
+                },
+                "last_four_digits": "3704",
+                "date_last_updated": "2021-10-07T13:18:04.000-04:00"
+            },
+            "integrator_id": null,
+            "status": "in_process",
+            "transaction_amount_refunded": 0,
+            "transaction_amount": 100,
+            "description": "Semillas de Coriandro.",
+            "money_release_date": null,
+            "merchant_number": null,
+            "refunds": [],
+            "authorization_code": null,
+            "captured": true,
+            "collector_id": 835446788,
+            "merchant_account_id": null,
+            "taxes_amount": 0,
+            "date_last_updated": "2021-10-07T13:18:04.833-04:00",
+            "coupon_amount": 0,
+            "store_id": null,
+            "date_created": "2021-10-07T13:18:04.705-04:00",
+            "acquirer_reconciliation": [],
+            "sponsor_id": null,
+            "shipping_amount": 0,
+            "issuer_id": "310",
+            "payment_method_id": "visa",
+            "binary_mode": false,
+            "platform_id": null,
+            "deduction_schema": null,
+            "processing_mode": "aggregator",
+            "currency_id": "ARS",
+            "shipping_cost": 0
+        },
+        {
+            "metadata": {},
+            "corporation_id": null,
+            "operation_type": "regular_payment",
+            "point_of_interaction": {},
+            "fee_details": [],
+            "notification_url": null,
+            "date_approved": null,
+            "money_release_schema": null,
+            "payer": {
+                "first_name": null,
+                "last_name": null,
+                "email": "test_user_80507629@testuser.com",
+                "identification": {
+                    "number": "32659430",
+                    "type": "DNI"
+                },
+                "phone": {
+                    "area_code": null,
+                    "number": null,
+                    "extension": null
+                },
+                "type": null,
+                "entity_type": null,
+                "id": "835446823"
+            },
+            "transaction_details": {
+                "total_paid_amount": 135.68,
+                "acquirer_reference": null,
+                "installment_amount": 22.61,
+                "financial_institution": null,
+                "net_received_amount": 0,
+                "overpaid_amount": 0,
+                "external_resource_url": null,
+                "payable_deferral_period": null,
+                "payment_method_reference_id": null
+            },
+            "statement_descriptor": "TETE6632272",
+            "call_for_authorize_id": null,
+            "installments": 6,
+            "pos_id": null,
+            "external_reference": "D357LW8WM554FRTW",
+            "date_of_expiration": null,
+            "charges_details": [],
+            "id": 1242139797,
+            "payment_type_id": "credit_card",
+            "order": {
+                "id": "3378661811",
+                "type": "mercadopago"
+            },
+            "counter_currency": null,
+            "brand_id": null,
+            "status_detail": "cc_rejected_bad_filled_security_code",
+            "differential_pricing_id": null,
+            "additional_info": {
+                "authentication_code": null,
+                "ip_address": "181.230.146.221",
+                "nsu_processadora": null,
+                "available_balance": null,
+                "items": [
+                    {
+                        "quantity": "2",
+                        "category_id": null,
+                        "picture_url": null,
+                        "description": null,
+                        "id": null,
+                        "title": "Semillas de Coriandro.",
+                        "unit_price": "50.0"
+                    }
+                ]
+            },
+            "live_mode": false,
+            "marketplace_owner": null,
+            "card": {
+                "first_six_digits": "450995",
+                "expiration_year": 2044,
+                "date_created": "2021-10-07T13:26:05.000-04:00",
+                "expiration_month": 11,
+                "id": null,
+                "cardholder": {
+                    "identification": {
+                        "number": "11111222",
+                        "type": "DNI"
+                    },
+                    "name": "SECU"
+                },
+                "last_four_digits": "3704",
+                "date_last_updated": "2021-10-07T13:26:05.000-04:00"
+            },
+            "integrator_id": null,
+            "status": "rejected",
+            "transaction_amount_refunded": 0,
+            "transaction_amount": 100,
+            "description": "Semillas de Coriandro.",
+            "money_release_date": null,
+            "merchant_number": null,
+            "refunds": [],
+            "authorization_code": null,
+            "captured": true,
+            "collector_id": 835446788,
+            "merchant_account_id": null,
+            "taxes_amount": 0,
+            "date_last_updated": "2021-10-07T13:26:06.091-04:00",
+            "coupon_amount": 0,
+            "store_id": null,
+            "date_created": "2021-10-07T13:26:05.983-04:00",
+            "acquirer_reconciliation": [],
+            "sponsor_id": null,
+            "shipping_amount": 0,
+            "issuer_id": "310",
+            "payment_method_id": "visa",
+            "binary_mode": false,
+            "platform_id": null,
+            "deduction_schema": null,
+            "processing_mode": "aggregator",
+            "currency_id": "ARS",
+            "shipping_cost": 0
+        },
+        {
+            "metadata": {},
+            "corporation_id": null,
+            "operation_type": "regular_payment",
+            "point_of_interaction": {},
+            "fee_details": [],
+            "notification_url": null,
+            "date_approved": null,
+            "money_release_schema": null,
+            "payer": {
+                "first_name": null,
+                "last_name": null,
+                "email": "test_user_80507629@testuser.com",
+                "identification": {
+                    "number": "32659430",
+                    "type": "DNI"
+                },
+                "phone": {
+                    "area_code": null,
+                    "number": null,
+                    "extension": null
+                },
+                "type": null,
+                "entity_type": null,
+                "id": "835446823"
+            },
+            "transaction_details": {
+                "total_paid_amount": 135.68,
+                "acquirer_reference": null,
+                "installment_amount": 22.61,
+                "financial_institution": null,
+                "net_received_amount": 0,
+                "overpaid_amount": 0,
+                "external_resource_url": null,
+                "payable_deferral_period": null,
+                "payment_method_reference_id": null
+            },
+            "statement_descriptor": "TETE6632272",
+            "call_for_authorize_id": null,
+            "installments": 6,
+            "pos_id": null,
+            "external_reference": "D357LW8WM554FRTW",
+            "date_of_expiration": null,
+            "charges_details": [],
+            "id": 1242139806,
+            "payment_type_id": "credit_card",
+            "order": {
+                "id": "3378661811",
+                "type": "mercadopago"
+            },
+            "counter_currency": null,
+            "brand_id": null,
+            "status_detail": "cc_rejected_bad_filled_security_code",
+            "differential_pricing_id": null,
+            "additional_info": {
+                "authentication_code": null,
+                "ip_address": "181.230.146.221",
+                "nsu_processadora": null,
+                "available_balance": null,
+                "items": [
+                    {
+                        "quantity": "2",
+                        "category_id": null,
+                        "picture_url": null,
+                        "description": null,
+                        "id": null,
+                        "title": "Semillas de Coriandro.",
+                        "unit_price": "50.0"
+                    }
+                ]
+            },
+            "live_mode": false,
+            "marketplace_owner": null,
+            "card": {
+                "first_six_digits": "450995",
+                "expiration_year": 2044,
+                "date_created": "2021-10-07T13:26:16.000-04:00",
+                "expiration_month": 11,
+                "id": null,
+                "cardholder": {
+                    "identification": {
+                        "number": "11111222",
+                        "type": "DNI"
+                    },
+                    "name": "SECU"
+                },
+                "last_four_digits": "3704",
+                "date_last_updated": "2021-10-07T13:26:16.000-04:00"
+            },
+            "integrator_id": null,
+            "status": "rejected",
+            "transaction_amount_refunded": 0,
+            "transaction_amount": 100,
+            "description": "Semillas de Coriandro.",
+            "money_release_date": null,
+            "merchant_number": null,
+            "refunds": [],
+            "authorization_code": null,
+            "captured": true,
+            "collector_id": 835446788,
+            "merchant_account_id": null,
+            "taxes_amount": 0,
+            "date_last_updated": "2021-10-07T13:26:16.929-04:00",
+            "coupon_amount": 0,
+            "store_id": null,
+            "date_created": "2021-10-07T13:26:16.831-04:00",
+            "acquirer_reconciliation": [],
+            "sponsor_id": null,
+            "shipping_amount": 0,
+            "issuer_id": "310",
+            "payment_method_id": "visa",
+            "binary_mode": false,
+            "platform_id": null,
+            "deduction_schema": null,
+            "processing_mode": "aggregator",
+            "currency_id": "ARS",
+            "shipping_cost": 0
+        },
+        {
+            "metadata": {},
+            "corporation_id": null,
+            "operation_type": "regular_payment",
+            "point_of_interaction": {},
+            "fee_details": [],
+            "notification_url": null,
+            "date_approved": null,
+            "money_release_schema": null,
+            "payer": {
+                "first_name": null,
+                "last_name": null,
+                "email": "test_user_80507629@testuser.com",
+                "identification": {
+                    "number": "32659430",
+                    "type": "DNI"
+                },
+                "phone": {
+                    "area_code": null,
+                    "number": null,
+                    "extension": null
+                },
+                "type": null,
+                "entity_type": null,
+                "id": "835446823"
+            },
+            "transaction_details": {
+                "total_paid_amount": 100,
+                "acquirer_reference": null,
+                "installment_amount": 0,
+                "financial_institution": "",
+                "net_received_amount": 0,
+                "overpaid_amount": 0,
+                "external_resource_url": "https://www.mercadopago.com/mla/payments/sandbox/ticket/helper?payment_id=1242139810&payment_method_reference_id=6002098363&caller_id=835446823&hash=c865bef0-290d-4471-80c4-eed89794f1d6",
+                "payable_deferral_period": null,
+                "payment_method_reference_id": "6002098363",
+                "verification_code": "6002098363"
+            },
+            "statement_descriptor": null,
+            "call_for_authorize_id": null,
+            "installments": 1,
+            "pos_id": null,
+            "external_reference": "D357LW8WM554FRTW",
+            "date_of_expiration": "2021-10-14T22:59:59.000-04:00",
+            "charges_details": [],
+            "id": 1242139810,
+            "payment_type_id": "ticket",
+            "barcode": {
+                "width": 1,
+                "type": "Code128C",
+                "content": "6002110146005008354468230060020983630000100006",
+                "height": 30
+            },
+            "order": {
+                "id": "3378661811",
+                "type": "mercadopago"
+            },
+            "counter_currency": null,
+            "brand_id": null,
+            "status_detail": "pending_waiting_payment",
+            "differential_pricing_id": null,
+            "additional_info": {
+                "authentication_code": null,
+                "ip_address": "181.230.146.221",
+                "nsu_processadora": null,
+                "available_balance": null,
+                "items": [
+                    {
+                        "quantity": "2",
+                        "category_id": null,
+                        "picture_url": null,
+                        "description": null,
+                        "id": null,
+                        "title": "Semillas de Coriandro.",
+                        "unit_price": "50.0"
+                    }
+                ]
+            },
+            "live_mode": false,
+            "marketplace_owner": null,
+            "card": {},
+            "integrator_id": null,
+            "status": "pending",
+            "transaction_amount_refunded": 0,
+            "transaction_amount": 100,
+            "description": "Semillas de Coriandro.",
+            "money_release_date": null,
+            "merchant_number": null,
+            "refunds": [],
+            "authorization_code": null,
+            "captured": true,
+            "collector_id": 835446788,
+            "merchant_account_id": null,
+            "taxes_amount": 0,
+            "date_last_updated": "2021-10-07T13:26:32.629-04:00",
+            "coupon_amount": 0,
+            "store_id": null,
+            "date_created": "2021-10-07T13:26:32.629-04:00",
+            "acquirer_reconciliation": [],
+            "sponsor_id": null,
+            "shipping_amount": 0,
+            "issuer_id": null,
+            "payment_method_id": "rapipago",
+            "binary_mode": false,
+            "platform_id": null,
+            "deduction_schema": null,
+            "processing_mode": "aggregator",
+            "currency_id": "ARS",
+            "shipping_cost": 0
+        }
+    ]
+}

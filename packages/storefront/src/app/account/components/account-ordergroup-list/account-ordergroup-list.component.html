@@ -1,0 +1,61 @@
+<vsf-mobile-section  title="Mis pedidos grupales" [backRouterLink]="['/micuenta']">
+
+  <div class="toolbar">
+    <button type="button" class="btn btn-sm btn-primary" [routerLink]="['/micuenta/grupos-nuevo']">   
+      <fa-icon icon="plus"></fa-icon>
+      Crear nuevo pedido grupal
+    </button>
+  </div>
+  <div class="table-responsive" *ngIf="displayEmptyResult === false; else emptyResult">
+    <div 
+      class="card" 
+      *ngFor="let order of orders" 
+      [routerLink]="['/micuenta/grupos/', order.code]"
+    >
+      <div class="card-body orderBodyCard">
+        <div class="left">
+          <div class="orderBodyCard-date">{{ order.createdAt | date: 'longDate'}}</div>
+          <div class="orderBodyCard-detailContainer">
+            <div class="orderBodyCard-ordersQuantity" *ngIf="order.ordersQuantity > 0;else sinParticipantesTmpl">{{ order.ordersQuantity }} participante<ng-container *ngIf="order.ordersQuantity!==1">s</ng-container></div>
+            <ng-template #sinParticipantesTmpl>
+              <div class="orderBodyCard-ordersQuantity">sin participantes</div>
+            </ng-template>
+          </div>
+          <vsf-state-tag [state]="order.state" mode="orderGroup"></vsf-state-tag>
+        </div>
+        <div class="right">
+          <div class="orderBodyCard-total">{{ order.totalWithTax | formatPrice }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-center footerActions">
+    <div *ngIf="loading">
+      <span
+          class="footerActions-loading spinner-grow spinner-grow-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+    </div>
+    <div class="footerActions-loadMore flex-fill" *ngIf="displayLoadMore">
+      <button
+        class="btn btn-secondary"
+        (click)="loadMore()"
+        [disabled]="loading"
+      >
+        Cargar más
+      </button>
+    </div>
+  </div>
+
+  <ng-template #emptyResult>
+    <div class="text-center emptyResult" >
+      <fa-icon icon="inbox"></fa-icon>
+      <div>
+        Todavía no hiciste pedidos
+      </div>
+    </div>
+  </ng-template>
+
+</vsf-mobile-section>
+

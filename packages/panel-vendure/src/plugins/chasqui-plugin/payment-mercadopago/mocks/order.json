@@ -1,0 +1,396 @@
+{
+  "createdAt": "2021-10-01T18:36:33.701Z",
+  "updatedAt": "2021-10-01T18:36:48.193Z",
+  "code": "D357LW8WM554FRTW",
+  "state": "ArrangingPayment",
+  "active": true,
+  "orderPlacedAt": null,
+  "couponCodes": [],
+  "shippingAddress": {
+    "fullName": "asdf",
+    "company": "",
+    "streetLine1": "asdf",
+    "streetLine2": "",
+    "city": "asdf",
+    "province": "Neuquén",
+    "postalCode": "3223",
+    "countryCode": "AR",
+    "phoneNumber": "asd",
+    "defaultShippingAddress": true,
+    "defaultBillingAddress": true,
+    "country": "Argentina"
+  },
+  "billingAddress": {},
+  "currencyCode": "ARS",
+  "subTotal": 47000,
+  "subTotalWithTax": 47000,
+  "shipping": 0,
+  "shippingWithTax": 0,
+  "id": 5,
+  "taxZoneId": 1,
+  "customer": {
+    "createdAt": "2021-09-29T16:09:15.377Z",
+    "updatedAt": "2021-09-29T16:09:15.377Z",
+    "deletedAt": null,
+    "title": "",
+    "firstName": "Juan",
+    "lastName": "Perez",
+    "phoneNumber": "",
+    "emailAddress": "jperez@chasqui.com.ar",
+    "id": 5,
+    "user": {
+      "createdAt": "2021-09-29T16:09:15.377Z",
+      "updatedAt": "2021-10-01T18:36:23.956Z",
+      "deletedAt": null,
+      "identifier": "jperez@chasqui.com.ar",
+      "verified": true,
+      "lastLogin": "2021-10-01T15:36:24.305Z",
+      "id": 6
+    }
+  },
+  "shippingLines": [
+    {
+      "createdAt": "2021-10-01T18:36:48.012Z",
+      "updatedAt": "2021-10-01T18:36:48.012Z",
+      "listPrice": 0,
+      "listPriceIncludesTax": false,
+      "adjustments": [],
+      "taxLines": [
+        {
+          "description": "shipping tax",
+          "taxRate": 0
+        }
+      ],
+      "id": 4,
+      "shippingMethodId": 1,
+      "price": 0,
+      "priceWithTax": 0,
+      "discountedPrice": 0,
+      "discountedPriceWithTax": 0,
+      "taxRate": 0,
+      "discounts": []
+    }
+  ],
+  "surcharges": [],
+  "lines": [
+    {
+      "createdAt": "2021-10-01T18:36:33.701Z",
+      "updatedAt": "2021-10-01T18:36:33.701Z",
+      "id": 7,
+      "productVariant": {
+        "createdAt": "2021-09-24T16:31:44.723Z",
+        "updatedAt": "2021-09-24T16:31:44.731Z",
+        "deletedAt": null,
+        "enabled": true,
+        "sku": "Cer0107",
+        "stockOnHand": 4,
+        "stockAllocated": 0,
+        "outOfStockThreshold": 0,
+        "useGlobalOutOfStockThreshold": true,
+        "trackInventory": "FALSE",
+        "id": 78,
+        "productId": 78,
+        "taxCategory": {
+          "createdAt": "2021-09-24T16:29:01.417Z",
+          "updatedAt": "2021-09-24T16:29:01.417Z",
+          "name": "IVA",
+          "isDefault": true,
+          "id": 1
+        },
+        "productVariantPrices": [
+          {
+            "createdAt": "2021-09-24T16:31:44.755Z",
+            "updatedAt": "2021-09-24T16:31:44.755Z",
+            "price": 24000,
+            "id": 78,
+            "channelId": 1
+          }
+        ],
+        "translations": [
+          {
+            "createdAt": "2021-09-24T16:31:44.723Z",
+            "updatedAt": "2021-09-24T16:31:44.731Z",
+            "languageCode": "es",
+            "name": "Cerveza Wynt Roja en lata",
+            "id": 78
+          }
+        ],
+        "price": 24000,
+        "priceWithTax": 24000,
+        "listPrice": 24000,
+        "listPriceIncludesTax": false,
+        "taxRateApplied": {
+          "createdAt": "2021-09-24T16:29:17.338Z",
+          "updatedAt": "2021-09-24T16:29:17.338Z",
+          "name": "IVA incluido",
+          "enabled": true,
+          "value": 0,
+          "id": 1,
+          "category": {
+            "createdAt": "2021-09-24T16:29:01.417Z",
+            "updatedAt": "2021-09-24T16:29:01.417Z",
+            "name": "IVA",
+            "isDefault": true,
+            "id": 1
+          },
+          "zone": {
+            "createdAt": "2021-09-24T16:28:31.232Z",
+            "updatedAt": "2021-09-24T16:28:31.232Z",
+            "name": "Federal",
+            "id": 1
+          },
+          "customerGroup": null
+        },
+        "currencyCode": "ARS",
+        "languageCode": "es",
+        "name": "Cerveza Wynt Roja en lata"
+      },
+      "featuredAsset": {
+        "createdAt": "2021-09-24T16:31:44.703Z",
+        "updatedAt": "2021-09-24T16:31:44.703Z",
+        "name": "roja__05.png",
+        "type": "IMAGE",
+        "mimeType": "image/png",
+        "width": 1080,
+        "height": 690,
+        "fileSize": 235794,
+        "source": "source/89/roja__05.png",
+        "preview": "preview/95/roja__05__preview.png",
+        "focalPoint": null,
+        "id": 79
+      },
+      "items": [
+        {
+          "createdAt": "2021-10-01T18:36:33.701Z",
+          "updatedAt": "2021-10-01T18:36:33.701Z",
+          "initialListPrice": 24000,
+          "listPrice": 24000,
+          "listPriceIncludesTax": false,
+          "adjustments": [],
+          "taxLines": [
+            {
+              "description": "IVA incluido",
+              "taxRate": 0
+            }
+          ],
+          "cancelled": false,
+          "id": 12,
+          "lineId": 7,
+          "refundId": null,
+          "fulfillments": [],
+          "unitPrice": 24000,
+          "unitPriceWithTax": 24000,
+          "taxRate": 0,
+          "unitTax": 0,
+          "discountedUnitPrice": 24000,
+          "discountedUnitPriceWithTax": 24000,
+          "proratedUnitPrice": 24000,
+          "proratedUnitPriceWithTax": 24000,
+          "proratedUnitTax": 0
+        }
+      ],
+      "taxCategory": {
+        "createdAt": "2021-09-24T16:29:01.417Z",
+        "updatedAt": "2021-09-24T16:29:01.417Z",
+        "name": "IVA",
+        "isDefault": true,
+        "id": 1
+      },
+      "unitPrice": 24000,
+      "unitPriceWithTax": 24000,
+      "unitPriceChangeSinceAdded": 0,
+      "unitPriceWithTaxChangeSinceAdded": 0,
+      "discountedUnitPrice": 24000,
+      "discountedUnitPriceWithTax": 24000,
+      "proratedUnitPrice": 24000,
+      "proratedUnitPriceWithTax": 24000,
+      "quantity": 1,
+      "adjustments": [],
+      "taxLines": [
+        {
+          "description": "IVA incluido",
+          "taxRate": 0
+        }
+      ],
+      "taxRate": 0,
+      "linePrice": 24000,
+      "linePriceWithTax": 24000,
+      "discountedLinePrice": 24000,
+      "discountedLinePriceWithTax": 24000,
+      "discounts": [],
+      "lineTax": 0,
+      "proratedLinePrice": 24000,
+      "proratedLinePriceWithTax": 24000,
+      "proratedLineTax": 0
+    },
+    {
+      "createdAt": "2021-10-01T18:36:42.239Z",
+      "updatedAt": "2021-10-01T18:36:42.239Z",
+      "id": 8,
+      "productVariant": {
+        "createdAt": "2021-09-24T16:31:36.813Z",
+        "updatedAt": "2021-09-24T16:31:36.832Z",
+        "deletedAt": null,
+        "enabled": true,
+        "sku": "Cer0201",
+        "stockOnHand": 35,
+        "stockAllocated": 0,
+        "outOfStockThreshold": 0,
+        "useGlobalOutOfStockThreshold": true,
+        "trackInventory": "FALSE",
+        "id": 1,
+        "productId": 1,
+        "taxCategory": {
+          "createdAt": "2021-09-24T16:29:01.417Z",
+          "updatedAt": "2021-09-24T16:29:01.417Z",
+          "name": "IVA",
+          "isDefault": true,
+          "id": 1
+        },
+        "productVariantPrices": [
+          {
+            "createdAt": "2021-09-24T16:31:36.862Z",
+            "updatedAt": "2021-09-24T16:31:36.862Z",
+            "price": 23000,
+            "id": 1,
+            "channelId": 1
+          }
+        ],
+        "translations": [
+          {
+            "createdAt": "2021-09-24T16:31:36.813Z",
+            "updatedAt": "2021-09-24T16:31:36.832Z",
+            "languageCode": "es",
+            "name": "Cerveza artesanal Pestrebola ESB",
+            "id": 1
+          }
+        ],
+        "price": 23000,
+        "priceWithTax": 23000,
+        "listPrice": 23000,
+        "listPriceIncludesTax": false,
+        "taxRateApplied": {
+          "createdAt": "2021-09-24T16:29:17.338Z",
+          "updatedAt": "2021-09-24T16:29:17.338Z",
+          "name": "IVA incluido",
+          "enabled": true,
+          "value": 0,
+          "id": 1,
+          "category": {
+            "createdAt": "2021-09-24T16:29:01.417Z",
+            "updatedAt": "2021-09-24T16:29:01.417Z",
+            "name": "IVA",
+            "isDefault": true,
+            "id": 1
+          },
+          "zone": {
+            "createdAt": "2021-09-24T16:28:31.232Z",
+            "updatedAt": "2021-09-24T16:28:31.232Z",
+            "name": "Federal",
+            "id": 1
+          },
+          "customerGroup": null
+        },
+        "currencyCode": "ARS",
+        "languageCode": "es",
+        "name": "Cerveza artesanal Pestrebola ESB"
+      },
+      "featuredAsset": {
+        "createdAt": "2021-09-24T16:31:36.612Z",
+        "updatedAt": "2021-09-24T16:31:36.612Z",
+        "name": "pestrebola_esb__05.png",
+        "type": "IMAGE",
+        "mimeType": "image/png",
+        "width": 1080,
+        "height": 690,
+        "fileSize": 242502,
+        "source": "source/7d/pestrebola_esb__05.png",
+        "preview": "preview/9c/pestrebola_esb__05__preview.png",
+        "focalPoint": null,
+        "id": 1
+      },
+      "items": [
+        {
+          "createdAt": "2021-10-01T18:36:42.239Z",
+          "updatedAt": "2021-10-01T18:36:42.239Z",
+          "initialListPrice": 23000,
+          "listPrice": 23000,
+          "listPriceIncludesTax": false,
+          "adjustments": [],
+          "taxLines": [
+            {
+              "description": "IVA incluido",
+              "taxRate": 0
+            }
+          ],
+          "cancelled": false,
+          "id": 13,
+          "lineId": 8,
+          "refundId": null,
+          "fulfillments": [],
+          "unitPrice": 23000,
+          "unitPriceWithTax": 23000,
+          "taxRate": 0,
+          "unitTax": 0,
+          "discountedUnitPrice": 23000,
+          "discountedUnitPriceWithTax": 23000,
+          "proratedUnitPrice": 23000,
+          "proratedUnitPriceWithTax": 23000,
+          "proratedUnitTax": 0
+        }
+      ],
+      "taxCategory": {
+        "createdAt": "2021-09-24T16:29:01.417Z",
+        "updatedAt": "2021-09-24T16:29:01.417Z",
+        "name": "IVA",
+        "isDefault": true,
+        "id": 1
+      },
+      "unitPrice": 23000,
+      "unitPriceWithTax": 23000,
+      "unitPriceChangeSinceAdded": 0,
+      "unitPriceWithTaxChangeSinceAdded": 0,
+      "discountedUnitPrice": 23000,
+      "discountedUnitPriceWithTax": 23000,
+      "proratedUnitPrice": 23000,
+      "proratedUnitPriceWithTax": 23000,
+      "quantity": 1,
+      "adjustments": [],
+      "taxLines": [
+        {
+          "description": "IVA incluido",
+          "taxRate": 0
+        }
+      ],
+      "taxRate": 0,
+      "linePrice": 23000,
+      "linePriceWithTax": 23000,
+      "discountedLinePrice": 23000,
+      "discountedLinePriceWithTax": 23000,
+      "discounts": [],
+      "lineTax": 0,
+      "proratedLinePrice": 23000,
+      "proratedLinePriceWithTax": 23000,
+      "proratedLineTax": 0
+    }
+  ],
+  "discounts": [],
+  "total": 47000,
+  "totalWithTax": 47000,
+  "totalQuantity": 2,
+  "taxSummary": [
+    {
+      "taxRate": 0,
+      "description": "IVA incluido",
+      "taxBase": 47000,
+      "taxTotal": 0
+    },
+    {
+      "taxRate": 0,
+      "description": "shipping tax",
+      "taxBase": 0,
+      "taxTotal": 0
+    }
+  ],
+  "payments": []
+}

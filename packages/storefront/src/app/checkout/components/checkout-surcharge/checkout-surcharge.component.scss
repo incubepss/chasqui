@@ -1,0 +1,32 @@
+.questionContainer {
+  display: flex;
+  flex-direction: column;
+  &-label {
+    margin-right: 1rem;
+  }
+}
+
+.card {
+  margin-top: 1rem;
+  border: 0;
+  margin-bottom: 2rem;
+
+  &-title {
+    font-weight: bold;
+    padding: 0;
+    color: #7c7c7c;
+  }
+
+  &-body {
+    padding: 0;
+  }
+}
+
+.custom-control {
+  margin-bottom: 0.5rem;
+}
+
+.custom-control-input,
+.custom-control-label {
+  cursor: pointer;
+}

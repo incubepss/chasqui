@@ -1,0 +1,49 @@
+<vdr-action-bar>
+  <vdr-ab-left> </vdr-ab-left>
+  <vdr-ab-right>
+    <vdr-action-bar-items locationId="example-list"></vdr-action-bar-items>
+    <a class="btn btn-primary" [routerLink]="['./create']" *ngIf="['CreateCustomSurcharge'] | hasPermission">
+      <clr-icon shape="plus"></clr-icon>
+      Nuevo
+    </a>
+  </vdr-ab-right>
+</vdr-action-bar>
+<vdr-data-table [items]="surcharges$ | async">
+  <vdr-dt-column>Concepto</vdr-dt-column>
+  <vdr-dt-column>Habilitado</vdr-dt-column>
+  <vdr-dt-column></vdr-dt-column>
+  <vdr-dt-column></vdr-dt-column>
+
+  <ng-template let-item="item">
+    <td class="left align-middle">
+      <div class="surcharge-name">{{ item.name }}</div>
+      <div class="surcharge-question">{{item.question}}</div>
+    </td>
+    <td class="left align-middle">
+      <vdr-chip colorType="success" *ngIf="item.enabled">Habilitado</vdr-chip>
+      <vdr-chip *ngIf="!item.enabled">No habilitado</vdr-chip>
+    </td>
+    <td class="right align-middle">
+      <vdr-table-row-action
+        iconShape="edit"
+        [label]="'common.edit' | translate"
+        [linkTo]="['/extensions', 'customSurcharge', item.id]"
+        *ngIf="['UpdateCustomSurcharge'] | hasPermission"
+      ></vdr-table-row-action>
+    </td>
+    <td class="right align-middle" style="width: 60px">
+      <vdr-dropdown *ngIf="['DeleteCustomSurcharge'] | hasPermission">
+        <button type="button" class="btn btn-link btn-sm" vdrDropdownTrigger>
+          {{ 'common.actions' | translate }}
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <vdr-dropdown-menu vdrPosition="bottom-right">
+          <button type="button" class="delete-button" (click)="delete(item.id)" vdrDropdownItem>
+            <clr-icon shape="trash" class="is-danger"></clr-icon>
+            {{ 'common.delete' | translate }}
+          </button>
+        </vdr-dropdown-menu>
+      </vdr-dropdown>
+    </td></ng-template
+  >
+</vdr-data-table>

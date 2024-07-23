@@ -1,0 +1,77 @@
+<form #registerForm="ngForm" (submit)="register()">
+  <vsf-centered-card>
+    <div *ngIf="registrationSent !== true">
+      <div class="form-group">
+        <label>Nombre *</label>
+        <input
+          class="form-control"
+          #firstName="ngModel"
+          [ngClass]="{
+            'is-invalid': !firstName.pristine && firstName.invalid
+          }"
+          name="firstName"
+          required
+          [disabled]="registrationSent"
+          [(ngModel)]="model.firstName"
+        />
+        <div *ngIf="firstName.invalid" class="invalid-feedback">
+          <div *ngIf="firstName.errors.required">El nombre es requerido.</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>Apellido *</label>
+        <input
+          class="form-control mt-1"
+          [ngClass]="{
+            'is-invalid': !lastName.pristine && lastName.invalid
+          }"
+          #lastName="ngModel"
+          name="lastName"
+          required
+          [disabled]="registrationSent"
+          [(ngModel)]="model.lastName"
+        />
+        <div *ngIf="!lastName.pristine && lastName.invalid" class="invalid-feedback">
+          <div *ngIf="lastName.errors.required">El apellido es requerido.</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>Email *</label>
+        <input
+          class="form-control mt-1"
+          [ngClass]="{
+            'is-invalid': !emailAddress.pristine && emailAddress.invalid
+          }"
+          #emailAddress="ngModel"
+          name="emailAddress"
+          required
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+          type="email"
+          [disabled]="registrationSent"
+          [(ngModel)]="model.emailAddress"
+        />
+        <div *ngIf="!emailAddress.pristine && emailAddress.invalid" class="invalid-feedback">
+          <div *ngIf="emailAddress.errors.required">El email es requerido</div>
+          <div *ngIf="emailAddress.errors.pattern">La dirección de email no es válida.</div>
+        </div>
+      </div>
+      <button
+        class="btn btn-primary btn-block"
+        [disabled]="registerForm.invalid || registerForm.pristine || registrationSent"
+        type="submit"
+      >
+        Registrar
+      </button>
+    </div>
+
+    <div *ngIf="registrationSent" class="registration-sent">
+      <fa-icon class="thanks-icon" icon="check-circle"></fa-icon>
+      <h2 class="thanks-message">Genial!</h2>
+      <div>
+        Ahora verificá tu cuenta de email <strong>{{ model.emailAddress }}</strong> para completar la registración
+      </div>
+    </div>
+  </vsf-centered-card>
+</form>

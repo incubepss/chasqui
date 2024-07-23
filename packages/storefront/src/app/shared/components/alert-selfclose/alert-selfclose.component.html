@@ -1,0 +1,10 @@
+<div *ngIf="(isHidden$ | async ) !== true" 
+  class="alert fade" 
+  [class.alert-success]="type === 'success'" 
+  [class.alert-warning]="type === 'warning'" 
+  [class.show]="isShown$ | async">
+  <ng-content></ng-content>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

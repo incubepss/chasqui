@@ -1,0 +1,74 @@
+<vdr-action-bar>
+  <vdr-ab-left>
+    <input
+      type="text"
+      name="searchTerm"
+      [formControl]="searchTerm"
+      [placeholder]="'productor-plugin.search' | translate"
+      class="clr-input search-input"
+    />
+  </vdr-ab-left>
+  <vdr-ab-right>
+    <vdr-action-bar-items locationId="email-list"></vdr-action-bar-items>
+    <a
+      disabled="true"
+      href="javascript:void(0)"
+      class="btn btn-primary disabled"
+      id="downloadbtn"
+      (click)="downloadcsv()"
+      *vdrIfPermissions="'CreateProductor'"
+    >
+      <clr-icon shape="download-cloud"></clr-icon>
+      {{ 'productor-plugin.download-csv' | translate }}
+    </a>
+    <a
+      class="btn btn-primary"
+      id="createbtn"
+      [routerLink]="['./create']"
+      *vdrIfPermissions="'CreateProductor'"
+    >
+      <clr-icon shape="plus"></clr-icon>
+      {{ 'productor-plugin.create-new-productor' | translate }}
+    </a>
+  </vdr-ab-right>
+</vdr-action-bar>
+
+<vdr-data-table
+  id="datatable"
+  [items]="items$ | async"
+  [itemsPerPage]="itemsPerPage$ | async"
+  [totalItems]="totalItems$ | async"
+  [currentPage]="currentPage$ | async"
+  (pageChange)="setPageNumber($event)"
+  (itemsPerPageChange)="setItemsPerPage($event)"
+>
+  <ng-template let-productor="item">
+    <td class="left align-middle">{{ productor.name }}</td>
+    <td class="left align-middle">{{ productor.descriptionOffered }}</td>
+    <td class="left align-middle">{{ productor.localidad }}</td>
+    <td class="left align-middle" style="width: 60px">
+      <vdr-chip>{{ productor.enabled ? 'Visible' : 'No visible' }}</vdr-chip>
+    </td>
+    <td class="right align-middle" style="width: 60px" *vdrIfPermissions="'UpdateProductor'">
+      <vdr-table-row-action
+        iconShape="edit"
+        [label]="'common.edit' | translate"
+        [linkTo]="['/extensions', 'productores', productor.id]"
+      ></vdr-table-row-action>
+    </td>
+    <td class="right align-middle" style="width: 60px" *vdrIfPermissions="'DeleteProductor'">
+      <vdr-dropdown>
+        <button type="button" class="btn btn-link btn-sm" vdrDropdownTrigger>
+          {{ 'common.actions' | translate }}
+          <clr-icon shape="caret down"></clr-icon>
+        </button>
+        <vdr-dropdown-menu vdrPosition="bottom-right">
+          <button type="button" class="delete-button" (click)="delete(productor.id)" vdrDropdownItem>
+            <clr-icon shape="trash" class="is-danger"></clr-icon>
+            {{ 'common.delete' | translate }}
+          </button>
+        </vdr-dropdown-menu>
+      </vdr-dropdown>
+    </td>
+  </ng-template>
+</vdr-data-table>

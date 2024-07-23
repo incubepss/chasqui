@@ -1,0 +1,28 @@
+<div class="mobileSection">
+  <div class="mobileSection-header" *ngIf="hideHeader !== true">
+    <div class="mobileHeader-icon">
+      <a *ngIf="backRouterLink; else defaultBack" [routerLink]="backRouterLink" routerLinkActive="active"> <fa-icon icon="arrow-left"></fa-icon></a>
+      <ng-template #defaultBack>
+        <a (click)="back()"> <fa-icon icon="arrow-left"></fa-icon></a>
+      </ng-template>
+    </div>
+    <div class="mobileHeader-title">
+      {{title}}
+      <ng-content select="[title]"></ng-content>
+    </div>
+    <div *ngIf="showHeaderDropdown" ngbDropdown>
+      <button class="btn btn-link" ngbDropdownToggle type="button" data-toggle="dropdown" aria-expanded="false">
+        <fa-icon icon="ellipsis-v"></fa-icon>
+      </button>
+      <div ngbDropdownMenu>
+        <ng-content select="[headerDropdownMenu]"></ng-content>
+      </div>
+    </div>
+  </div>
+  <div class="mobileSection-body" [style]="styleBody">
+    <ng-content></ng-content>
+  </div>
+  <div class="mobileSection-toolbar">
+    <ng-content select="[toolbar]"></ng-content>
+  </div>
+</div>

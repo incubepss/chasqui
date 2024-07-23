@@ -1,0 +1,100 @@
+<ng-container *ngIf="activeCustomer$ | async as customer">
+
+  <div class="containerMain">
+    
+    <div class="sectionContainer" >
+      <div class="sectionContainer-header">
+        <h5 class="sectionContainer-headerTitle">
+          <fa-icon icon="shopping-cart"></fa-icon>
+          Pedidos individuales
+        </h5>
+        <div class="sectionContainer-headerAction">
+          <button class="btn btn-sm btn-secondary"
+              [routerLink]="['./', 'pedidos']"
+              routerLinkActive="active">
+              ver todos
+          </button>
+        </div>
+      </div>
+      <div class="sectionContainer-body">
+        <div class="listContainer">
+          <div class="listItem" *ngFor="let order of orders$ | async" [routerLink]="['/micuenta/pedidos/', order.code]">
+            <div class="listItem-date">{{ order.updatedAt | timeAgo }}</div>
+            <div class="listItem-total">{{ order.totalWithTax | formatPrice }}</div>
+            <div  class="listItem-state">
+              <vsf-state-tag [state]="order.state" [stateGroup]="order.customFields?.orderGroup?.state" [mode]="order" ></vsf-state-tag>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sectionContainer" *ngIf="isOrderGroupEnabled$ | async ">
+      <div class="sectionContainer-header">
+        <h5 class="sectionContainer-headerTitle">
+          <fa-icon icon="user-friends"></fa-icon> 
+          Pedidos grupales
+        </h5>
+        <div class="sectionContainer-headerAction">
+          <button class="btn btn-sm btn-secondary"
+          [routerLink]="['./', 'grupos']"
+          routerLinkActive="active">
+          ver todos
+        </button>
+      </div>
+      
+    </div>
+   
+    <div class="sectionContainer-body">
+        <div class="listContainer">
+          <div class="listItem listItem--orderGroup" 
+            *ngFor="let orderGroup of orderGroups$ | async"
+            [routerLink]="['/micuenta/grupos/', orderGroup.code]"
+          >
+            <div class="listItem-date">{{ orderGroup.updatedAt | timeAgo }}</div>
+            <div class="listItem-total">{{ orderGroup.totalWithTax | formatPrice }}</div>
+            <div class="listItem-count">{{ orderGroup.ordersQuantity }} pedidos confirmados</div>
+            <div class="listItem-state">
+              <vsf-state-tag [state]="orderGroup.state" [mode]="orderGroup" ></vsf-state-tag>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-primary" [routerLink]="['/micuenta/grupos-nuevo']">   
+          <fa-icon icon="plus"></fa-icon>
+          Crear nuevo pedido grupal
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="moreActionsList">
+    <div class="sectionContainer-header">
+      <h5 class="sectionContainer-headerTitle">
+        Ajustes
+      </h5>
+    </div>
+    
+    <vsf-mobile-list-action 
+      [routerLink]="['./', 'datos-personales']"
+      icon="pencil-alt"
+      label="Mis datos"
+      secondaryText="Podés modificar tu nombre y teléfono"
+    ></vsf-mobile-list-action>
+
+    <vsf-mobile-list-action 
+      [routerLink]="['./', 'cambio-credenciales']"
+      icon="key"
+      label="Cambiar Credenciales"
+      secondaryText="Podés modificar tu dirección de correo o contraseña"
+    ></vsf-mobile-list-action>
+
+    <vsf-mobile-list-action 
+      [routerLink]="['./', 'direcciones']"
+      icon="map-marker"
+      label="Mis direcciones de entrega"
+    ></vsf-mobile-list-action>
+
+  </div>
+</ng-container>

@@ -1,0 +1,23 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a [routerLink]="['/']">Tiendas</a>
+    </li>
+    <li class="breadcrumb-item" *ngIf="breadcrumbs?.length > 1">
+      <a [contextRouterLink]="['/']">{{channelName$ | async}}</a>
+    </li>
+    <li class="breadcrumb-item" *ngIf="breadcrumbs?.length < 1">
+      {{channelName$ | async}}
+    </li>
+    <li
+      class="breadcrumb-item"
+      *ngFor="let breadcrumb of tail(breadcrumbs); last as isLast; first as isFirst"
+      [attr.aria-current]="isLast"
+    >
+      <ng-container *ngIf="isLast && !linkLast; else link">{{ breadcrumb.name }}</ng-container>
+      <ng-template #link>
+        <a [contextRouterLink]="['/categoria', breadcrumb.slug]">{{ breadcrumb.name }}</a>
+      </ng-template>
+    </li>
+  </ol>
+</nav>

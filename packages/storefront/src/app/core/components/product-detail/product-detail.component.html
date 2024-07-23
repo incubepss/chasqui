@@ -1,0 +1,122 @@
+<div class="masthead" *ngIf="showBreadcrumbs">
+  <div class="container">
+    <vsf-collection-breadcrumbs [breadcrumbs]="breadcrumbs" *ngIf="product" class="mb-2"
+      [linkLast]="true"></vsf-collection-breadcrumbs>
+  </div>
+</div>
+
+<div class="container">
+  <ng-template [ngIf]="product" [ngIfElse]="placeholder">
+    <div class="row product-detailContainer">
+      <div class="col-12 col-lg-6 text-center">
+        <vsf-asset-gallery [assets]="product.assets" [selectedAssetId]="product.featuredAsset?.id"
+          class="mb-3"></vsf-asset-gallery>
+        <vsf-sellos-products [sellos]="product.facetValues" size="lg"></vsf-sellos-products>
+      </div>
+      <div class="col-12 col-lg-6" #zoomPreviewArea>
+        <h2 class="display-4 product-name">{{ product.name }}</h2>
+        <div class="purchase-options">
+          <div class="variant-selector" *ngIf="product.variants.length > 1">
+            <select [(ngModel)]="selectedVariant" class="form-control">
+              <option *ngFor="let variant of product.variants" [ngValue]="variant">{{ variant.name }}</option>
+            </select>
+          </div>
+
+          <div class="add-to-cart-row" *ngIf="!channel">
+            <div class="col-6 price">
+              {{ selectedVariant?.priceWithTax | formatPrice }}
+            </div>
+            <div class="col-6 sku">
+              {{ selectedVariant?.sku }}
+            </div>
+          </div>
+          <div class="add-to-cart-row" *ngIf="!channel">
+            <div class="qty col-4" *ngIf="isAvailable">
+              <input type="number" min="0" max="99" [(ngModel)]="qty" class="form-control form-control-lg"
+                *ngIf="addEnabled$ | async" />
+            </div>
+            <div class="col-8 text-center" *ngIf="isAvailable; else notAvailable">
+              <button [disabled]="qty === 0" class="btn btn-primary btn-lg btn-addCart"
+                (click)="addToCart(selectedVariant, qty)" *ngIf="addEnabled$ | async">
+                Agregar al carrito
+              </button>
+            </div>
+            <ng-template #notAvailable>
+              <span class="--not-available text-danger">No disponible</span>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="add-to-cart-row">
+          <div class="col-12 description" [innerHTML]="product.description"></div>
+        </div>
+
+        <div class="productor-section" *ngIf="productor">
+          <div class="cart-section-title">Productor</div>
+          <div class="productor-name">{{ productor.name }}</div>
+          <div class="productor-place" *ngIf="productor.localidad || productor.provincia">
+            {{ productor.localidad }}<span *ngIf="productor.localidad && productor.provincia">, </span>
+            {{ productor.provincia }}
+          </div>
+          <div class="productor-offered">{{ productor.descriptionOffered }}</div>
+          <a class="productor-link" [routerLink]="channelRoute(['productores', productor.id])" (click)="modalDismiss()">
+            Ver más productos
+          </a>
+        </div>
+        <div class="share-container">
+          <a *ngIf="shareAvailable" class="btn mb-1" (click)="doShare($event)"
+            [routerLink]="channelRoute(['producto', product.slug])" target="_blank">
+            <fa-icon icon="share-alt"></fa-icon> Compartir
+          </a>
+          <a *ngIf="!shareAvailable" class="btn mb-1" (click)="modalDismiss()"
+            [routerLink]="channelRoute(['producto', product.slug])">
+            <fa-icon icon="link"></fa-icon> Enlace permanente
+          </a>
+          <a class="btn btn-primary" *ngIf="channel" [routerLink]="channelRoute(['producto', product.slug])"
+            (click)="modalDismiss()">
+            <fa-icon icon="store"></fa-icon> Comprar en la tienda
+          </a>
+        </div>
+        <vsf-multicatalog-card *ngIf="channel" (click)="modalDismiss()" [tienda]="channel"></vsf-multicatalog-card>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #placeholder>
+    <div class="placeholder-breadcrumb loading-placeholder"></div>
+    <div class="row">
+      <div class="col-12 col-md-6 text-center">
+        <div class="product-image">
+          <div class="placeholder-image loading-placeholder"></div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="placeholder-title loading-placeholder"></div>
+        <div class="placeholder-description loading-placeholder"></div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<ng-template #addedToCartTemplate let-variant="variant" let-quantity="quantity" let-close="closeFn">
+  <div class="add-to-cart-notification">
+    <div class="thumb mr-2">
+      <img class="" *ngIf="variant.featuredAsset?.preview"
+        [src]="(variant.featuredAsset?.preview || product.featuredAsset?.preview) + '?preset=tiny'"
+        alt="product thumbnail" />
+    </div>
+    <div>{{ quantity }} x {{ variant.name }}</div>
+  </div>
+  <button class="btn btn-sm btn-outline-primary btn-block" (click)="viewCartFromNotification(close)">
+    Ver carrito
+  </button>
+</ng-template>
+
+<ng-template #productormodal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ productor?.name }}</h4>
+    <button type="button" class="close" aria-label="Cerrar" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="modal-body">{{ productor?.descriptionOffered }}</div>
+</ng-template>

@@ -1,0 +1,61 @@
+@import 'bootstrap';
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 600px;
+  height: 3rem;
+}
+
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+
+  .number {
+    display: flex;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    background-color: $light;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+
+  .label {
+    color: $gray-600;
+  }
+
+  &.active {
+    .number {
+      background-color: $secondary;
+      color: white;
+    }
+
+    .label {
+      margin-left: 0.2rem;
+      color: $secondary;
+      font-weight: bold;
+    }
+  }
+
+  &.ready {
+    .number {
+      color: $primary;
+    }
+
+    .label {
+      color: $primary;
+    }
+  }
+}
+
+.line {
+  flex: 1;
+  height: 0;
+  border-bottom: 1px solid $gray-300;
+  margin: 0 $spacer / 2;
+}
